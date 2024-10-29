@@ -4,7 +4,7 @@ function LoggedInName(){
     function doLogout(event:any) : void {
         event.preventDefault();
 
-        alert('doLogout');
+        alert('doLogout()');
     };
 
     return(
