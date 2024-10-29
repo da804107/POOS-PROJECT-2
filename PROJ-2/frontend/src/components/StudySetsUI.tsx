@@ -1,4 +1,4 @@
-function StudySetUI() {
+function StudySetsUI() {
     function addStudySet(event:any) : void {
         event.preventDefault();
 
@@ -27,4 +27,4 @@ function StudySetUI() {
     );
 }
 
-export default StudySetUI;
+export default StudySetsUI;
