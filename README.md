@@ -5,7 +5,7 @@
 - /studySets = homepage
 - /newStudySet = create new set
 - /editStudySet = view an existing set
-- /indexCards = view sets as a index cards
+- /indexCards = view sets as a index cards -> might not be necessary but created in case
 
 ## color pallette:
 ### text
