@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage.tsx';
 import StudySetsPage from './pages/StudySetsPage.tsx';
 import CreateAccountPage from './pages/CreateAccountPage.tsx';
 import NewStudySetPage from './pages/NewStudySetPage.tsx';
+import EditStudySetPage from './pages/EditStudySetPage.tsx';
+import IndexCardPage from './pages/IndexCardPage.tsx';
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
         <Route path="/studySets" element={<StudySetsPage />} />
         <Route path="/newAccount" element={<CreateAccountPage />} />
         <Route path="/newStudySet" element={<NewStudySetPage />} />
+        <Route path="/editStudySet" element={<EditStudySetPage />} />
+        <Route path="/indexCards" element={<IndexCardPage />} />
       </Routes>
     </Router>
   );
