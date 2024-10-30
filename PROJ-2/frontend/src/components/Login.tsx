@@ -1,3 +1,4 @@
+import '../styles/Login.css';
 import React, { useState } from 'react';
 
 function Login() {
@@ -26,7 +27,7 @@ function Login() {
             onChange={handleSetLoginName}/><br />
             <input type="text" id="loginPassword" placeholder="Password"
             onChange={handleSetPassword}/><br />
-            <input type="submit" id="loginButton" className="buttons" value="Login"
+            <input type="submit" id="loginButton" className="buttons" value="LOGIN"
             onClick={doLogin} />
             <span id="loginResult">{message}</span>
         </div>

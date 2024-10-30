@@ -1,0 +1,33 @@
+#inner-title {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#loginName, #loginPassword {
+    background-color: #FBFBFB;
+    color: #333;
+    text-align: center;
+    border: 2px solid #FFDDAE;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#loginName:focus, #loginPassword:focus {
+    outline: none;
+}
+
+#loginButton {
+    background-color: #FFDDAE;
+    color: #444444;
+    border: none;
+    padding: 12px 24px;
+}
+
+#loginButton:hover {
+    background-color: #FFC68F;
+}

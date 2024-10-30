@@ -1,3 +1,4 @@
+import '../styles/StudySetsUI.css';
 import React, { useState } from 'react';
 
 function StudySetsUI() {
@@ -23,23 +24,19 @@ function StudySetsUI() {
         setSearchValue( e.target.value );
     }
 
-    function handleStudySetTextChange(e:any) : void {
-        setStudySetNameValue( e.target.value );
-    }
-
     return(
         <div id="accessUIDiv">
             <br />
-            <input type="text" id="searchText" placeholder="Study Set to Search For"
+            <input type="text" id="searchText" placeholder="Search Your Study Sets..."
             onChange={handleSearchTextChange}/>
+            <div id="button-container">
             <button type="button" id="searchStudySetButton" className="buttons"
-            onClick={searchStudySets}> Search Study Sets </button><br />
+            onClick={searchStudySets}> SEARCH </button><br />
             <span id="studySetResult">{searchResults}</span>
-            <p id="studySetsList">{studySetList}</p><br /><br />
-            <input type="text" id="studySetText" placeholder="Study Set to Add"
-            onChange={handleStudySetTextChange}/>
             <button type="button" id="addStudySetButton" className="buttons"
-            onClick={addStudySet}> Add Study Set </button><br />
+            onClick={addStudySet}> ADD </button><br />
+            </div>
+            <p id="studySetsList">{studySetList}</p><br /><br />
             <span id="studySetAddResult">{message}</span>
         </div>
     );

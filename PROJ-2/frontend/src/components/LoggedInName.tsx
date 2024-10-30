@@ -1,3 +1,5 @@
+import '../styles/LoggedInName.css';
+
 function LoggedInName(){
     var user={}
 
@@ -9,9 +11,9 @@ function LoggedInName(){
 
     return(
         <div id="loggedInDiv">
-            <span id="userName">Logged In as Daisy Hernandez</span><br />
+            <span id="userName">Welcome Back Jamie Fraser !</span><br />
             <button type="button" id="logoutButton" className="buttons"
-            onClick={doLogout}> Log Out </button>
+            onClick={doLogout}> LOG OUT </button>
         </div>
     );
 };

@@ -1,0 +1,34 @@
+#searchText, #studySetText {
+    background-color: #FBFBFB;
+    color: #333;
+    text-align: center;
+    border: 2px solid #FFDDAE;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#searchText, #studySetText:focus {
+    outline: none;
+}
+
+#button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#searchStudySetButton, #addStudySetButton {
+    background-color: #FFDDAE;
+    color: #444444;
+    border: none;
+    padding: 12px 24px;
+}
+
+#searchStudySetButton:hover, #addStudySetButton:hover {
+    background-color: #FFC68F;
+}

@@ -1,0 +1,15 @@
+#userName{
+    display: block;
+    margin-bottom: 10px;
+}
+
+#logoutButton {
+    background-color: #FFDDAE;
+    color: #444444;
+    border: none;
+    padding: 12px 24px;
+}
+
+#logoutButton:hover {
+    background-color: #FFC68F;
+}
