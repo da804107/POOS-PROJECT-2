@@ -1,4 +1,8 @@
 # study-buddy
+## Routes
+/ = login
+/studySets = homepage
+
 ## color pallette:
 ### text
 #444444 (grey)
