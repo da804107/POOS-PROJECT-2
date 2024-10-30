@@ -1,7 +1,11 @@
 # study-buddy
 ## Routes
 - / = login
+- /newAccount = create account
 - /studySets = homepage
+- /addStudySet = create new set
+- /editStudySet = view an existing set
+- /indexCards = view sets as a index cards
 
 ## color pallette:
 ### text
