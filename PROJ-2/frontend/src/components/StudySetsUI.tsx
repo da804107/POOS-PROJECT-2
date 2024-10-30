@@ -1,17 +1,16 @@
 import '../styles/StudySetsUI.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function StudySetsUI() {
     const [message, setMessage] = React.useState('');
     const [searchResults, setSearchResults] = React.useState('');
     const [studySetList, setStudySetList] = React.useState('');
     const [search, setSearchValue] = React.useState('');
-    const [studySet, setStudySetNameValue] = React.useState('');
+    const navigate = useNavigate();
 
-    function addStudySet(event:any) : void {
-        event.preventDefault();
-
-        alert('addStudySet() ' + studySet);
+    function addStudySet() {
+        navigate('/newStudySet');
     };
 
     function searchStudySets(event:any) : void {
@@ -29,7 +28,7 @@ function StudySetsUI() {
             <br />
             <input type="text" id="searchText" placeholder="Search Your Study Sets..."
             onChange={handleSearchTextChange}/>
-            <div id="button-container">
+            <div id="home-button-container">
             <button type="button" id="searchStudySetButton" className="buttons"
             onClick={searchStudySets}> SEARCH </button><br />
             <span id="studySetResult">{searchResults}</span>

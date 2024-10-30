@@ -34,10 +34,17 @@
     background-color: #FFC68F;
 }
 
+#login-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
 #loginResult {
     display: block;
     margin-top: 15px;
-    font-size: 1em;
+    font-size: 0.75em;
     font-weight: bold;
     border-radius: 12px;
     background-color: #FFD5D4;

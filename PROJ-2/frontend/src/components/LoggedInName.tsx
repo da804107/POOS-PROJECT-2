@@ -1,12 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import '../styles/LoggedInName.css';
 
 function LoggedInName(){
     var user={}
 
-    function doLogout(event:any) : void {
-        event.preventDefault();
+    const navigate = useNavigate();
 
-        alert('doLogout()');
+    function doLogout() {
+
+        navigate('/');
+        //alert('doLogout()');
     };
 
     return(

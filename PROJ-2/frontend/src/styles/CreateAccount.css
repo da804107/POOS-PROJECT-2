@@ -31,8 +31,8 @@
 #createAccountResult {
     display: block;
     margin-top: 15px;
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 0.75em;
+    font-weight: bold; 
     border-radius: 12px;
     background-color: #FFD5D4;
     color: #ff000d;
