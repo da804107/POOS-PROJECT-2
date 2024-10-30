@@ -1,7 +1,7 @@
 # study-buddy
 ## Routes
-/ = login
-/studySets = homepage
+- / = login
+- /studySets = homepage
 
 ## color pallette:
 ### text
