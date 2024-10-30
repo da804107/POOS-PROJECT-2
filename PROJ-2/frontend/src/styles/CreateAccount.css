@@ -1,10 +1,4 @@
-#inner-title {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-#loginName, #loginPassword {
+#username, #password, #confirmPassword {
     background-color: #FBFBFB;
     color: #333;
     text-align: center;
@@ -18,11 +12,11 @@
     margin-bottom: 20px;
 }
 
-#loginName:focus, #loginPassword:focus {
+#username:focus, #password:focus, #confirmPassword:focus {
     outline: none;
 }
 
-#loginButton {
+#createAccountButton {
     font-weight: bold;
     background-color: #FFDDAE;
     color: #444444;
@@ -30,11 +24,11 @@
     padding: 12px 24px;
 }
 
-#loginButton:hover {
+#createAccountButton:hover {
     background-color: #FFC68F;
 }
 
-#loginResult {
+#createAccountResult {
     display: block;
     margin-top: 15px;
     font-size: 1em;
