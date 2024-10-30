@@ -3,7 +3,7 @@
 - / = login
 - /newAccount = create account
 - /studySets = homepage
-- /addStudySet = create new set
+- /newStudySet = create new set
 - /editStudySet = view an existing set
 - /indexCards = view sets as a index cards
 
