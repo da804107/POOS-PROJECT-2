@@ -14,3 +14,7 @@
 
 ### secondary accent
 #D4F6FF (light teal)
+
+## other information:
+### default font
+Rubik
