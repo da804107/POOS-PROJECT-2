@@ -3,43 +3,66 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
-    const [message, setMessage] = React.useState('');
-    const [loginName, setLoginName] = React.useState('');
-    const [loginPassword, setLoginPassword] = React.useState('');
-    const navigate = useNavigate();
+  // State for input values and messages
+  const [message, setMessage] = useState('');
+  const [loginName, setLoginName] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const navigate = useNavigate();
 
-    function doLogin() {
-        navigate('/studySets');
-    }
+  // Navigate to login page
+  function doLogin(): void {
+    navigate('/studySets');
+  }
 
-    function handleSetLoginName(e:any) : void {
-        setLoginName( e.target.value );
-    }
+  // Track changes in the login name input
+  function handleSetLoginName(e: React.ChangeEvent<HTMLInputElement>): void {
+    setLoginName(e.target.value);
+  }
 
-    function handleSetPassword(e:any) : void {
-        setLoginPassword( e.target.value );
-    }
+  // Track changes in the password input
+  function handleSetPassword(e: React.ChangeEvent<HTMLInputElement>): void {
+    setLoginPassword(e.target.value);
+  }
 
-    function doCreateAccount() {
-        navigate('/newAccount');
-    }
+  // Navigate to create account page
+  function doCreateAccount(): void {
+    navigate('/newAccount');
+  }
 
-    return(
-        <div id="loginDiv">
-            <span id="inner-title">LOGIN TO STUDY BUDDY</span><br />
-            <input type="text" id="loginName" placeholder="Username"
-            onChange={handleSetLoginName}/><br />
-            <input type="text" id="loginPassword" placeholder="Password"
-            onChange={handleSetPassword}/><br />
-            <div id="login-button-container">
-            <input type="submit" id="loginButton" className="buttons" value="LOGIN"
-            onClick={doLogin} />
-            <input type="submit" id="createAccountButton" className="buttons" value="CREATE ACCOUNT"
-            onClick={doCreateAccount} />
-            </div>
-            <span id="loginResult">{message}</span>
+  return (
+    <div className="center-text">
+      <div className="small-square">
+        <div className="center-text">
+          <br />
+          <br />
+          <span className="large-text">Please Login</span>
+          <br />
+          <br />
+          <input
+            className="input-bar"
+            type="text"
+            placeholder="Username"
+            value={loginName}
+            onChange={handleSetLoginName}
+          />
+          <input
+            className="input-bar"
+            type="password"
+            placeholder="Password"
+            value={loginPassword}
+            onChange={handleSetPassword}
+          />
+          <button className="purple-buttons" onClick={doLogin}>
+            Login
+          </button>
+          <button className="blue-buttons" onClick={doCreateAccount}>
+            Sign Up
+          </button>
+          {message && <div className="message">{message}</div>}
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
 
 export default Login;
