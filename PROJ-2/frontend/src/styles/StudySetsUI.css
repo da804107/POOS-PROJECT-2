@@ -2,7 +2,7 @@
     background-color: #FBFBFB;
     color: #333;
     text-align: center;
-    border: 2px solid #FFDDAE;
+    border: 2px solid #FFB385;
     border-radius: 8px;
     padding: 10px;
     font-size: 16px;
@@ -23,12 +23,12 @@
 }
 
 #searchStudySetButton, #addStudySetButton {
-    background-color: #FFDDAE;
+    background-color: #FFB385;
     color: #444444;
     border: none;
     padding: 12px 24px;
 }
 
 #searchStudySetButton:hover, #addStudySetButton:hover {
-    background-color: #FFC68F;
+    background-color: #FFA366;
 }

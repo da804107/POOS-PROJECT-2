@@ -3,7 +3,7 @@
     background-color: #FBFBFB;
     color: #333;
     text-align: center;
-    border: 2px solid #FFDDAE;
+    border: 2px solid #FFB385;
     border-radius: 8px;
     padding: 10px;
     font-size: 16px;
@@ -19,28 +19,18 @@
 
 #goHomeButton, #addWordButton {
     font-weight: bold;
-    background-color: #FFDDAE;
+    background-color: #FFB385;
     color: #444444;
     border: none;
     padding: 12px 24px;
 }
 
-#goHomeButton:hover {
-    background-color: #FFC68F;
+#goHomeButton:hover, #addWordButton:hover {
+    background-color: #FFA366;
 }
 
 #addition-container {
     margin: 10px 10px;
     display: flex;
     gap: 10px;
-}
-
-#loginResult {
-    display: block;
-    margin-top: 15px;
-    font-size: 0.75em;
-    font-weight: bold;
-    border-radius: 12px;
-    background-color: #FFD5D4;
-    color: #ff000d;
 }

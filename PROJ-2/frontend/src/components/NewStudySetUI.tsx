@@ -45,7 +45,6 @@ function NewStudySetUI() {
             <input type="submit" id="addWordButton" className="buttons" value="ADD WORD"
             onClick={doAddWord} />
             <p id="studySetsList">{pair}</p><br /><br />
-            {/*<span id="loginResult">{message}</span>*/}
         </div>
     );
 }

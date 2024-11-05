@@ -8,7 +8,7 @@
     background-color: #FBFBFB;
     color: #333;
     text-align: center;
-    border: 2px solid #FFDDAE;
+    border: 2px solid #FFB385;
     border-radius: 8px;
     padding: 10px;
     font-size: 16px;
@@ -24,14 +24,14 @@
 
 #loginButton {
     font-weight: bold;
-    background-color: #FFDDAE;
+    background-color: #FFB385;
     color: #444444;
     border: none;
     padding: 12px 24px;
 }
 
 #loginButton:hover {
-    background-color: #FFC68F;
+    background-color: #FFA366;
 }
 
 #login-button-container {

@@ -15,13 +15,13 @@
 #C6E7FF (sky blue)
 
 ### accents & buttons
-#FFDDAE (faded peach)
+#FFB385 (faded peach)
 
 ### textboxes
 #FBFBFB (white)
 
 ### secondary accent
-#D4F6FF (light teal)
+#FFA366; (lfor button hovers)
 
 ## other information:
 ### default font
