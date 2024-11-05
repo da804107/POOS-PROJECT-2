@@ -9,10 +9,6 @@ function NewStudySetUI() {
     const [pair, setPair] = React.useState('');
     const navigate = useNavigate();
 
-    function doLogin() {
-        navigate('/studySets');
-    }
-
     function handleSetWord(e:any) : void {
         setWord( e.target.value );
     }
