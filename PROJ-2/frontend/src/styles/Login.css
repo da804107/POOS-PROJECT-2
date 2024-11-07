@@ -107,3 +107,16 @@ body {
     background-color: #311cb5;
     transition: 0.15s;
 }
+
+.message {
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 30px;   
+    padding: 10px 15px;        
+    font-size: 0.875em;      
+    font-weight: bold; 
+    border-radius: 8px;            
+    background-color: #FFD5D4;  
+    color: #ff000d;                
+    text-align: center; 
+}

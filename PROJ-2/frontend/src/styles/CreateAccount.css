@@ -1,39 +1,122 @@
-#username, #password, #confirmPassword {
-    background-color: #FBFBFB;
-    color: #333;
+body {
+    background-color: #150c25;
     text-align: center;
-    border: 2px solid #FFB385;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 400px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
 }
 
-#username:focus, #password:focus, #confirmPassword:focus {
-    outline: none;
+::placeholder {
+    opacity: 1;
+    color: #B0B0B0;
 }
 
-#createAccountButton {
-    font-weight: bold;
-    background-color: #FFB385;
-    color: #444444;
-    border: none;
-    padding: 12px 24px;
+.small-text {
+    color: white;
+    font: monospace;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-#createAccountButton:hover {
-    background-color: #FFA366;
+.large-text {
+    color: white;
+    font: monospace;
+    font-size: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-#createAccountResult {
+.center-text {
+    display: grid;
+    place-items: center;
+}
+
+.small-square {
     display: block;
-    margin-top: 15px;
-    font-size: 0.75em;
+    overflow: auto;
+    width: 500px;
+    background-color: #3D3648;
+    border: none;
+    border-radius: 8px;
+    margin-top: 60px;
+    box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+
+.small-dark-square {
+    display: block;
+    overflow: auto;
+    width: 400px;
+    background-color: #2b2439;
+    border: none;
+    border-radius: 8px;
+
+}
+
+.input-bar {
+    border: 2px solid white;
+    border-radius: 2px;
+    background: transparent;
+    font: monospace;
+    font-size: 20px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    outline: 0;
+}
+
+.purple-buttons {
+    background-color: #5021a0;
+    color: white;
+    font: monospace;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    transition: 0.15s;
+}
+.purple-buttons:hover {
+    background-color: #5e27a2;
+    transition: 0.15s;
+}
+.purple-buttons:active {
+    background-color: #6b2da4;
+    transition: 0.15s;
+}
+
+.blue-buttons {
+    background-color: #1700ad;
+    color: white;
+    font: monospace;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    transition: 0.15s;
+}
+.blue-buttons:hover {
+    background-color: #2b16b1;
+    transition: 0.15s;
+}
+.blue-buttons:active {
+    background-color: #311cb5;
+    transition: 0.15s;
+}
+
+.message {
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 30px;   
+    padding: 10px 15px;        
+    font-size: 0.875em;      
     font-weight: bold; 
-    border-radius: 12px;
-    background-color: #FFD5D4;
-    color: #ff000d;
+    border-radius: 8px;            
+    background-color: #FFD5D4;  
+    color: #ff000d;                
+    text-align: center; 
 }
