@@ -10,14 +10,12 @@ body {
 
 .small-text {
     color: white;
-    font: monospace;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .large-text {
     color: white;
-    font: monospace;
     font-size: 60px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -53,7 +51,6 @@ body {
     border: 2px solid white;
     border-radius: 2px;
     background: transparent;
-    font: monospace;
     font-size: 20px;
     color: white;
     margin-top: 30px;
@@ -67,7 +64,6 @@ body {
 .purple-buttons {
     background-color: #5021a0;
     color: white;
-    font: monospace;
     font-size: 20px;
     border: none;
     border-radius: 20px;
@@ -89,7 +85,6 @@ body {
 .blue-buttons {
     background-color: #1700ad;
     color: white;
-    font: monospace;
     font-size: 20px;
     border: none;
     border-radius: 20px;
