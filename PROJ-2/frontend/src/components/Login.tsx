@@ -35,7 +35,7 @@ function Login() {
         <div className="center-text">
           <br />
           <br />
-          <span className="large-text">Please Login</span>
+          <span className="large-text">PLEASE LOGIN</span>
           <br />
           <br />
           <input
@@ -53,10 +53,10 @@ function Login() {
             onChange={handleSetPassword}
           />
           <button className="purple-buttons" onClick={doLogin}>
-            Login
+            LOGIN
           </button>
           <button className="blue-buttons" onClick={doCreateAccount}>
-            Sign Up
+            SIGN UP
           </button>
           {message && <div className="message">{message}</div>}
         </div>

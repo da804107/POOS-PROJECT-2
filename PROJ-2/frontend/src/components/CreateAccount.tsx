@@ -69,7 +69,7 @@ function CreateAccount(): JSX.Element {
                         CREATE ACCOUNT
                     </button>
                     <button className="blue-buttons" onClick={doBackToHome}>
-                        Back to Login
+                        BACK TO LOGIN
                     </button>
                     {message && <div className="message">{message}</div>}
                 </div>
