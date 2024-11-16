@@ -1,36 +1,273 @@
-
-#word, #definition {
-    background-color: #FBFBFB;
-    color: #333;
+body {
+    background-color: #150c25;
     text-align: center;
-    border: 2px solid #FFB385;
+}
+
+::placeholder {
+    opacity: 1;
+    color: #B0B0B0;
+}
+
+.small-text {
+    color: white;
+    font: monospace;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.large-text {
+    color: white;
+    font: monospace;
+    font-size: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.center-text {
+    display: grid;
+    place-items: center;
+}
+
+.small-square {
+    display: block;
+    overflow: auto;
+    width: 500px;
+    background-color: #3D3648;
+    border: none;
     border-radius: 8px;
-    padding: 10px;
-    font-size: 16px;
-    width: 100%;
-    max-width: 400px;
+    margin-top: 60px;
+    box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+
+.small-dark-square {
+    display: block;
+    overflow: auto;
+    width: 400px;
+    background-color: #2b2439;
+    border: none;
+    border-radius: 8px;
+
+}
+
+.input-bar {
+    border: 2px solid white;
+    border-radius: 2px;
+    background: transparent;
+    font: monospace;
+    font-size: 20px;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 0px;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    outline: 0;
+}
+
+.purple-buttons {
+    background-color: #5021a0;
+    color: white;
+    font: monospace;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    transition: 0.15s;
+}
+.purple-buttons:hover {
+    background-color: #5e27a2;
+    transition: 0.15s;
+}
+.purple-buttons:active {
+    background-color: #6b2da4;
+    transition: 0.15s;
+}
+
+.blue-buttons {
+    background-color: #1700ad;
+    color: white;
+    font: monospace;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    transition: 0.15s;
+}
+.blue-buttons:hover {
+    background-color: #2b16b1;
+    transition: 0.15s;
+}
+.blue-buttons:active {
+    background-color: #311cb5;
+    transition: 0.15s;
+}
+
+.div-next { /*divs that are next to each other*/
+    display: inline-block
+}
+
+.large-square {
+    display: block;
+    overflow: auto;
+    background-color: #2b2439;
+    border-radius: 8px;
+    width: 1100px;
+    margin-top: 20px;
+    box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+
+.input-bar-term1 {
+    background: transparent;
+    font: monospace;
+    border: none;
+    border-bottom: 2px white solid;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    width: 400px;
+    min-height: 30px;
+    margin-right: 20px;
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    resize: none;
+    overflow: hidden;
+}
+
+.input-bar-def1 {
+    background: transparent;
+    font: monospace;
+    border: none;
+    border-bottom: 2px white solid;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    width: 600px;
+    min-height: 30px;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    resize: none;
+    overflow: hidden;
+}
+
+.input-bar-term2 {
+    background: transparent;
+    font: monospace;
+    border: none;
+    border-bottom: 2px white solid;
+    color: white;
+    outline: none;
+    width: 400px;
+    min-height: 50px;
+    resize: none;
+    overflow: hidden;
+    font-size: 20px;
     box-sizing: border-box;
+    margin-right: 20px;
+    margin-left: 0px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
-#word:focus, #definition:focus {
-    outline: none;
-}
-
-#goHomeButton, #addWordButton {
-    font-weight: bold;
-    background-color: #FFB385;
-    color: #444444;
+.input-bar-def2 {
+    background: transparent;
+    font: monospace;
     border: none;
-    padding: 12px 24px;
+    border-bottom: 2px white solid;
+    color: white;
+    outline: none;
+    width: 600px;
+    min-height: 50px;
+    resize: none;
+    overflow: hidden;
+    font-size: 20px;
+    box-sizing: border-box;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-#goHomeButton:hover, #addWordButton:hover {
-    background-color: #FFA366;
+.input-bar-term {
+    background: transparent;
+    font: monospace;
+    border: none;
+    border-bottom: 2px white solid;
+    color: white;
+    outline: none;
+    width: 400px;
+    min-height: 40px;
+    padding: 0px;
+    resize: none;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 20px;
+    margin-left: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-#addition-container {
-    margin: 10px 10px;
-    display: flex;
-    gap: 10px;
+.input-bar-def {
+    background: transparent;
+    font: monospace;
+    border: none;
+    border-bottom: 2px white solid;
+    color: white;
+    outline: none;
+    width: 600px;
+    min-height: 40px;
+    padding: 0px;
+    resize: none;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.large-square2 {
+    display: flex;    /* Align textareas horizontally */
+    flex-direction: row; /* Align textareas in a row */
+    gap: 10px;        /* Space between the two textareas */
+    align-items: flex-start;
+    background-color: #2b2439;
+    border-radius: 8px;
+    width: 1100px;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+
+.add-flash-card-button {
+    background-color: #5021a0;
+    color: white;
+    font: monospace;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+    width: 300px;
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    transition: 0.15s;
+    box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+.add-flash-card-button:hover {
+    background-color: #5e27a2;
+    transition: 0.15s;
+}
+.add-flash-card-button:active {
+    background-color: #6b2da4;
+    transition: 0.15s;
 }
