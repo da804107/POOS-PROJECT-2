@@ -1,5 +1,6 @@
 import '../styles/NewStudySetUI.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface TextareaPair {
   id: number;
@@ -8,7 +9,9 @@ interface TextareaPair {
 }
 
 function NewStudySetUI() {
+  const [title, setTitle] = useState(''); // State for the title
   const [textareasList, setTextareasList] = useState<TextareaPair[]>([]);
+  const navigate = useNavigate();
 
   const addTextareas = () => {
     const newTextareaPair: TextareaPair = {
@@ -34,16 +37,38 @@ function NewStudySetUI() {
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
+  const handleSaveChanges = () => {
+    // Here you can handle saving the title and flashcards, e.g., sending to a server or local storage.
+    console.log('Saving Study Set...');
+    console.log('Title:', title);
+    console.log('Flashcards:', textareasList);
+    navigate('/studySets');
+  };
+
   return (
     <div>
+      {/* Title Input Field */}
+      <div className="center-text">
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="title-input"
+          placeholder="Enter Study Set Title"
+          aria-label="Study Set Title"
+        />
+      </div>
+
+      {/* Add Flashcards Button */}
       <button
         className="add-flash-card-button"
         onClick={addTextareas}
         aria-label="Add New Flash Card"
       >
-        Add New Flash Card
+        ADD NEW FLASH CARD
       </button>
 
+      {/* Flashcards */}
       <div>
         {textareasList.map((pair, index) => (
           <div key={pair.id} className="center-text">
@@ -67,6 +92,17 @@ function NewStudySetUI() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Save Changes Button */}
+      <div className="center-text">
+        <button
+          className="save-changes-button"
+          onClick={handleSaveChanges}
+          aria-label="Save Study Set"
+        >
+          SAVE STUDY SET
+        </button>
       </div>
     </div>
   );
