@@ -46,9 +46,9 @@ function NewStudySetUI() {
   };
 
   return (
-    <div>
+    <div className="study-set-container">
       {/* Title Input Field */}
-      <div className="center-text">
+      <div className="title-container">
         <input
           type="text"
           value={title}
@@ -58,18 +58,18 @@ function NewStudySetUI() {
           aria-label="Study Set Title"
         />
       </div>
-
+  
       {/* Add Flashcards Button */}
       <button
         className="add-flash-card-button"
         onClick={addTextareas}
         aria-label="Add New Flash Card"
       >
-        ADD NEW FLASH CARD
+        Add New Flash Card
       </button>
-
-      {/* Flashcards */}
-      <div>
+  
+      {/* Flashcards (Scrollable Section) */}
+      <div className="flashcards-container">
         {textareasList.map((pair, index) => (
           <div key={pair.id} className="center-text">
             <div className="large-square2">
@@ -93,7 +93,7 @@ function NewStudySetUI() {
           </div>
         ))}
       </div>
-
+  
       {/* Save Changes Button */}
       <div className="center-text">
         <button
@@ -101,11 +101,11 @@ function NewStudySetUI() {
           onClick={handleSaveChanges}
           aria-label="Save Study Set"
         >
-          SAVE STUDY SET
+          Save Changes
         </button>
       </div>
     </div>
-  );
+  );  
 }
 
 export default NewStudySetUI;
