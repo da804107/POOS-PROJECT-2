@@ -19,3 +19,9 @@ app.use((req, res, next) => {
 });
 
 app.listen(5000); //start Node + Express server on port 5000
+
+//Database
+const MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb+srv://da804107:<db_password>@proj-2.ghujw.mongodb.net/?retryWrites=true&w=majority&appName=PROJ-2';
+const client = new MongoClient(url);
+client.connect();
