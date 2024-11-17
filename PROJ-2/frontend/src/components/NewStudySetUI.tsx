@@ -38,7 +38,7 @@ function NewStudySetUI() {
   };
 
   const handleSaveChanges = () => {
-    // Here you can handle saving the title and flashcards, e.g., sending to a server or local storage.
+    // Handle saving the title and flashcards, e.g., sending to a server or local storage.
     console.log('Saving Study Set...');
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
@@ -48,64 +48,58 @@ function NewStudySetUI() {
   return (
     <div className="study-set-container">
       {/* Title Input Field */}
-      <div className="title-container">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="title-input"
-          placeholder="Enter Study Set Title"
-          aria-label="Study Set Title"
-        />
-      </div>
-  
+      <input
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="title-input"
+        placeholder="Enter Study Set Title"
+        aria-label="Study Set Title"
+      />
+
       {/* Add Flashcards Button */}
       <button
         className="add-flash-card-button"
         onClick={addTextareas}
         aria-label="Add New Flash Card"
       >
-        Add New Flash Card
+        ADD NEW FLASHCARD
       </button>
-  
+
       {/* Flashcards (Scrollable Section) */}
       <div className="flashcards-container">
         {textareasList.map((pair, index) => (
-          <div key={pair.id} className="center-text">
-            <div className="large-square2">
-              <textarea
-                value={pair.textarea1}
-                onChange={(e) => handleTextareaChange(index, 'textarea1', e)}
-                onInput={autoResize}
-                className="input-bar-term"
-                placeholder="Enter Term"
-                aria-label="Enter Term"
-              />
-              <textarea
-                value={pair.textarea2}
-                onChange={(e) => handleTextareaChange(index, 'textarea2', e)}
-                onInput={autoResize}
-                className="input-bar-def"
-                placeholder="Enter Definition"
-                aria-label="Enter Definition"
-              />
-            </div>
+          <div key={pair.id} className="flashcard">
+            <textarea
+              value={pair.textarea1}
+              onChange={(e) => handleTextareaChange(index, 'textarea1', e)}
+              onInput={autoResize}
+              className="input-bar-term"
+              placeholder="Enter Term"
+              aria-label="Enter Term"
+            />
+            <textarea
+              value={pair.textarea2}
+              onChange={(e) => handleTextareaChange(index, 'textarea2', e)}
+              onInput={autoResize}
+              className="input-bar-def"
+              placeholder="Enter Definition"
+              aria-label="Enter Definition"
+            />
           </div>
-        ))}
-      </div>
-  
-      {/* Save Changes Button */}
-      <div className="center-text">
-        <button
-          className="save-changes-button"
-          onClick={handleSaveChanges}
-          aria-label="Save Study Set"
-        >
-          Save Changes
-        </button>
-      </div>
+      ))}
     </div>
-  );  
+
+      {/* Save Changes Button */}
+      <button
+        className="save-changes-button"
+        onClick={handleSaveChanges}
+        aria-label="Save Study Set"
+      >
+        SAVE STUDY SET
+      </button>
+    </div>
+  );
 }
 
 export default NewStudySetUI;

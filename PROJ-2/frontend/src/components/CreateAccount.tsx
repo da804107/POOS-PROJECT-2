@@ -18,7 +18,7 @@ function CreateAccount(): JSX.Element {
             alert(`Creating account for ${username}`);
             setMessage('Account Created Successfully!');
             // Navigate to the login page or another page if needed
-            navigate('/login');
+            navigate('/');
         }
     }
 
