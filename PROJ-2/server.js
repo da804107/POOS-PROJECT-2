@@ -26,6 +26,7 @@ const url = 'mongodb+srv://da804107:<db_password>@proj-2.ghujw.mongodb.net/?retr
 const client = new MongoClient(url);
 client.connect();
 
+//SignUp
 app.post('/api/signup', async (req, res, next) => {
     // incoming, username, pass
     // outgoing error
@@ -48,5 +49,98 @@ app.post('/api/signup', async (req, res, next) => {
     }
     
     var ret = { error: error };
+    res.status(200).json(ret);
+});
+
+//Login
+app.post('/api/login', async (req, res, next) => {
+    // incoming: login, password
+    // outgoing: id, firstName, lastName, error
+    var error = '';
+    const { login, password } = req.body;
+    const db = client.db();
+    const results = await
+        db.collection('Users').find({ Username: login, Password: password }).toArray();
+    var id = -1;
+    var fn = '';
+    var ln = '';
+    if (results.length > 0) {
+        id = results[0].UserId;
+        fn = results[0].FirstName;
+        ln = results[0].LastName;
+    } else {
+        error = 'Wrong username/password'
+    }
+    var ret = { id: id, firstName: fn, lastName: ln, error: error };
+    res.status(200).json(ret);
+});
+
+//Add Card to Study Set
+app.post('/api/addcard', async (req, res, next) => {
+    // incoming: userId, color
+    // outgoing: error
+    const { userId, setName, cardTitle, cardDesc } = req.body;
+    const newCard = { SetName: setName, CardTitle: cardTitle, CardDesc: cardDesc, UserId: userId };
+    var error = '';
+    try {
+        const db = client.db();
+        const result = db.collection('Flash-Cards').insertOne(newCard);
+    }
+    catch (e) {
+        error = e.toString();
+    }
+    var ret = { error: error };
+    res.status(200).json(ret);
+});
+
+//Add Study Set
+app.post('/api/addset', async (req, res, next) => {
+    // incoming: userId, color
+    // outgoing: error
+    const { userId, setName } = req.body;
+    const newSet = { SetName: SetName, UserId: userId };
+    var error = '';
+    try {
+        const db = client.db();
+        const result = db.collection('Study-Sets').insertOne(newSet);
+    }
+    catch (e) {
+        error = e.toString();
+    }
+    var ret = { error: error };
+    res.status(200).json(ret);
+});
+
+//Search Study Set
+app.post('/api/searchcards', async (req, res, next) => {
+    // incoming: userId, search
+    // outgoing: results[], error
+    var error = '';
+    const { userId, search } = req.body;
+    var _search = search.trim();
+    const db = client.db();
+    const results = await db.collection('Study-Sets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
+    var _ret = [];
+    for (var i = 0; i < results.length; i++) {
+        _ret.push(results[i].Card);
+    }
+    var ret = { results: _ret, error: error };
+    res.status(200).json(ret);
+});
+
+//Search Flash Cards
+app.post('/api/searchcards', async (req, res, next) => {
+    // incoming: userId, setName
+    // outgoing: results[], error
+    var error = '';
+    const { userId, setName } = req.body;
+    var _search = search.trim();
+    const db = client.db();
+    const results = await db.collection('Flash-Cards').find({ UserId: userId, SetName: setName }).toArray();
+    var _ret = [];
+    for (var i = 0; i < results.length; i++) {
+        _ret.push(results[i].Card);
+    }
+    var ret = { results: _ret, error: error };
     res.status(200).json(ret);
 });
