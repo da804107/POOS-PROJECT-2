@@ -69,7 +69,7 @@ app.post('/api/login', async (req, res, next) => {
     let id = -1, fn = '', ln = '';
 
     try {
-        const db = client.db();
+        const db = client.db('project');
         const results = await db.collection('Users').find({ Username: login, Password: password }).toArray();
 
         if (results.length > 0) {
@@ -93,7 +93,7 @@ app.post('/api/addcard', async (req, res, next) => {
     let error = '';
 
     try {
-        const db = client.db();
+        const db = client.db('project');
         await db.collection('Flash-Cards').insertOne(newCard);
     } catch (e) {
         error = e.toString();
@@ -109,7 +109,7 @@ app.post('/api/addset', async (req, res, next) => {
     let error = '';
 
     try {
-        const db = client.db();
+        const db = client.db('project');
         await db.collection('Study-Sets').insertOne(newSet);
     } catch (e) {
         error = e.toString();
@@ -126,7 +126,7 @@ app.post('/api/searchsets', async (req, res, next) => {
     let _ret = [];
 
     try {
-        const db = client.db();
+        const db = client.db('project');
         const results = await db.collection('Study-Sets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
@@ -146,7 +146,7 @@ app.post('/api/searchcards', async (req, res, next) => {
     let _ret = [];
 
     try {
-        const db = client.db();
+        const db = client.db('project');
         const results = await db.collection('Flash-Cards').find({ UserId: userId, SetName: setName }).toArray();
 
         for (let i = 0; i < results.length; i++) {
