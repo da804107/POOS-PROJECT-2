@@ -9,16 +9,31 @@ function CreateAccount(): JSX.Element {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
 
-    function doCreateAccount(event: React.MouseEvent<HTMLButtonElement>): void {
+    async function doCreateAccount(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         event.preventDefault();
+
+        var obj = { Username: username, Password: password };
+        var js = JSON.stringify(obj);
 
         if (password !== confirmPassword) {
             setMessage('Passwords do not match!');
         } else {
-            alert(`Creating account for ${username}`);
-            setMessage('Account Created Successfully!');
-            // Navigate to the login page or another page if needed
-            navigate('/');
+            try {
+                alert(`Creating account for ${username}`)
+
+                const response = await fetch('http://localhost:5000/api/signup',
+                    { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+
+                const res = await response.json();
+
+
+                setMessage('Account Created Successfully!');
+                // Navigate to the login page or another page if needed
+                navigate('/');
+            } catch (error: any) {
+                alert(error.toString())
+                return;
+            }
         }
     }
 
