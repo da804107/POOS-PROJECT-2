@@ -3,13 +3,22 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+
+// CORS Configuration
+const corsOptions = {
+    origin: 'http://localhost:5173/', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+app.use(cors(corsOptions));
+
+// Middleware
 app.use(bodyParser.json());
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Or your frontend URL
     res.setHeader(
         'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-TypeError, Accept, Authorization'
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     );
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -18,130 +27,139 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(5000); //start Node + Express server on port 5000
+// Root Route
+app.get('/', (req, res) => {
+    res.send('Server is running!');
+});
 
-//Database
+// Database Connection
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb+srv://GroupAccess:pROjECT2_gROuP@proj-2.ghujw.mongodb.net/?retryWrites=true&w=majority&appName=PROJ-2';
+const url = 'mongodb+srv://da804107:mypassword@cluster0.v6oei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const client = new MongoClient(url);
 client.connect();
 
-//SignUp
+// SignUp Route
 app.post('/api/signup', async (req, res, next) => {
-    // incoming, username, pass
-    // outgoing error
-
-    const {username, password} = req.body;
-
-    const newUser = {UserId: null, Username: username, Password: password};
+    const { username, password } = req.body;
+    const newUser = { UserId: null, Username: username, Password: password };
+    let error = '';
 
     try {
-    const db = client.db();
-    newUser.UserId = await db.collection('Users').countDocuments();
-    /*        commented out for testing
-    if(await db.collection('Users').findOne({Username: newUser.Username, Password: newUser.Password})) {
-        return res.status(400).json({ error: 'User already exists' });
-    }
-    */
-    const results = await db.collection('Users').insertOne(newUser);
+        const db = client.db('project');
+        newUser.UserId = await db.collection('Users').countDocuments();
 
-    } catch(e) {
+        /* Uncomment to check for existing user
+        if (await db.collection('Users').findOne({ Username: newUser.Username })) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+        */
+
+        await db.collection('Users').insertOne(newUser);
+    } catch (e) {
         error = e.toString();
     }
-    
-    var ret = { error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ error });
 });
 
-//Login
+// Login Route
 app.post('/api/login', async (req, res, next) => {
-    // incoming: login, password
-    // outgoing: id, firstName, lastName, error
-    var error = '';
     const { login, password } = req.body;
-    const db = client.db();
-    const results = await
-        db.collection('Users').find({ Username: login, Password: password }).toArray();
-    var id = -1;
-    var fn = '';
-    var ln = '';
-    if (results.length > 0) {
-        id = results[0].UserId;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
-    } else {
-        error = 'Wrong username/password'
+    let error = '';
+    let id = -1, fn = '', ln = '';
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Users').find({ Username: login, Password: password }).toArray();
+
+        if (results.length > 0) {
+            id = results[0].UserId;
+            fn = results[0].FirstName || '';
+            ln = results[0].LastName || '';
+        } else {
+            error = 'Wrong username/password';
+        }
+    } catch (e) {
+        error = e.toString();
     }
-    var ret = { id: id, firstName: fn, lastName: ln, error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ id, firstName: fn, lastName: ln, error });
 });
 
-//Add Card to Study Set
+// Add Card to Study Set
 app.post('/api/addcard', async (req, res, next) => {
-    // incoming: userId, color
-    // outgoing: error
     const { userId, setName, cardTitle, cardDesc } = req.body;
     const newCard = { SetName: setName, CardTitle: cardTitle, CardDesc: cardDesc, UserId: userId };
-    var error = '';
+    let error = '';
+
     try {
         const db = client.db();
-        const result = db.collection('Flash-Cards').insertOne(newCard);
-    }
-    catch (e) {
+        await db.collection('Flash-Cards').insertOne(newCard);
+    } catch (e) {
         error = e.toString();
     }
-    var ret = { error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ error });
 });
 
-//Add Study Set
+// Add Study Set
 app.post('/api/addset', async (req, res, next) => {
-    // incoming: userId, color
-    // outgoing: error
     const { userId, setName } = req.body;
-    const newSet = { SetName: SetName, UserId: userId };
-    var error = '';
+    const newSet = { SetName: setName, UserId: userId }; // Fixed variable name
+    let error = '';
+
     try {
         const db = client.db();
-        const result = db.collection('Study-Sets').insertOne(newSet);
-    }
-    catch (e) {
+        await db.collection('Study-Sets').insertOne(newSet);
+    } catch (e) {
         error = e.toString();
     }
-    var ret = { error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ error });
 });
 
-//Search Study Set
-app.post('/api/searchcards', async (req, res, next) => {
-    // incoming: userId, search
-    // outgoing: results[], error
-    var error = '';
+// Search Study Sets
+app.post('/api/searchsets', async (req, res, next) => {
     const { userId, search } = req.body;
-    var _search = search.trim();
-    const db = client.db();
-    const results = await db.collection('Study-Sets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
-    var _ret = [];
-    for (var i = 0; i < results.length; i++) {
-        _ret.push(results[i].Card);
+    const _search = search.trim();
+    let error = '';
+    let _ret = [];
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Study-Sets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
+
+        for (let i = 0; i < results.length; i++) {
+            _ret.push(results[i].SetName);
+        }
+    } catch (e) {
+        error = e.toString();
     }
-    var ret = { results: _ret, error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ results: _ret, error });
 });
 
-//Search Flash Cards
+// Search Flash Cards
 app.post('/api/searchcards', async (req, res, next) => {
-    // incoming: userId, setName
-    // outgoing: results[], error
-    var error = '';
     const { userId, setName } = req.body;
-    var _search = search.trim();
-    const db = client.db();
-    const results = await db.collection('Flash-Cards').find({ UserId: userId, SetName: setName }).toArray();
-    var _ret = [];
-    for (var i = 0; i < results.length; i++) {
-        _ret.push(results[i].Card);
+    let error = '';
+    let _ret = [];
+
+    try {
+        const db = client.db();
+        const results = await db.collection('Flash-Cards').find({ UserId: userId, SetName: setName }).toArray();
+
+        for (let i = 0; i < results.length; i++) {
+            _ret.push(results[i]);
+        }
+    } catch (e) {
+        error = e.toString();
     }
-    var ret = { results: _ret, error: error };
-    res.status(200).json(ret);
+
+    res.status(200).json({ results: _ret, error });
+});
+
+// Start the Server
+app.listen(5000, () => {
+    console.log('Server is running on http://localhost:5000');
 });
