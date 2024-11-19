@@ -17,7 +17,7 @@ function CreateAccount(): JSX.Element {
             return;
         }
     
-        const userData = { username, password }; // Use lowercase keys for backend consistency
+        const userData = { username, password };
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -34,7 +34,7 @@ function CreateAccount(): JSX.Element {
     
             const res = await response.json();
             setMessage('Account Created Successfully!');
-            setTimeout(() => navigate('/'), 2000); // Redirect to login after a delay
+            setTimeout(() => navigate('/'), 2000);
         } catch (error: any) {
             console.error('Error during signup:', error);
             setMessage(error.message || 'Failed to create account. Please try again.');
