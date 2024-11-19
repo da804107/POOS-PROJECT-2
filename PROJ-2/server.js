@@ -38,11 +38,11 @@ app.post('/api/signup', async (req, res, next) => {
     try {
     const db = client.db();
     newUser.UserId = await db.collection('Users').countDocuments();
-    
+    /*        commented out for testing
     if(await db.collection('Users').findOne({Username: newUser.Username, Password: newUser.Password})) {
         return res.status(400).json({ error: 'User already exists' });
     }
-
+    */
     const results = await db.collection('Users').insertOne(newUser).toArray();
     } catch(e) {
         error = e.toString();
