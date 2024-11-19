@@ -11,31 +11,36 @@ function CreateAccount(): JSX.Element {
 
     async function doCreateAccount(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         event.preventDefault();
-
-        var obj = { Username: username, Password: password };
-        var js = JSON.stringify(obj);
-
+    
         if (password !== confirmPassword) {
             setMessage('Passwords do not match!');
-        } else {
-            try {
-                alert(`Creating account for ${username}`)
-
-                const response = await fetch('http://localhost:5000/api/signup',
-                    { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
-
-                const res = await response.json();
-
-
-                setMessage('Account Created Successfully!');
-                // Navigate to the login page or another page if needed
-                navigate('/');
-            } catch (error: any) {
-                alert(error.toString())
-                return;
+            return;
+        }
+    
+        const userData = { username, password }; // Use lowercase keys for backend consistency
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        };
+    
+        try {
+            const response = await fetch('http://localhost:5000/api/signup', requestOptions);
+    
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Signup failed');
             }
+    
+            const res = await response.json();
+            setMessage('Account Created Successfully!');
+            setTimeout(() => navigate('/'), 2000); // Redirect to login after a delay
+        } catch (error: any) {
+            console.error('Error during signup:', error);
+            setMessage(error.message || 'Failed to create account. Please try again.');
         }
     }
+    
 
     function doBackToHome(): void {
         navigate('/');
