@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
   // State for input values and messages
-  const [message, setMessage] = useState('');
-  const [loginName, setLoginName] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [message, setMessage] = React.useState('');
+  const [loginName, setLoginName] = React.useState('');
+  const [loginPassword, setLoginPassword] = React.useState('');
   const navigate = useNavigate();
 
   // OLD ~~~~ Navigate to login page
@@ -76,6 +76,7 @@ function Login() {
           <input
             className="input-bar"
             type="text"
+            id="loginName"
             placeholder="Username"
             value={loginName}
             onChange={handleSetLoginName}
@@ -83,6 +84,7 @@ function Login() {
           <input
             className="input-bar"
             type="password"
+            id="loginPassword"
             placeholder="Password"
             value={loginPassword}
             onChange={handleSetPassword}
