@@ -9,10 +9,45 @@ function Login() {
   const [loginPassword, setLoginPassword] = useState('');
   const navigate = useNavigate();
 
-  // Navigate to login page
-  function doLogin(): void {
+  // OLD ~~~~ Navigate to login page
+  /*function doLogin(): void {
     navigate('/studySets');
+  }*/
+
+  // Check if valid user then navigate to study set page
+  async function doLogin(event: any) : Promise < void > {
+  event.preventDefault();
+  var obj = {
+    login: loginName,
+    password: loginPassword
+  };
+  var js = JSON.stringify(obj);
+  try {
+    const response = await fetch('https://project.annetteisabrunette.xyz/api/login', {
+      method: 'POST',
+      body: js,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    var res = JSON.parse(await response.text());
+    if (res.id <= 0) {
+      setMessage('User/Password combination incorrect');
+    } else {
+      var user = {
+        firstName: res.firstName,
+        lastName: res.lastName,
+        id: res.id
+      }
+      localStorage.setItem('user_data', JSON.stringify(user));
+      setMessage('');
+      window.location.href = '/studySets';
+    }
+  } catch(error: any) {
+    alert(error.toString());
+    return;
   }
+};
 
   // Track changes in the login name input
   function handleSetLoginName(e: React.ChangeEvent<HTMLInputElement>): void {
