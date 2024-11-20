@@ -23,7 +23,7 @@ function Login() {
   };
   var js = JSON.stringify(obj);
   try {
-    const response = await fetch('http://localhost:5000/api/login', {
+    const response = await fetch('https://localhost:5000/api/login', {
       method: 'POST',
       body: js,
       headers: {
@@ -70,7 +70,7 @@ function Login() {
         <div className="center-text">
           <br />
           <br />
-          <span className="large-text">PLEASE LOGIN!</span>
+          <span className="large-text">PLEASE LOGIN</span>
           <br />
           <br />
           <input
