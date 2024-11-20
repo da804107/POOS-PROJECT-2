@@ -41,7 +41,7 @@ function Login() {
       }
       localStorage.setItem('user_data', JSON.stringify(user));
       setMessage('');
-      window.location.href = '/studySets';
+      window.location.href = '/newStudySet';
     }
   } catch(error: any) {
     alert(error.toString());
