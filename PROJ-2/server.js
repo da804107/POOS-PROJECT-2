@@ -64,6 +64,7 @@ app.post('/api/signup', async (req, res, next) => {
 
 // Login Route
 app.post('/api/login', async (req, res, next) => {
+    console.log("in server.js");
     const { login, password } = req.body;
     let error = '';
     let id = -1, fn = '', ln = '';
