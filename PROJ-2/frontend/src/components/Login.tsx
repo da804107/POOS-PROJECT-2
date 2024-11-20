@@ -70,7 +70,7 @@ function Login() {
         <div className="center-text">
           <br />
           <br />
-          <span className="large-text">PLEASE LOGIN</span>
+          <span className="large-text">PLEASE LOGIN<!/span>
           <br />
           <br />
           <input
