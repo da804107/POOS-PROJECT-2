@@ -22,6 +22,7 @@ function Login() {
     password: loginPassword
   };
   var js = JSON.stringify(obj);
+    console.log("outside try");
   try {
     const response = await fetch('https://project.annetteisabrunette.xyz:5000/api/login', {
       method: 'POST',
@@ -30,6 +31,7 @@ function Login() {
         'Content-Type': 'application/json'
       }
     });
+    console.log("inside try");
     var res = JSON.parse(await response.text());
     if (res.id <= 0) {
       setMessage('User/Password combination incorrect');
