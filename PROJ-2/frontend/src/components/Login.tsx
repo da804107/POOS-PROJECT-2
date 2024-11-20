@@ -24,7 +24,7 @@ function Login() {
   var js = JSON.stringify(obj);
     console.log("outside try");
   try {
-    const response = await fetch('https://project.annetteisabrunette.xyz:5000/api/login', {
+    const response = await fetch('https://project.annetteisabrunette.xyz/api/login', {
       method: 'POST',
       body: js,
       headers: {
