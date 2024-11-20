@@ -23,7 +23,7 @@ function Login() {
   };
   var js = JSON.stringify(obj);
   try {
-    const response = await fetch('http://project.annetteisabrunette.xyz/api/login', {
+    const response = await fetch('https://project.annetteisabrunette.xyz/api/login', {
       method: 'POST',
       body: js,
       headers: {
