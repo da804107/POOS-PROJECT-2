@@ -6,7 +6,7 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-    origin: 'https://project.annetteisabrunette.xyz/', // Replace with your frontend URL
+    origin: 'https://project.annetteisabrunette.xyz', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
