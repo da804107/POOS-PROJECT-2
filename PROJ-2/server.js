@@ -89,8 +89,8 @@ app.post('/api/login', async (req, res, next) => {
 
 // Add Card to Study Set
 app.post('/api/addcard', async (req, res, next) => {
-    const { userId, setName, cardTitle, cardDesc } = req.body;
-    const newCard = { SetName: setName, CardTitle: cardTitle, CardDesc: cardDesc, UserId: userId };
+    const { setId, cardTitle, cardDesc } = req.body;
+    const newCard = { SetId: setId, CardTitle: cardTitle, CardDesc: cardDesc };
     let error = '';
 
     try {
@@ -107,12 +107,11 @@ app.post('/api/addcard', async (req, res, next) => {
 app.post('/api/addset', async (req, res, next) => {
     const { userId, title } = req.body;
     console.log(req.body);
-    const newSet = { SetId: null, SetName: title, UserId: userId };
+    const newSet = { SetName: title, UserId: userId };
     console.log(newSet);
     let error = '';
     try {
         const db = client.db('project');
-        newSet.SetId = await db.collection('StudySets').countDocuments();
         await db.collection('StudySets').insertOne(newSet);
     } catch (e) {
         error = e.toString();
