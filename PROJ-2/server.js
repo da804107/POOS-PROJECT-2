@@ -105,13 +105,17 @@ app.post('/api/addcard', async (req, res, next) => {
 
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
-    const { userId, setName } = req.body;
-    const newSet = { SetName: setName, UserId: userId }; // Fixed variable name
+    const { setName } = req.body;
+    const newSet = { SetId: null, SetName: setName, UserId: null }; // Fixed variable name
     let error = '';
-
+    var _ud = localStorage.getItem('user_data');
+    var ud = JSON.parse(_ud);
+    var userId = ud.id;
+    newSet.UserId = userId;
     try {
         const db = client.db('project');
-        await db.collection('Study-Sets').insertOne(newSet);
+        newSet.SetId = await db.collection('StudySets').countDocuments();
+        await db.collection('StudySets').insertOne(newSet);
     } catch (e) {
         error = e.toString();
     }
