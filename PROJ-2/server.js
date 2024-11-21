@@ -132,7 +132,7 @@ app.post('/api/searchsets', async (req, res, next) => {
         const results = await db.collection('StudySets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push(results[i]._id : results[i]:SetName);
+            _ret.push(i : [results[i]._id, results[i].SetName]);
         }
     } catch (e) {
         error = e.toString();
