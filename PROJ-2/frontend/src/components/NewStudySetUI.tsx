@@ -42,7 +42,31 @@ function NewStudySetUI() {
     console.log('Saving Study Set...');
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
-    navigate('/studySets');
+
+    const studySet = { setTitle };
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+        };
+    
+        try {
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/addSet', requestOptions);
+    
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Addset failed');
+            }
+    
+            const res = await response.json();
+            setMessage('Set added Successfully!');
+            setTimeout(() => navigate('/studySets'), 2000);
+        } catch (error: any) {
+            console.error('Error during add set:', error);
+            setMessage(error.message || 'Failed to add set. Please try again.');
+        }
+    
+    //navigate('/studySets');
   };
 
   return (
