@@ -37,7 +37,8 @@ function NewStudySetUI() {
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
-  const handleSaveChanges = () => {
+  async function handleSaveChanges(event: any) : Promise < void > {
+  event.preventDefault();
     // Handle saving the title and flashcards, e.g., sending to a server or local storage.
     console.log('Saving Study Set...');
     console.log('Title:', title);
