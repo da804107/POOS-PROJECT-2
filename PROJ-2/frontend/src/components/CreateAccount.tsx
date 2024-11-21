@@ -25,7 +25,7 @@ function CreateAccount(): JSX.Element {
         };
     
         try {
-            const response = await fetch('http://localhost:5000/api/signup', requestOptions);
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/signup', requestOptions);
     
             if (!response.ok) {
                 const errorResponse = await response.json();
