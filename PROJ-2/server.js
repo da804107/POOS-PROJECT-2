@@ -88,7 +88,7 @@ app.post('/api/login', async (req, res, next) => {
 });
 
 // Add Card to Study Set
-app.post('/api/addcard', async (req, res, next) => {
+/*app.post('/api/addcard', async (req, res, next) => {
     const { setId, cardTitle, cardDesc } = req.body;
     const newCard = { SetId: setId, CardTitle: cardTitle, CardDesc: cardDesc };
     let error = '';
@@ -101,7 +101,7 @@ app.post('/api/addcard', async (req, res, next) => {
     }
 
     res.status(200).json({ error });
-});
+});*/
 
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
@@ -125,14 +125,14 @@ app.post('/api/searchsets', async (req, res, next) => {
     const { userId, search } = req.body;
     const _search = search.trim();
     let error = '';
-    let _ret = [];
+    let _ret = {};
 
     try {
         const db = client.db('project');
-        const results = await db.collection('Study-Sets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
+        const results = await db.collection('StudySets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push(results[i].SetName);
+            _ret.push(results[i]._id : results[i]:SetName);
         }
     } catch (e) {
         error = e.toString();
@@ -143,16 +143,16 @@ app.post('/api/searchsets', async (req, res, next) => {
 
 // Search Flash Cards
 app.post('/api/searchcards', async (req, res, next) => {
-    const { userId, setName } = req.body;
+    const { setId } = req.body;
     let error = '';
     let _ret = [];
 
     try {
         const db = client.db('project');
-        const results = await db.collection('Flash-Cards').find({ UserId: userId, SetName: setName }).toArray();
+        const results = await db.collection('Flash-Cards').find({ _id: setId }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push(results[i]);
+            _ret.push(results[i].Flashcards);
         }
     } catch (e) {
         error = e.toString();
