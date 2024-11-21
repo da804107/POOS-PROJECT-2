@@ -11,6 +11,7 @@ function StudySetsUI() {
     const [studySetList, setStudySetList] = React.useState('');
     const [search, setSearchValue] = React.useState('');
     const navigate = useNavigate();
+    searchStudySets();
 
     function addStudySet() {
         navigate('/newStudySet');
@@ -42,7 +43,7 @@ function StudySetsUI() {
             for (let i = 0; i < _results.length; i++) {
                 resultText += _results[i][1];
                 if (i < _results.length - 1) {
-                    resultText += ', ';
+                    resultText += '\n';
                 }
             }
             setSearchResults('Card(s) have been retrieved');
