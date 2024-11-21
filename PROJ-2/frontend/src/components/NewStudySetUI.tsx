@@ -48,7 +48,7 @@ function NewStudySetUI() {
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
 
-    const studySet = { userId, title };
+    const studySet = { userId, title, textareasList };
     console.log(studySet);
         const requestOptions = {
             method: 'POST',
@@ -71,6 +71,10 @@ function NewStudySetUI() {
             console.error('Error during add set:', error);
             setMessage(error.message || 'Failed to add set. Please try again.');
         }
+
+    //for (var i = 0; i < textareasList.length; i++) {
+
+    //}
     
     //navigate('/studySets');
   };
