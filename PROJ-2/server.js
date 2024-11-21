@@ -106,7 +106,8 @@ app.post('/api/addcard', async (req, res, next) => {
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
     const { userId, setName } = req.body;
-    const newSet = { SetId: null, SetName: setName, UserId: userId }; // Fixed variable name
+    const newSet = { SetId: null, SetName: setName, UserId: userId };
+    console.log(newSet);
     let error = '';
     try {
         const db = client.db('project');
