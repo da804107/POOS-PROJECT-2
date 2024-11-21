@@ -1,0 +1,132 @@
+.homepage {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.center-text {
+  display: grid;
+  place-items: center;
+}
+
+.search-bar {
+  width: 500px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-button {
+  background-color: #FFB385;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.small-square {
+  display: block;
+  overflow: scroll;
+  width: 500px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 60px;
+  box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
+}
+
+.new-set input {
+  width: 60%;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.study-sets-list {
+  list-style: none;
+  padding: 0;
+}
+
+.study-sets-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.set-name {
+  text-decoration: none;
+  color: #FFB385;
+  margin-right: 50px;
+  text-align: left;
+}
+
+.set-name:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.right {
+  align-items: right;
+}
+
+button {
+  background-color: #FFB385;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #FFA366;
+}
+
+.delete-button {
+  background-color: white;
+  color: #ce4f00;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  justify-content: right;
+}
+
+.delete-button:hover {
+  background-color: #e1e1e1;
+  color: #a94a00;
+}
+
+.edit-set {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit-set input {
+  flex: 1;
+  padding: 5px;
+}
+
+.save-button {
+  background-color: #FFB385;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #FFA366
+}
+
+.cancel-button {
+  background-color: white;
+  color: #ce4f00;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #e1e1e1;
+  color: #a94a00;
+}
