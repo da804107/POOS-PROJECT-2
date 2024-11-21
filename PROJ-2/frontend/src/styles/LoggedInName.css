@@ -4,12 +4,13 @@
 }
 
 #logoutButton {
-    background-color: #FFB385;
-    color: #444444;
+    background-color: white;
+    color: #ce4f00;
     border: none;
     padding: 12px 24px;
 }
 
 #logoutButton:hover {
-    background-color: #FFA366;
+    background-color: #e1e1e1;
+    color: #a94a00
 }
