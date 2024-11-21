@@ -53,7 +53,7 @@ function NewStudySetUI() {
         };
     
         try {
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/addSet', requestOptions);
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
     
             if (!response.ok) {
                 const errorResponse = await response.json();
