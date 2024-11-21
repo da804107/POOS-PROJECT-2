@@ -40,7 +40,7 @@ function StudySetsUI() {
             let _results = res.results;
             let resultText = '';
             for (let i = 0; i < _results.length; i++) {
-                resultText += _results[i].i[1];
+                resultText += _results[i][1];
                 if (i < _results.length - 1) {
                     resultText += ', ';
                 }
