@@ -13,10 +13,42 @@ function StudySetsUI() {
         navigate('/newStudySet');
     };
 
-    function searchStudySets(event:any) : void {
+    /*function searchStudySets(event:any) : void {
         event.preventDefault();
 
         alert('searchStudySet() ' + search);
+    };*/
+    
+    async function searchStudySets(e: any): Promise<void> {
+        e.preventDefault();
+        let obj = { userId: userId, search: search };
+        let js = JSON.stringify(obj);
+        try {
+            const response = await
+                fetch('https://project.annetteisabrunette.xyz/api/searchsets',
+                    {
+                        method: 'POST', body: js, headers: {
+                            'Content-Type':
+                                'application/json'
+                        }
+                    });
+            let txt = await response.text();
+            let res = JSON.parse(txt);
+            let _results = res.results;
+            let resultText = '';
+            for (let i = 0; i < _results.length; i++) {
+                resultText += _results[i].i[1];
+                if (i < _results.length - 1) {
+                    resultText += ', ';
+                }
+            }
+            setSearchResults('Card(s) have been retrieved');
+            setStudySetList(resultText);
+        }
+        catch (error: any) {
+            alert(error.toString());
+            setResults(error.toString());
+        }
     };
 
     function handleSearchTextChange(e:any) : void {
