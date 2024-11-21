@@ -1,6 +1,5 @@
 import '../styles/StudySetsUI.css';
 import React, { useState } from 'react';
-import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function StudySetsUI() {
@@ -14,9 +13,7 @@ function StudySetsUI() {
     const navigate = useNavigate();
     //searchStudySets();
 
-    useEffect(() => {
-        searchStudySets();
-    }, [])
+   \
 
     function addStudySet() {
         navigate('/newStudySet');
