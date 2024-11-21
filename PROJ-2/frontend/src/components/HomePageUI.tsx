@@ -1,45 +1,37 @@
 import '../styles/HomePageUI.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function HomePageUI() {
-    const [search, setSearch] = useState('');
-    const [studySets, setStudySets] = useState([
-        { id: '1', name: 'Math Basics' },
-        { id: '2', name: 'History Facts' },
-    ]); // Example data
-    const [newSetName, setNewSetName] = useState('');
-    const [isAdding, setIsAdding] = useState(false);
+interface HomePageUIProps {
+    studySets: { id: string; name: string; isEditing: boolean }[];
+    search: string;
+    setSearch: React.Dispatch<React.SetStateAction<string>>;
+    isAdding: boolean;
+    newSetName: string;
+    setNewSetName: React.Dispatch<React.SetStateAction<string>>;
+    handleAddSet: () => void;
+    handleSaveSet: () => void;
+    handleDeleteSet: (id: string) => void;
+    handleEditToggle: (id: string) => void;
+    handleEditSave: (id: string, newName: string) => void;
+    setIsAdding: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const HomePageUI: React.FC<HomePageUIProps> = ({
+    studySets,
+    search,
+    setSearch,
+    isAdding,
+    newSetName,
+    setNewSetName,
+    handleAddSet,
+    handleSaveSet,
+    handleDeleteSet,
+    handleEditToggle,
+    handleEditSave,
+    setIsAdding,
+}) => {
     const navigate = useNavigate();
-
-    function addStudySet() {
-        setIsAdding(true);
-    }
-
-    function saveNewSet() {
-        if (newSetName.trim() !== '') {
-            const newSet = {
-                id: `${Date.now()}`,
-                name: newSetName,
-            };
-            setStudySets([...studySets, newSet]);
-            setNewSetName('');
-            setIsAdding(false);
-        }
-    }
-
-    function cancelAddSet() {
-        setNewSetName('');
-        setIsAdding(false);
-    }
-
-    function deleteSet(id: string) {
-        setStudySets(studySets.filter(set => set.id !== id));
-    }
-
-    function handleSearchTextChange(e: any): void {
-        setSearch(e.target.value);
-    }
 
     return (
         <div id="homepageUIDiv">
@@ -48,13 +40,13 @@ function HomePageUI() {
                 id="searchText"
                 placeholder="Search Your Study Sets..."
                 value={search}
-                onChange={handleSearchTextChange}
+                onChange={e => setSearch(e.target.value)}
             />
             <div id="home-button-container">
                 <button
                     type="button"
                     id="addStudySetButton"
-                    onClick={addStudySet}
+                    onClick={handleAddSet}
                 >
                     ADD SET
                 </button>
@@ -71,13 +63,13 @@ function HomePageUI() {
                     <div id="addNewSetButtons">
                         <button
                             className="buttons save-button"
-                            onClick={saveNewSet}
+                            onClick={handleSaveSet}
                         >
                             SAVE
                         </button>
                         <button
                             className="buttons cancel-button"
-                            onClick={cancelAddSet}
+                            onClick={() => setIsAdding(false)}
                         >
                             CANCEL
                         </button>
@@ -86,31 +78,54 @@ function HomePageUI() {
             )}
             <div id="studySetListDiv">
                 <ul id="studySetList">
-                    {studySets
-                        .filter(set => set.name.toLowerCase().includes(search.toLowerCase()))
-                        .map(set => (
-                            <li key={set.id} className="studySetItem">
-                                <span className="setName">{set.name}</span>
-                                <div className="setActions">
+                    {studySets.map(set => (
+                        <li key={set.id} className="studySetItem">
+                            {set.isEditing ? (
+                                <div className="editSetDiv">
+                                    <input
+                                        type="text"
+                                        className="editSetInput"
+                                        defaultValue={set.name}
+                                        onBlur={e => handleEditSave(set.id, e.target.value)}
+                                    />
                                     <button
-                                        className="buttons view-button"
-                                        onClick={() => navigate(`/newStudySet/${set.id}`)}
+                                        className="buttons save-button"
+                                        onClick={() => handleEditSave(set.id, set.name)}
                                     >
-                                        VIEW
-                                    </button>
-                                    <button
-                                        className="buttons delete-button"
-                                        onClick={() => deleteSet(set.id)}
-                                    >
-                                        DELETE
+                                        SAVE
                                     </button>
                                 </div>
-                            </li>
-                        ))}
+                            ) : (
+                                <>
+                                    <span className="setName">{set.name}</span>
+                                    <div className="setActions">
+                                        <button
+                                            className="buttons view-button"
+                                            onClick={() => navigate(`/newStudySet/${set.id}`)}
+                                        >
+                                            VIEW
+                                        </button>
+                                        <button
+                                            className="buttons delete-button"
+                                            onClick={() => handleDeleteSet(set.id)}
+                                        >
+                                            DELETE
+                                        </button>
+                                        <button
+                                            className="buttons edit-button"
+                                            onClick={() => handleEditToggle(set.id)}
+                                        >
+                                            EDIT
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
     );
-}
+};
 
 export default HomePageUI;
