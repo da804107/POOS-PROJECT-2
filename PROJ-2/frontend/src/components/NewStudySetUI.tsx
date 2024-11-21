@@ -9,6 +9,7 @@ interface TextareaPair {
 }
 
 function NewStudySetUI() {
+  const [message, setMessage] = React.useState('');
   const [title, setTitle] = useState(''); // State for the title
   const [textareasList, setTextareasList] = useState<TextareaPair[]>([]);
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function NewStudySetUI() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData),
+            body: JSON.stringify(studySet),
         };
     
         try {
