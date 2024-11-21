@@ -11,7 +11,7 @@ function StudySetsUI() {
     const [studySetList, setStudySetList] = React.useState('');
     const [search, setSearchValue] = React.useState('');
     const navigate = useNavigate();
-    searchStudySets();
+    //searchStudySets();
 
     function addStudySet() {
         navigate('/newStudySet');
