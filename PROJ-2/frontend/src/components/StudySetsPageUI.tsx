@@ -42,7 +42,6 @@ const StudySetsPageUI: React.FC<{
     return (
         <div className="study-set-page">
             <div className="header">
-                <h1 className="app-title">Study Buddy</h1>
                 <button
                     className="home-button"
                     onClick={() => (window.location.href = '/')}
