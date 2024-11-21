@@ -48,7 +48,8 @@ function NewStudySetUI() {
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
 
-    const studySet = { userId, setTitle };
+    const studySet = { userId, title };
+    console.log(studySet);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
