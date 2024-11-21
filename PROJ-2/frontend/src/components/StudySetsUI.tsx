@@ -13,7 +13,6 @@ function StudySetsUI() {
     const navigate = useNavigate();
     //searchStudySets();
 
-   \
 
     function addStudySet() {
         navigate('/newStudySet');
