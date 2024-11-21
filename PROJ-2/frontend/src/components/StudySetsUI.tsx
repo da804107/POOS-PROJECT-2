@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function StudySetsUI() {
+    let _ud: any = localStorage.getItem('user_data');
+      let ud = JSON.parse(_ud);
+      let userId: string = ud.id;
     const [message, setMessage] = React.useState('');
     const [searchResults, setSearchResults] = React.useState('');
     const [studySetList, setStudySetList] = React.useState('');
@@ -47,7 +50,7 @@ function StudySetsUI() {
         }
         catch (error: any) {
             alert(error.toString());
-            setResults(error.toString());
+            setStudySetList(error.toString());
         }
     };
 
