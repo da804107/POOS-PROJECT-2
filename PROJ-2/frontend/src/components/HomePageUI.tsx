@@ -3,11 +3,10 @@ import { useState } from 'react';
 import React from 'react';
 
 const HomePageUI: React.FC<{
-    studySet: {
+    studySets: {
         id: string;
         name: string;
-        flashcards: { id: string; term: string; definition: string }[];
-        isEditingName: boolean;
+        isEditing: boolean;
     }[];
     search: string;
     setSearch: (value: string) => void;
