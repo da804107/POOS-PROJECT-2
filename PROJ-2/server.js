@@ -105,9 +105,9 @@ app.post('/api/addcard', async (req, res, next) => {
 
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
-    const { userId, title } = req.body;
+    const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const newSet = { SetName: title, UserId: userId };
+    const newSet = { SetName: title, UserId: userId, Flashcards: textareasList };
     console.log(newSet);
     let error = '';
     try {
