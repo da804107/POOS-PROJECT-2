@@ -1,4 +1,4 @@
-import '../styles/NewStudySetUI.css';
+import '../styles/ViewStudySetUI.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ interface TextareaPair {
   textarea2: string;
 }
 
-function NewStudySetUI() {
+function ViewStudySetUI() {
   let _ud: any = localStorage.getItem('user_data');
   let ud = JSON.parse(_ud);
   let userId: string = ud.id;
@@ -136,4 +136,4 @@ function NewStudySetUI() {
   );
 }
 
-export default NewStudySetUI;
+export default ViewStudySetUI;

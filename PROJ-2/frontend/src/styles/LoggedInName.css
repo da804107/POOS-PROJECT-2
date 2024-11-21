@@ -1,15 +1,30 @@
-#userName{
+  #userName {
     display: block;
     margin-bottom: 10px;
-}
-
-#logoutButton {
-    background-color: #FFB385;
-    color: #444444;
+    font-size: 18px;
+    color: white;
+  }
+  
+  #logoutButton {
+    background-color: #5021a0; /* Matches NewStudySet button styling */
+    color: white;
+    font: monospace;
+    font-size: 16px;
     border: none;
     padding: 12px 24px;
-}
-
-#logoutButton:hover {
-    background-color: #FFA366;
-}
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #logoutButton:hover {
+    background-color: #5e27a2; /* Hover state for consistency */
+    transition: 0.15s;
+  }
+  
+  #logoutButton:active {
+    background-color: #6b2da4; /* Active state */
+    transition: 0.15s;
+  }
+  

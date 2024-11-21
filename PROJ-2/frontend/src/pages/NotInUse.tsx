@@ -1,5 +1,5 @@
 import PageTitle from '../components/PageTitle';
-import EditStudySetUI from '../components/EditStudySetUI';
+import EditStudySetUI from '../components/NotInUseUI';
 
 const EditStudySetPage = () => {
     return(

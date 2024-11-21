@@ -1,4 +1,4 @@
-import '../styles/EditStudySetUI.css';
+import '../styles/NotInUseUI.css';
 import React, { useState } from 'react';
 
 function EditStudySetUI() {

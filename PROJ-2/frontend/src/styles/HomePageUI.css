@@ -1,132 +1,182 @@
-.homepage {
-  font-family: Arial, sans-serif;
+#homepageUIDiv {
+  text-align: center;
   padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.center-text {
-  display: grid;
-  place-items: center;
-}
-
-.search-bar {
-  width: 500px;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.add-button {
-  background-color: #FFB385;
+#searchText {
+  background-color: transparent;
   color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.small-square {
-  display: block;
-  overflow: scroll;
-  width: 500px;
-  border: none;
+  text-align: center;
+  border: 2px solid #5021a0;
   border-radius: 8px;
-  margin-top: 60px;
-  box-shadow: 15px 15px 15px rgb(0 0 0 / 0.2);
-}
-
-.new-set input {
-  width: 60%;
-  padding: 5px;
-  margin-right: 10px;
-}
-
-.study-sets-list {
-  list-style: none;
-  padding: 0;
-}
-
-.study-sets-list li {
-  display: flex;
-  justify-content: space-between;
   padding: 10px;
-  margin-bottom: 5px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font: monospace;
 }
 
-.set-name {
-  text-decoration: none;
-  color: #FFB385;
-  margin-right: 50px;
-  text-align: left;
+#searchText:focus {
+  outline: none;
 }
 
-.set-name:hover {
-  text-decoration: underline;
-  color: white;
-}
-
-.right {
-  align-items: right;
-}
-
-button {
-  background-color: #FFB385;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #FFA366;
-}
-
-.delete-button {
-  background-color: white;
-  color: #ce4f00;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  justify-content: right;
-}
-
-.delete-button:hover {
-  background-color: #e1e1e1;
-  color: #a94a00;
-}
-
-.edit-set {
+#home-button-container {
   display: flex;
-  align-items: center;
-  gap: 5px;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.edit-set input {
-  flex: 1;
-  padding: 5px;
+#addStudySetButton {
+  background-color: #5021a0;
+  color: white;
+  font: monospace;
+  font-size: 16px;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.15s;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+#addStudySetButton:hover {
+  background-color: #5e27a2;
+}
+
+#addStudySetButton:active {
+  background-color: #6b2da4;
+}
+
+#addNewSetDiv {
+  margin-top: 20px;
+}
+
+#addNewSetDiv input {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #5021a0;
+  border-radius: 8px;
+  padding: 10px;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+#addNewSetDiv input:focus {
+  outline: none;
+}
+
+#addNewSetButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 .save-button {
-  background-color: #FFB385;
+  background-color: #5021a0;
   color: white;
   padding: 8px 16px;
-  border: none;
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .save-button:hover {
-  background-color: #FFA366
+  background-color: #5e27a2;
+}
+
+.save-button:active {
+  background-color: #6b2da4;
 }
 
 .cancel-button {
-  background-color: white;
-  color: #ce4f00;
+  background-color: transparent;
+  color: #ff6565;
+  border: 2px solid #5021a0;
   padding: 8px 16px;
-  border: none;
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .cancel-button:hover {
-  background-color: #e1e1e1;
-  color: #a94a00;
+  background-color: #ff6565;
+  color: white;
+}
+
+.cancel-button:active {
+  background-color: #ff4c4c;
+}
+
+#studySetListDiv {
+  margin-top: 30px;
+  display: block;
+  overflow: auto;
+  max-height: 400px;
+  width: 100%;
+  max-width: 500px;
+  border: 2px solid #5021a0;
+  border-radius: 8px;
+  background-color: #2b2439;
+  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.2);
+}
+
+#studySetList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.studySetItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #5021a0;
+  color: white;
+}
+
+.setName {
+  color: white;
+  text-align: left;
+}
+
+.setActions {
+  display: flex;
+  gap: 10px;
+}
+
+.view-button {
+  background-color: #5021a0;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.view-button:hover {
+  background-color: #5e27a2;
+}
+
+.view-button:active {
+  background-color: #6b2da4;
+}
+
+.delete-button {
+  background-color: #2b2439;
+  color: #ff6565;
+  border: 2px solid #5021a0;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #ff6565;
+  color: white;
+}
+
+.delete-button:active {
+  background-color: #ff4c4c;
 }

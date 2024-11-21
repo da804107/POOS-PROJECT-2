@@ -1,6 +1,6 @@
 import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
-import StudySetsUI from '../components/StudySetsUI';
+import StudySetsUI from '../components/OldHomePageUI';
 
 const StudySetsPage = () => {
     return(
