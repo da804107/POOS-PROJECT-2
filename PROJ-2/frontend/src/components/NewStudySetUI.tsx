@@ -66,7 +66,7 @@ function NewStudySetUI() {
     
             const res = await response.json();
             setMessage('Set added Successfully!');
-            setTimeout(() => navigate('/studySets'), 2000);
+            setTimeout(() => navigate('/HomePage'), 2000);
         } catch (error: any) {
             console.error('Error during add set:', error);
             setMessage(error.message || 'Failed to add set. Please try again.');
