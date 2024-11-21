@@ -60,7 +60,7 @@ function StudySetsUI() {
     }
 
     return(
-        <div id="accessUIDiv">
+        <div id="accessUIDiv" onload={searchStudySets}>
             <br />
             <input type="text" id="searchText" placeholder="Search Your Study Sets..."
             onChange={handleSearchTextChange}/>
