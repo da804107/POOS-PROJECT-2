@@ -9,6 +9,9 @@ interface TextareaPair {
 }
 
 function NewStudySetUI() {
+  let _ud: any = localStorage.getItem('user_data');
+  let ud = JSON.parse(_ud);
+  let userId: string = ud.id;
   const [message, setMessage] = React.useState('');
   const [title, setTitle] = useState(''); // State for the title
   const [textareasList, setTextareasList] = useState<TextareaPair[]>([]);
@@ -45,7 +48,7 @@ function NewStudySetUI() {
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
 
-    const studySet = { setTitle };
+    const studySet = { userId, setTitle };
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
