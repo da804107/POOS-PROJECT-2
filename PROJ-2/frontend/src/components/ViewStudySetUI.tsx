@@ -59,7 +59,7 @@ const ViewStudySetUI: React.FC<{
             <div className="header">
                 <button
                     className="home-button"
-                    onClick={() => (window.location.href = '/')}
+                    onClick={() => (window.location.href = '/homePage')}
                 >
                     Home
                 </button>
