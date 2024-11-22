@@ -57,7 +57,7 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
                     <input
                         type="text"
                         id="newSetNameInput"
-                        placeholder="New set name"
+                        placeholder="New Set Name"
                         value={newSetName}
                         onChange={e => setNewSetName(e.target.value)}
                     />
