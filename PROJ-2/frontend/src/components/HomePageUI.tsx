@@ -35,22 +35,23 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
 
     return (
         <div id="homepageUIDiv">
-            <input
-                type="text"
-                id="searchText"
-                placeholder="Search Your Study Sets..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-            />
-            <div id="home-button-container">
+            <div id="searchBarContainer">
+                <input
+                    type="text"
+                    id="searchText"
+                    placeholder="Search Your Study Sets..."
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                />
                 <button
                     type="button"
                     id="addStudySetButton"
                     onClick={handleAddSet}
                 >
-                    ADD SET
+                ADD SET
                 </button>
             </div>
+
             {isAdding && (
                 <div id="addNewSetDiv">
                     <input
