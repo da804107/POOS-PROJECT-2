@@ -1,5 +1,5 @@
 import '../styles/ViewStudySetUI.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface TextareaPair {
@@ -10,12 +10,22 @@ interface TextareaPair {
 
 function ViewStudySetUI() {
   let _ud: any = localStorage.getItem('user_data');
-  let ud = JSON.parse(_ud);
-  let userId: string = ud.id;
+  let ud = _ud ? JSON.parse(_ud) : null;
+  let userId: string = ud?.id || 'defaultUserId'; // Fallback for testing
+
   const [message, setMessage] = React.useState('');
-  const [title, setTitle] = useState(''); // State for the title
+  const [title, setTitle] = useState('');
   const [textareasList, setTextareasList] = useState<TextareaPair[]>([]);
   const navigate = useNavigate();
+
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const storedStudySet = JSON.parse(localStorage.getItem('current_study_set') || '{}');
+    if (storedStudySet.title) {
+      setTitle(storedStudySet.title);
+      setTextareasList(storedStudySet.flashcards || []);
+    }
+  }, []);
 
   const addTextareas = () => {
     const newTextareaPair: TextareaPair = {
@@ -41,43 +51,41 @@ function ViewStudySetUI() {
     event.target.style.height = `${event.target.scrollHeight}px`;
   };
 
-  async function handleSaveChanges(event: any) : Promise < void > {
-  event.preventDefault();
-    // Handle saving the title and flashcards, e.g., sending to a server or local storage.
+  async function handleSaveChanges(event: any): Promise<void> {
+    event.preventDefault();
+
     console.log('Saving Study Set...');
     console.log('Title:', title);
     console.log('Flashcards:', textareasList);
 
     const studySet = { userId, title, textareasList };
-    console.log(studySet);
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(studySet),
-        };
-    
-        try {
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
-    
-            if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error(errorResponse.error || 'Addset failed');
-            }
-    
-            const res = await response.json();
-            setMessage('Set added Successfully!');
-            setTimeout(() => navigate('/HomePage'), 2000);
-        } catch (error: any) {
-            console.error('Error during add set:', error);
-            setMessage(error.message || 'Failed to add set. Please try again.');
-        }
 
-    //for (var i = 0; i < textareasList.length; i++) {
+    // Save to localStorage
+    localStorage.setItem('current_study_set', JSON.stringify(studySet));
 
-    //}
-    
-    //navigate('/studySets');
-  };
+    // Simulate API call
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(studySet),
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/addset', requestOptions);
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || 'Addset failed');
+      }
+
+      const res = await response.json();
+      setMessage('Set saved successfully!');
+      setTimeout(() => navigate('/HomePage'), 2000);
+    } catch (error: any) {
+      console.error('Error during save:', error);
+      setMessage(error.message || 'Failed to save set. Please try again.');
+    }
+  }
 
   return (
     <div className="study-set-container">
@@ -121,8 +129,8 @@ function ViewStudySetUI() {
               aria-label="Enter Definition"
             />
           </div>
-      ))}
-    </div>
+        ))}
+      </div>
 
       {/* Save Changes Button */}
       <button
@@ -132,6 +140,9 @@ function ViewStudySetUI() {
       >
         SAVE STUDY SET
       </button>
+
+      {/* Display Message */}
+      {message && <div className="message">{message}</div>}
     </div>
   );
 }
