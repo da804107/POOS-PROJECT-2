@@ -1,150 +1,148 @@
 import '../styles/ViewStudySetUI.css';
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-interface TextareaPair {
-  id: number;
-  textarea1: string;
-  textarea2: string;
-}
-
-function ViewStudySetUI() {
-  let _ud: any = localStorage.getItem('user_data');
-  let ud = _ud ? JSON.parse(_ud) : null;
-  let userId: string = ud?.id || 'defaultUserId'; // Fallback for testing
-
-  const [message, setMessage] = React.useState('');
-  const [title, setTitle] = useState('');
-  const [textareasList, setTextareasList] = useState<TextareaPair[]>([]);
-  const navigate = useNavigate();
-
-  // Load data from localStorage on mount
-  useEffect(() => {
-    const storedStudySet = JSON.parse(localStorage.getItem('current_study_set') || '{}');
-    if (storedStudySet.title) {
-      setTitle(storedStudySet.title);
-      setTextareasList(storedStudySet.flashcards || []);
-    }
-  }, []);
-
-  const addTextareas = () => {
-    const newTextareaPair: TextareaPair = {
-      id: Date.now(),
-      textarea1: '',
-      textarea2: '',
+const ViewStudySetUI: React.FC<{
+    studySet?: {
+        id: string;
+        name: string;
+        flashcards: { id: string; term: string; definition: string }[];
+        isEditingName: boolean;
     };
-    setTextareasList((prev) => [...prev, newTextareaPair]);
-  };
+    isAddingFlashcard?: boolean;
+    setIsAddingFlashcard: (value: boolean) => void;
+    term: string;
+    setTerm: (value: string) => void;
+    definition: string;
+    setDefinition: (value: string) => void;
+    isCardView: boolean;
+    setIsCardView: (value: boolean) => void;
+    handleDeleteSet: () => void;
+    handleEditSetName: () => void;
+    handleSaveSetName: (newName: string) => void;
+    handleAddFlashcard: () => void;
+    handleDeleteFlashcard: (id: string) => void;
+    handleEditFlashcard: (id: string, newTerm: string, newDefinition: string) => void;
+}> = ({
+    studySet,
+    isAddingFlashcard = false,
+    setIsAddingFlashcard,
+    term,
+    setTerm,
+    definition,
+    setDefinition,
+    isCardView,
+    setIsCardView,
+    handleDeleteSet,
+    handleEditSetName,
+    handleSaveSetName,
+    handleAddFlashcard,
+    handleDeleteFlashcard,
+    handleEditFlashcard,
+}) => {
+    const [localStudySet, setLocalStudySet] = useState(() => studySet || null);
 
-  const handleTextareaChange = (
-    index: number,
-    field: 'textarea1' | 'textarea2',
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const updatedList = [...textareasList];
-    updatedList[index][field] = event.target.value;
-    setTextareasList(updatedList);
-  };
+    useEffect(() => {
+        if (!localStudySet) {
+            const storedSet = localStorage.getItem('current_study_set');
+            if (storedSet) {
+                setLocalStudySet(JSON.parse(storedSet));
+            }
+        }
+    }, [localStudySet]);
 
-  const autoResize = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    event.target.style.height = 'auto';
-    event.target.style.height = `${event.target.scrollHeight}px`;
-  };
-
-  async function handleSaveChanges(event: any): Promise<void> {
-    event.preventDefault();
-
-    console.log('Saving Study Set...');
-    console.log('Title:', title);
-    console.log('Flashcards:', textareasList);
-
-    const studySet = { userId, title, textareasList };
-
-    // Save to localStorage
-    localStorage.setItem('current_study_set', JSON.stringify(studySet));
-
-    // Simulate API call
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(studySet),
-    };
-
-    try {
-      const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
-
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.error || 'Addset failed');
-      }
-
-      const res = await response.json();
-      setMessage('Set saved successfully!');
-      setTimeout(() => navigate('/HomePage'), 2000);
-    } catch (error: any) {
-      console.error('Error during save:', error);
-      setMessage(error.message || 'Failed to save set. Please try again.');
+    if (!localStudySet) {
+        return <div>Loading...</div>;
     }
-  }
 
-  return (
-    <div className="study-set-container">
-      {/* Title Input Field */}
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="title-input"
-        placeholder="Enter Study Set Title"
-        aria-label="Study Set Title"
-      />
-
-      {/* Add Flashcards Button */}
-      <button
-        className="add-flash-card-button"
-        onClick={addTextareas}
-        aria-label="Add New Flash Card"
-      >
-        ADD NEW FLASHCARD
-      </button>
-
-      {/* Flashcards (Scrollable Section) */}
-      <div className="flashcards-container">
-        {textareasList.map((pair, index) => (
-          <div key={pair.id} className="flashcard">
-            <textarea
-              value={pair.textarea1}
-              onChange={(e) => handleTextareaChange(index, 'textarea1', e)}
-              onInput={autoResize}
-              className="input-bar-term"
-              placeholder="Enter Term"
-              aria-label="Enter Term"
-            />
-            <textarea
-              value={pair.textarea2}
-              onChange={(e) => handleTextareaChange(index, 'textarea2', e)}
-              onInput={autoResize}
-              className="input-bar-def"
-              placeholder="Enter Definition"
-              aria-label="Enter Definition"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Save Changes Button */}
-      <button
-        className="save-changes-button"
-        onClick={handleSaveChanges}
-        aria-label="Save Study Set"
-      >
-        SAVE STUDY SET
-      </button>
-
-      {/* Display Message */}
-      {message && <div className="message">{message}</div>}
-    </div>
-  );
-}
+    return (
+        <div className="study-set-page">
+            <div className="header">
+                <button
+                    className="home-button"
+                    onClick={() => (window.location.href = '/')}
+                >
+                    Home
+                </button>
+            </div>
+            <div className="study-set-header">
+                {localStudySet.isEditingName ? (
+                    <div className="edit-set-name">
+                        <input
+                            type="text"
+                            defaultValue={localStudySet.name}
+                            onBlur={(e) => handleSaveSetName(e.target.value)}
+                            autoFocus
+                        />
+                        <button onClick={() => handleEditSetName()}>Cancel</button>
+                    </div>
+                ) : (
+                    <h2>{localStudySet.name}</h2>
+                )}
+                <div className="header-buttons">
+                    <button onClick={handleEditSetName}>Edit</button>
+                    <button onClick={handleDeleteSet}>Delete</button>
+                </div>
+            </div>
+            <div className="actions">
+                <button onClick={() => setIsAddingFlashcard(true)}>Add</button>
+                <button onClick={() => setIsCardView(!isCardView)}>
+                    {isCardView ? 'List View' : 'Card View'}
+                </button>
+            </div>
+            {isAddingFlashcard && (
+                <div className="add-flashcard">
+                    <input
+                        type="text"
+                        placeholder="Term"
+                        value={term}
+                        onChange={(e) => setTerm(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Definition"
+                        value={definition}
+                        onChange={(e) => setDefinition(e.target.value)}
+                    />
+                    <button onClick={handleAddFlashcard}>Save</button>
+                    <button onClick={() => setIsAddingFlashcard(false)}>Cancel</button>
+                </div>
+            )}
+            <div className="flashcards">
+                {localStudySet.flashcards.map((card) => (
+                    <div
+                        className={`flashcard ${isCardView ? 'card-view' : ''}`}
+                        key={card.id}
+                    >
+                        {isCardView ? (
+                            <div className="card">
+                                <div className="card-front">{card.term}</div>
+                                <div className="card-back">{card.definition}</div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="term">{card.term}</div>
+                                <div className="definition">{card.definition}</div>
+                                <button
+                                    onClick={() =>
+                                        handleEditFlashcard(
+                                            card.id,
+                                            prompt('Edit Term:', card.term) || card.term,
+                                            prompt('Edit Definition:', card.definition) || card.definition
+                                        )
+                                    }
+                                >
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDeleteFlashcard(card.id)}>
+                                    Delete
+                                </button>
+                            </>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default ViewStudySetUI;

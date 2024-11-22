@@ -16,7 +16,6 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/homePage" element={<HomePage />} />
-        <Route path="/studySets" element={<StudySetsPage />} />
         <Route path="/newAccount" element={<CreateAccountPage />} />
         <Route path="/studySet/:id" element={<ViewStudySetPage />} />
         <Route path="/editStudySet" element={<EditStudySetPage />} />
