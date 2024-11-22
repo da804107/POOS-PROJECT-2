@@ -77,7 +77,7 @@ const HomePageUI: React.FC<{
                                         </div>
                                     ) : (
                                         <>
-                                            <a href={`/studyset/${set.id}`} className="set-name">
+                                            <a href={`/studySets/${set.id}`} className="set-name">
                                                 {set.name}
                                             </a>
                                             <div className="right">

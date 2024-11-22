@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/homePage" element={<HomePage />} />
-        <Route path="/studySets:id" element={<StudySetsPageWrapper />} />
+        <Route path="/studySets/:id" element={<StudySetsPageWrapper />} />
         <Route path="/newAccount" element={<CreateAccountPage />} />
         <Route path="/newStudySet" element={<NewStudySetPage />} />
         <Route path="/editStudySet" element={<EditStudySetPage />} />
