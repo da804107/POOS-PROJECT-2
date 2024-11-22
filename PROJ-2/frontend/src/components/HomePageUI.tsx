@@ -90,7 +90,7 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
                                         onBlur={e => handleEditSave(set.id, e.target.value)}
                                     />
                                     <button
-                                        className="buttons save-button"
+                                        className="editSetSaveButton"
                                         onClick={() => handleEditSave(set.id, set.name)}
                                     >
                                         SAVE

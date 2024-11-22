@@ -51,7 +51,6 @@
   border-radius: 20px;
   cursor: pointer;
   transition: 0.15s;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 #addStudySetButton:hover {
@@ -74,7 +73,6 @@
   padding: 10px;
   border: 2px solid #5021a0;
   border-radius: 8px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 #addNewSetDiv input {
@@ -142,7 +140,6 @@
   border: 2px solid #5021a0;
   border-radius: 8px;
   background-color: #2b2439;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.2);
 }
 
 #studySetList {
@@ -165,7 +162,6 @@
   margin-right: 10px;
   margin-left: 10px;
   text-align: left;
-  font-size: 16px;
 }
 
 .setActions {
@@ -206,4 +202,51 @@
 
 .delete-button:active {
   background-color: #ff4c4c;
+}
+
+.edit-button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  
+}
+
+.editSetDiv {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.editSetInput {
+  background-color: transparent;
+  color: white;
+  border: 2px solid #5021a0;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 12px;
+  flex-grow: 0.5;
+}
+
+.editSetInput:focus {
+  outline: none;
+  border-color: #5e27a2;
+}
+
+.editSetSaveButton {
+  background-color: #5021a0;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.15s;
+  border: none;
+  margin-left: 275px;
+}
+
+.editSetSaveButton:hover {
+  background-color: #5e27a2;
+}
+
+.editSetSaveButton:active {
+  background-color: #6b2da4;
 }
