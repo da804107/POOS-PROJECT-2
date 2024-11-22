@@ -5,8 +5,10 @@
 }
 
 #searchBarContainer {
+  width: 100%;
+  max-width: 550px;
   position: absolute;
-  top: 240px; 
+  top: 220px; 
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -23,7 +25,6 @@
   padding: 10px;
   font-size: 16px;
   width: 100%;
-  max-width: 400px;
   box-sizing: border-box;
   margin-bottom: 20px;
   font: monospace;
@@ -63,7 +64,7 @@
 
 #addNewSetDiv {
   position: absolute;
-  top: 360px;
+  top: 340px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -80,6 +81,7 @@
   background-color: transparent;
   color: white;
   border: 2px solid #5021a0;
+  font-size: 16px;
   border-radius: 8px;
   padding: 10px;
   width: 300px;
@@ -130,7 +132,7 @@
 
 #studySetListDiv {
   position: absolute;
-  top: 430px;
+  top: 420px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -163,6 +165,7 @@
   margin-right: 10px;
   margin-left: 10px;
   text-align: left;
+  font-size: 16px;
 }
 
 .setActions {
