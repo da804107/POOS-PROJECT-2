@@ -13,14 +13,6 @@
     box-sizing: border-box;
 }
 
-.header {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    padding: 10px 20px;
-    box-sizing: border-box;
-}
-
 .home-button {
     background-color: #5021a0;
     color: white;
@@ -29,7 +21,10 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    top: -70px; 
 }
 
 .home-button:hover {
@@ -80,7 +75,6 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .header-buttons button:hover {
@@ -106,7 +100,6 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .actions button:hover {
@@ -145,7 +138,6 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .add-flashcard button:hover {
@@ -166,7 +158,6 @@
     background-color: #2b2439;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     max-height: 400px;
 }
@@ -181,7 +172,6 @@
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .flashcard .term,
@@ -215,7 +205,6 @@
     font-size: 14px;
     cursor: pointer;
     margin-top: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .flashcard button:hover {
