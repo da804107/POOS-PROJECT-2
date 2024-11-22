@@ -129,12 +129,14 @@
 }
 
 #studySetListDiv {
-  margin-top: 30px;
-  display: block;
-  overflow: auto;
-  max-height: 400px;
+  position: absolute;
+  top: 430px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
-  max-width: 500px;
+  max-width: 1000px; 
+  height: calc(100vh - 450px);
+  overflow-y: auto;
   border: 2px solid #5021a0;
   border-radius: 8px;
   background-color: #2b2439;
@@ -153,7 +155,6 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #5021a0;
-  padding: 10px;
   color: white;
 }
 
