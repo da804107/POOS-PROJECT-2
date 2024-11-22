@@ -134,17 +134,21 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #5021a0;
+  padding: 10px;
   color: white;
 }
 
 .setName {
   color: white;
+  margin-right: 10px;
+  margin-left: 10px;
   text-align: left;
 }
 
 .setActions {
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  margin-right: 10px;
 }
 
 .view-button {
