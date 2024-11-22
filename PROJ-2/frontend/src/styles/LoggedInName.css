@@ -3,10 +3,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  position: absolute; /* Positioning this container explicitly */
-  top: 100px; /* Adjust this value based on the height of your title */
+  position: absolute;
+  top: 100px;
   left: 50%;
-  transform: translateX(-50%); /* Center the container horizontally */
+  transform: translateX(-50%);
   text-align: center;
 }
 
