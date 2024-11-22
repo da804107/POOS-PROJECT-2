@@ -23,8 +23,10 @@
     cursor: pointer;
     text-align: center;
     margin: 0 auto;
-    position: relative;
-    top: -70px; 
+    position: absolute;
+    top: 100px; 
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .home-button:hover {
