@@ -1,34 +1,30 @@
-
+/* Placeholder Style */
 ::placeholder {
     opacity: 1;
     color: #B0B0B0;
 }
 
+/* Study Set Page Layout */
 .study-set-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
     padding: 20px;
-    gap: 20px;
-    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
+/* Home Button */
 .home-button {
     background-color: #5021a0;
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
+    border-radius: 20px;
+    padding: 12px 24px;
     font-size: 16px;
     cursor: pointer;
-    text-align: center;
-    margin: 0 auto;
     position: absolute;
-    top: 105px; 
+    top: 105px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 8px 16px;
-    border-radius: 20px;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .home-button:hover {
@@ -39,6 +35,7 @@
     background-color: #6b2da4;
 }
 
+/* Study Set Header */
 .study-set-header {
     position: absolute;
     top: 160px;
@@ -47,48 +44,79 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
     width: 100%;
     max-width: 800px;
+    gap: 10px;
 }
-
 
 .study-set-header h2 {
     font-size: 30px;
-    margin: 0;
     color: white;
+    margin: 0;
 }
 
+/* Editable Set Name */
 .edit-set-name input {
     background-color: transparent;
-    border: 2px solid white;
+    border: 2px solid #5021a0;
     border-radius: 8px;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
     padding: 10px;
-    width: 100%;
-    max-width: 500px;
+    width: 300px;
     outline: none;
+    text-align: center;
 }
 
+.edit-set-name input:focus {
+    border-color: #5e27a2;
+}
+
+/* Actions Section */
 .actions {
     display: flex;
     gap: 10px;
     justify-content: center;
-    align-items: center;
-    margin-top: -80px;
     margin-bottom: 20px;
     flex-wrap: wrap;
+    position: relative; /* Ensure proper stacking */
+    z-index: 10; /* Keep actions above other content */
+    margin-top: -50px; /* Adjust to move the buttons above the flashcards */
+    padding: 10px; /* Add padding for extra spacing */
 }
+
+/* Flashcards Section */
+.flashcards {
+    position: absolute;
+    top: 460px; /* Adjust position to leave space for action buttons */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    height: calc(100vh - 500px); /* Adjust height to accommodate actions */
+    overflow-y: auto;
+    background-color: #2b2439;
+    padding: 20px;
+    border: 2px solid #5021a0;
+    border-radius: 8px;
+    z-index: 5; /* Ensure flashcards are below actions */
+}
+
+
 
 .actions button {
     background-color: #5021a0;
     color: white;
-    border: none;
     font-size: 16px;
-    cursor: pointer;
-    padding: 8px 16px;
+    border: none;
+    padding: 12px 24px;
     border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .actions button:hover {
@@ -99,13 +127,22 @@
     background-color: #6b2da4;
 }
 
+/* Add Flashcard Section */
 .add-flashcard {
+    position: absolute;
+    top: 340px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
     width: 100%;
     max-width: 600px;
+    background-color: #2b2439;
+    padding: 20px;
+    border: 2px solid #5021a0;
+    border-radius: 8px;
 }
 
 .add-flashcard input {
@@ -115,7 +152,7 @@
     border-radius: 8px;
     padding: 10px;
     font-size: 16px;
-    width: 100%;
+    width: 300px;
     outline: none;
 }
 
@@ -127,6 +164,7 @@
     border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .add-flashcard button:hover {
@@ -137,28 +175,15 @@
     background-color: #6b2da4;
 }
 
-.flashcards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 800px;
-    background-color: #2b2439;
-    padding: 20px;
-    border-radius: 8px;
-    overflow-y: auto;
-    max-height: 400px;
-}
+
 
 .flashcard {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: #2b2439;
-    border: 2px solid #5021a0;
-    border-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
+    border-bottom: 1px solid #5021a0;
+    color: white;
     width: 100%;
     box-sizing: border-box;
 }
@@ -170,21 +195,6 @@
     margin-bottom: 5px;
 }
 
-.flashcard .card {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.flashcard .card-front,
-.flashcard .card-back {
-    background-color: #5021a0;
-    color: white;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-}
-
 .flashcard button {
     background-color: #5021a0;
     color: white;
@@ -194,6 +204,7 @@
     font-size: 14px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .flashcard button:hover {

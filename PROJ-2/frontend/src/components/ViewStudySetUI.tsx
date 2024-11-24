@@ -61,7 +61,7 @@ const ViewStudySetUI: React.FC<{
                     className="home-button"
                     onClick={() => (window.location.href = '/homePage')}
                 >
-                    Home
+                    HOME
                 </button>
             </div>
             <div className="study-set-header">
@@ -73,18 +73,18 @@ const ViewStudySetUI: React.FC<{
                             onBlur={(e) => handleSaveSetName(e.target.value)}
                             autoFocus
                         />
-                        <button onClick={() => handleEditSetName()}>Cancel</button>
+                        <button onClick={() => handleEditSetName()}>CANCEL</button>
                     </div>
                 ) : (
                     <h2>{localStudySet.name}</h2>
                 )}
             </div>
             <div className="actions">
-                {/*<button onClick={handleEditSetName}>Edit</button>
-                <button onClick={handleDeleteSet}>Delete</button>*/}
-                <button onClick={() => setIsAddingFlashcard(true)}>Add</button>
+                {/*<button onClick={handleEditSetName}>EDIT</button>
+                <button onClick={handleDeleteSet}>DELETE</button>*/}
+                <button onClick={() => setIsAddingFlashcard(true)}>ADD</button>
                 <button onClick={() => setIsCardView(!isCardView)}>
-                    {isCardView ? 'List View' : 'Card View'}
+                    {isCardView ? 'LIST VIEW' : 'CARD VIEW'}
                 </button>
             </div>
             {isAddingFlashcard && (
@@ -102,7 +102,7 @@ const ViewStudySetUI: React.FC<{
                         onChange={(e) => setDefinition(e.target.value)}
                     />
                     <button onClick={handleAddFlashcard}>Save</button>
-                    <button onClick={() => setIsAddingFlashcard(false)}>Cancel</button>
+                    <button onClick={() => setIsAddingFlashcard(false)}>CANCEL</button>
                 </div>
             )}
             <div className="flashcards">
@@ -129,10 +129,10 @@ const ViewStudySetUI: React.FC<{
                                         )
                                     }
                                 >
-                                    Edit
+                                    EDIT
                                 </button>
                                 <button onClick={() => handleDeleteFlashcard(card.id)}>
-                                    Delete
+                                    DELETE
                                 </button>
                             </>
                         )}
