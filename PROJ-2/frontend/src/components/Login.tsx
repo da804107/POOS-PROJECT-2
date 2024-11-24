@@ -52,17 +52,14 @@ function Login() {
   }
 };
 
-  // Track changes in the login name input
   function handleSetLoginName(e: React.ChangeEvent<HTMLInputElement>): void {
     setLoginName(e.target.value);
   }
 
-  // Track changes in the password input
   function handleSetPassword(e: React.ChangeEvent<HTMLInputElement>): void {
     setLoginPassword(e.target.value);
   }
 
-  // Navigate to create account page
   function doCreateAccount(): void {
     navigate('/newAccount');
   }
