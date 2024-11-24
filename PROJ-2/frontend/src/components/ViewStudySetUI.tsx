@@ -101,8 +101,10 @@ const ViewStudySetUI: React.FC<{
                         value={definition}
                         onChange={(e) => setDefinition(e.target.value)}
                     />
-                    <button onClick={handleAddFlashcard}>Save</button>
-                    <button onClick={() => setIsAddingFlashcard(false)}>CANCEL</button>
+                    <div className="add-card-buttons">
+                        <button onClick={handleAddFlashcard}>SAVE</button>
+                        <button onClick={() => setIsAddingFlashcard(false)}>CANCEL</button>
+                    </div>
                 </div>
             )}
             <div className="flashcards">
