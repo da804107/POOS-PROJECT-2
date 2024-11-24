@@ -1,17 +1,14 @@
-/* Placeholder Style */
 ::placeholder {
     opacity: 1;
     color: #B0B0B0;
 }
 
-/* Study Set Page Layout */
 .study-set-page {
     text-align: center;
     padding: 20px;
     font-family: Arial, sans-serif;
 }
 
-/* Home Button */
 .home-button {
     background-color: #5021a0;
     color: white;
@@ -35,7 +32,6 @@
     background-color: #6b2da4;
 }
 
-/* Study Set Header */
 .study-set-header {
     position: absolute;
     top: 160px;
@@ -55,7 +51,6 @@
     margin: 0;
 }
 
-/* Editable Set Name */
 .edit-set-name input {
     background-color: transparent;
     border: 2px solid #5021a0;
@@ -72,23 +67,21 @@
     border-color: #5e27a2;
 }
 
-/* Actions Section */
 .actions {
     display: flex;
     gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    position: relative; /* Ensure proper stacking */
-    z-index: 10; /* Keep actions above other content */
-    margin-top: -50px; /* Adjust to move the buttons above the flashcards */
-    padding: 10px; /* Add padding for extra spacing */
+    position: relative;
+    z-index: 10;
+    margin-top: -50px;
+    padding: 10px;
 }
 
-/* Flashcards Section */
 .flashcards {
     position: absolute;
-    top: 460px; /* Adjust position to leave space for action buttons */
+    top: 460px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -97,16 +90,14 @@
     gap: 10px;
     width: 100%;
     max-width: 800px;
-    height: calc(100vh - 500px); /* Adjust height to accommodate actions */
+    height: calc(100vh - 500px);
     overflow-y: auto;
     background-color: #2b2439;
     padding: 20px;
     border: 2px solid #5021a0;
     border-radius: 8px;
-    z-index: 5; /* Ensure flashcards are below actions */
+    z-index: 5;
 }
-
-
 
 .actions button {
     background-color: #5021a0;
@@ -127,7 +118,6 @@
     background-color: #6b2da4;
 }
 
-/* Add Flashcard Section */
 .add-flashcard {
     position: absolute;
     top: 340px;
@@ -174,8 +164,6 @@
 .add-flashcard button:active {
     background-color: #6b2da4;
 }
-
-
 
 .flashcard {
     display: flex;
