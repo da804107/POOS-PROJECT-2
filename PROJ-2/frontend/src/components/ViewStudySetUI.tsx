@@ -122,20 +122,22 @@ const ViewStudySetUI: React.FC<{
                             <>
                                 <div className="term">{card.term}</div>
                                 <div className="definition">{card.definition}</div>
-                                <button
-                                    onClick={() =>
-                                        handleEditFlashcard(
-                                            card.id,
-                                            prompt('Edit Term:', card.term) || card.term,
-                                            prompt('Edit Definition:', card.definition) || card.definition
-                                        )
-                                    }
-                                >
-                                    EDIT
-                                </button>
-                                <button onClick={() => handleDeleteFlashcard(card.id)}>
-                                    DELETE
-                                </button>
+                                <div className="flashcard-buttons">
+                                    <button
+                                        onClick={() =>
+                                            handleEditFlashcard(
+                                                card.id,
+                                                prompt('Edit Term:', card.term) || card.term,
+                                                prompt('Edit Definition:', card.definition) || card.definition
+                                            )
+                                        }
+                                    >
+                                        EDIT
+                                    </button>
+                                    <button onClick={() => handleDeleteFlashcard(card.id)}>
+                                        DELETE
+                                    </button>
+                                </div>
                             </>
                         )}
                     </div>
