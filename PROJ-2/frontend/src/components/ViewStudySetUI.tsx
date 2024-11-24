@@ -80,8 +80,8 @@ const ViewStudySetUI: React.FC<{
                 )}
             </div>
             <div className="actions">
-                <button onClick={handleEditSetName}>Edit</button>
-                <button onClick={handleDeleteSet}>Delete</button>
+                {/*<button onClick={handleEditSetName}>Edit</button>
+                <button onClick={handleDeleteSet}>Delete</button>*/}
                 <button onClick={() => setIsAddingFlashcard(true)}>Add</button>
                 <button onClick={() => setIsCardView(!isCardView)}>
                     {isCardView ? 'List View' : 'Card View'}
