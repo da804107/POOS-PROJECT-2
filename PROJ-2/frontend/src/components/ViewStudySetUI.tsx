@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import '../styles/ViewStudySetUI.css';
+import React, { useEffect, useState } from 'react';
 
 const ViewStudySetUI: React.FC<{
     studySet?: {
@@ -81,7 +81,19 @@ const ViewStudySetUI: React.FC<{
                 </button>
             </div>
             <div className="study-set-header">
-                <h2>{localStudySet.name}</h2>
+                {localStudySet.isEditingName ? (
+                    <div className="edit-set-name">
+                        <input
+                            type="text"
+                            defaultValue={localStudySet.name}
+                            onBlur={(e) => handleSaveSetName(e.target.value)}
+                            autoFocus
+                        />
+                        <button onClick={() => handleEditSetName()}>CANCEL</button>
+                    </div>
+                ) : (
+                    <h2>{localStudySet.name}</h2>
+                )}
             </div>
             <div className="actions">
                 <button onClick={() => setIsAddingFlashcard(true)}>ADD</button>
@@ -89,6 +101,26 @@ const ViewStudySetUI: React.FC<{
                     {isCardView ? 'LIST VIEW' : 'CARD VIEW'}
                 </button>
             </div>
+            {isAddingFlashcard && (
+                <div className="add-flashcard">
+                    <input
+                        type="text"
+                        placeholder="Term"
+                        value={term}
+                        onChange={(e) => setTerm(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Definition"
+                        value={definition}
+                        onChange={(e) => setDefinition(e.target.value)}
+                    />
+                    <div className="add-card-buttons">
+                        <button onClick={handleAddFlashcard}>SAVE</button>
+                        <button onClick={() => setIsAddingFlashcard(false)}>CANCEL</button>
+                    </div>
+                </div>
+            )}
             {isCardView && currentCard ? (
                 <div>
                     <div
@@ -106,17 +138,35 @@ const ViewStudySetUI: React.FC<{
                     </div>
                 </div>
             ) : (
-                <div className="flashcards">
-                    {localStudySet.flashcards.map((card) => (
-                        <div className="flashcard" key={card.id}>
-                            <div className="term">{card.term}</div>
-                            <div className="definition">{card.definition}</div>
-                        </div>
-                    ))}
-                </div>
+                !isCardView && (
+                    <div className="flashcards">
+                        {localStudySet.flashcards.map((card) => (
+                            <div className="flashcard" key={card.id}>
+                                <div className="term">{card.term}</div>
+                                <div className="definition">{card.definition}</div>
+                                <div className="flashcard-buttons">
+                                    <button
+                                        onClick={() =>
+                                            handleEditFlashcard(
+                                                card.id,
+                                                prompt('Edit Term:', card.term) || card.term,
+                                                prompt('Edit Definition:', card.definition) || card.definition
+                                            )
+                                        }
+                                    >
+                                        EDIT
+                                    </button>
+                                    <button onClick={() => handleDeleteFlashcard(card.id)}>
+                                        DELETE
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
             )}
         </div>
-    );
+    );    
 };
 
 export default ViewStudySetUI;
