@@ -1,5 +1,5 @@
-import '../styles/ViewStudySetUI.css';
 import React, { useEffect, useState } from 'react';
+import '../styles/ViewStudySetUI.css';
 
 const ViewStudySetUI: React.FC<{
     studySet?: {
@@ -40,6 +40,8 @@ const ViewStudySetUI: React.FC<{
     handleEditFlashcard,
 }) => {
     const [localStudySet, setLocalStudySet] = useState(() => studySet || null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     useEffect(() => {
         if (!localStudySet) {
@@ -54,6 +56,20 @@ const ViewStudySetUI: React.FC<{
         return <div>Loading...</div>;
     }
 
+    const currentCard = localStudySet.flashcards[currentIndex];
+
+    const handleNextCard = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) => (prev + 1) % localStudySet.flashcards.length);
+    };
+
+    const handlePreviousCard = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) =>
+            (prev - 1 + localStudySet.flashcards.length) % localStudySet.flashcards.length
+        );
+    };
+
     return (
         <div className="study-set-page">
             <div className="header">
@@ -65,84 +81,40 @@ const ViewStudySetUI: React.FC<{
                 </button>
             </div>
             <div className="study-set-header">
-                {localStudySet.isEditingName ? (
-                    <div className="edit-set-name">
-                        <input
-                            type="text"
-                            defaultValue={localStudySet.name}
-                            onBlur={(e) => handleSaveSetName(e.target.value)}
-                            autoFocus
-                        />
-                        <button onClick={() => handleEditSetName()}>CANCEL</button>
-                    </div>
-                ) : (
-                    <h2>{localStudySet.name}</h2>
-                )}
+                <h2>{localStudySet.name}</h2>
             </div>
             <div className="actions">
-                {/*<button onClick={handleEditSetName}>EDIT</button>
-                <button onClick={handleDeleteSet}>DELETE</button>*/}
                 <button onClick={() => setIsAddingFlashcard(true)}>ADD</button>
                 <button onClick={() => setIsCardView(!isCardView)}>
                     {isCardView ? 'LIST VIEW' : 'CARD VIEW'}
                 </button>
             </div>
-            {isAddingFlashcard && (
-                <div className="add-flashcard">
-                    <input
-                        type="text"
-                        placeholder="Term"
-                        value={term}
-                        onChange={(e) => setTerm(e.target.value)}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Definition"
-                        value={definition}
-                        onChange={(e) => setDefinition(e.target.value)}
-                    />
-                    <div className="add-card-buttons">
-                        <button onClick={handleAddFlashcard}>SAVE</button>
-                        <button onClick={() => setIsAddingFlashcard(false)}>CANCEL</button>
+            {isCardView && currentCard ? (
+                <div>
+                    <div
+                        className={`card ${isFlipped ? 'flipped' : ''}`}
+                        onClick={() => setIsFlipped(!isFlipped)}
+                    >
+                        <div className="card-inner">
+                            <div className="card-front">{currentCard.term}</div>
+                            <div className="card-back">{currentCard.definition}</div>
+                        </div>
+                    </div>
+                    <div className="card-buttons">
+                        <button onClick={handlePreviousCard}>PREVIOUS</button>
+                        <button onClick={handleNextCard}>NEXT</button>
                     </div>
                 </div>
+            ) : (
+                <div className="flashcards">
+                    {localStudySet.flashcards.map((card) => (
+                        <div className="flashcard" key={card.id}>
+                            <div className="term">{card.term}</div>
+                            <div className="definition">{card.definition}</div>
+                        </div>
+                    ))}
+                </div>
             )}
-            <div className="flashcards">
-                {localStudySet.flashcards.map((card) => (
-                    <div
-                        className={`flashcard ${isCardView ? 'card-view' : ''}`}
-                        key={card.id}
-                    >
-                        {isCardView ? (
-                            <div className="card">
-                                <div className="card-front">{card.term}</div>
-                                <div className="card-back">{card.definition}</div>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="term">{card.term}</div>
-                                <div className="definition">{card.definition}</div>
-                                <div className="flashcard-buttons">
-                                    <button
-                                        onClick={() =>
-                                            handleEditFlashcard(
-                                                card.id,
-                                                prompt('Edit Term:', card.term) || card.term,
-                                                prompt('Edit Definition:', card.definition) || card.definition
-                                            )
-                                        }
-                                    >
-                                        EDIT
-                                    </button>
-                                    <button onClick={() => handleDeleteFlashcard(card.id)}>
-                                        DELETE
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                ))}
-            </div>
         </div>
     );
 };
