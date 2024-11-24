@@ -34,7 +34,7 @@
 
 .study-set-header {
     position: absolute;
-    top: 160px;
+    top: 157px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -68,15 +68,17 @@
 }
 
 .actions {
+    position: absolute;
+    top: 220px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: 10px;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 10;
-    margin-top: -50px;
-    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    gap: 10px;
 }
 
 .flashcards {
