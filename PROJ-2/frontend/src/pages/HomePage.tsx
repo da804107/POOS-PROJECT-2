@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(set),
+            body: JSON.stringify(newSet),
         };
 
         try {
