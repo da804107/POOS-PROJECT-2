@@ -107,7 +107,7 @@ app.post('/api/login', async (req, res, next) => {
 app.post('/api/addset', async (req, res, next) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const newSet = { SetName: title, UserId: userId, Flashcards: textareasList };
+    const newSet = { SetName: title, UserId: userId, Flashcards: null };
     console.log(newSet);
     let error = '';
     try {
