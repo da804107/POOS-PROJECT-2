@@ -11,14 +11,44 @@ const HomePage: React.FC = () => {
 
     const handleAddSet = () => setIsAdding(true);
 
-    const handleSaveSet = () => {
+// Made changes to call the api, going to test , might revert
+
+    const handleSaveSet = async () => {
         if (newSetName.trim()) {
             const newSet = { id: Date.now().toString(), name: newSetName, isEditing: false };
+            try {
+            await doAddSet(newSet);
             setStudySets([...studySets, newSet]);
             setNewSetName('');
             setIsAdding(false);
+            } catch (error) {
+                console.error('Failed to add set', error);
+            }
         }
     };
+
+    async function doAddSet(set: { id: string; name: string; isEditing: boolean; }): Promise<void> {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(set),
+        };
+
+        try {
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
+
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Error adding set');
+            }
+
+        } catch(error : any) {
+            console.error('Error during add set');
+            throw error;
+        }
+    };
+
+    
 
     const handleDeleteSet = (id: string) => {
         setStudySets(studySets.filter(set => set.id !== id));
