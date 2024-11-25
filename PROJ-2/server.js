@@ -107,12 +107,12 @@ app.post('/api/login', async (req, res, next) => {
 app.post('/api/addset', async (req, res, next) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const newSet = { SetName: title, UserId: userId, Flashcards: null };
-    console.log(newSet);
+    const set = { SetName: title, UserId: userId, Flashcards: null };
+    console.log(set);
     let error = '';
     try {
         const db = client.db('project');
-        await db.collection('StudySets').insertOne(newSet);
+        await db.collection('StudySets').insertOne(set);
     } catch (e) {
         error = e.toString();
     }
