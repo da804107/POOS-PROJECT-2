@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
         }
     };
 
-    async function doAddSet(set: { userId: string; title: string; isEditing: boolean; }): Promise<void> {
+    async function doAddSet(set: { id: string; name: string; isEditing: boolean; }): Promise<void> {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
