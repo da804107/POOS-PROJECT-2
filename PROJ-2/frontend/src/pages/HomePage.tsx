@@ -10,6 +10,8 @@ const HomePage: React.FC = () => {
     const [newSetName, setNewSetName] = useState('');
 
     const handleAddSet = () => setIsAdding(true);
+    let _ud: any = localStorage.getItem('user_data');
+    let ud = JSON.parse(_ud);
 
 // Made changes to call the api, going to test , might revert
 
@@ -33,7 +35,7 @@ const HomePage: React.FC = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(set),
         };
-        console.log(userId);
+        console.log(ud.userId);
         try {
             const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
 
