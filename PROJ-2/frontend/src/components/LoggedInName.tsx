@@ -9,6 +9,7 @@ function LoggedInName(){
     var userId = ud.id;
     var firstName = ud.firstName;
     var lastName = ud.lastName;
+    console.log(ud);
 
     const navigate = useNavigate();
 
