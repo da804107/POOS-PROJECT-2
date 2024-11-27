@@ -38,8 +38,7 @@ function Login() {
       setMessage('User/Password combination incorrect');
     } else {
       var user = {
-        firstName: res.firstName,
-        lastName: res.lastName,
+        firstName: res.username,
         id: res.id
       }
       localStorage.setItem('user_data', JSON.stringify(user));
