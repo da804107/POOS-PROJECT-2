@@ -75,8 +75,7 @@ app.post('/api/login', async (req, res, next) => {
 
         if (results.length > 0) {
             id = results[0].UserId;
-            fn = results[0].FirstName || '';
-            ln = results[0].LastName || '';
+            fn = results[0].Username || '';
         } else {
             error = 'Wrong username/password';
         }
@@ -84,7 +83,7 @@ app.post('/api/login', async (req, res, next) => {
         error = e.toString();
     }
 
-    res.status(200).json({ id, firstName: fn, lastName: ln, error });
+    res.status(200).json({ id, username: fn, error });
 });
 
 // Add Card to Study Set
