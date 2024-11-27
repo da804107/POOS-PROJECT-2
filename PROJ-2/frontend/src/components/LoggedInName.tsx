@@ -7,8 +7,7 @@ function LoggedInName(){
     if (_ud == null) _ud = "";
     var ud = JSON.parse(_ud);
     var userId = ud.id;
-    var firstName = ud.firstName;
-    var lastName = ud.lastName;
+    var firstName = ud.username;
     console.log(ud);
 
     const navigate = useNavigate();
