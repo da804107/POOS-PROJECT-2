@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(set),
         };
-
+        console.log(userId);
         try {
             const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
 
