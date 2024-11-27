@@ -12,6 +12,7 @@ const HomePage: React.FC = () => {
     const handleAddSet = () => setIsAdding(true);
     let _ud: any = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
+    let Id: string = ud.userId;
 
 // Made changes to call the api, going to test , might revert
 
@@ -35,9 +36,7 @@ const HomePage: React.FC = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(set),
         };
-        
-        let Id: string = ud.userId;
-        console.log(Id);
+
         try {
             const response = await fetch('https://project.annetteisabrunette.xyz/api/addset', requestOptions);
 
