@@ -6,7 +6,7 @@ function LoggedInName(){
     var _ud = localStorage.getItem('user_data');
     if (_ud == null) _ud = "";
     var ud = JSON.parse(_ud);
-    var UserId = ud.id;
+    var userId = ud.id;
     var firstName = ud.firstName;
     var lastName = ud.lastName;
 
