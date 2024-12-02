@@ -160,6 +160,25 @@ app.post('/api/searchcards', async (req, res, next) => {
     res.status(200).json({ results: _ret, error });
 });
 
+app.post('/api/loadsets', async (req, res, next) => {
+    const { userId } = req.body;
+    let error = '';
+    let _ret = [];
+
+    try {
+        const db = client.db('project');
+        const results = await db.collection('StudySets').find({ UserId: userId }).toArray();
+
+        for (let i = 0; i < results.length; i++) {
+            _ret.push(results[i]);
+        }
+    } catch (e) {
+        error = e.toString();
+    }
+    
+    res.status(200).json({ results: _ret, error });
+});
+
 // Start the Server
 app.listen(5000, () => {
     console.log('Server is running on http://localhost:5000');
