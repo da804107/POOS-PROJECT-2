@@ -1,5 +1,5 @@
 import '../styles/HomePageUI.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface HomePageUIProps {
@@ -32,6 +32,10 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
     setIsAdding,
 }) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        loadSets();
+    }, [loadSets]);
 
     return (
         <div id="homepageUIDiv">
