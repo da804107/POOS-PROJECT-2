@@ -162,7 +162,7 @@ app.post('/api/searchcards', async (req, res, next) => {
 
 app.post('/api/loadsets', async (req, res, next) => {
     const { userId } = req.body;
-    console.log(req.body);
+    console.log(userId);
     let error = '';
     let _ret = [];
 
