@@ -18,8 +18,8 @@
   }
   
   #logoutButton {
-    background-color: #5021a0;
-    color: white;
+    background-color: transparent;
+    color: #FF0000;
     font: monospace;
     font-size: 16px;
     font-weight: normal;
@@ -32,12 +32,13 @@
   }
   
   #logoutButton:hover {
-    background-color: #5e27a2;
+    background-color: transparent;
+    color: 
     transition: 0.15s;
   }
   
   #logoutButton:active {
-    background-color: #6b2da4;
+    background-color: #AF0000;
     transition: 0.15s;
   }
   
