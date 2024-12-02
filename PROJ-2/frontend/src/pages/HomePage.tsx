@@ -23,13 +23,15 @@ const HomePage: React.FC = () => {
 
     
     const handleLoad = async () => {
+        const userId = Id;
+        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ Id }),
+            body: JSON.stringify({ userId }),
         };
         try {
-            console.log(Id);
+            console.log(userId);
             const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
             if(!response.ok) {
                 throw new Error('Failed to fetch sets');
