@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
 
     const handleSaveSet = async () => {
         if (newSetName.trim()) {
-            const newSet = { userId: Id, title: newSetName, isEditing: false};
+            const newSet = { id: Id, name: newSetName, isEditing: false};
             try {
             await doAddSet(newSet);
             setStudySets([...studySets, newSet]);
