@@ -34,10 +34,11 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
     handleLoad,
 }) => {
     const navigate = useNavigate();
-
+    /*
     useEffect(() => {
         handleLoad();
     }, [handleLoad]);
+    */
 
     return (
         <div id="homepageUIDiv">
