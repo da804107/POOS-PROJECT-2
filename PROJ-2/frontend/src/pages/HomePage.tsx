@@ -111,7 +111,7 @@ const HomePage: React.FC = () => {
                 handleEditToggle={handleEditToggle}
                 handleEditSave={handleEditSave}
                 setIsAdding={setIsAdding}
-                loadSets={loadSets}
+                handleLoad={handleLoad}
             />
         </div>
     );
