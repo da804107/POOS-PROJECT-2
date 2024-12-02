@@ -10,8 +10,8 @@
 }
 
 .home-button {
-    background-color: #5021a0;
-    color: white;
+    background-color: transparent;
+    color: D80101;
     border: none;
     border-radius: 20px;
     padding: 12px 24px;
@@ -25,11 +25,13 @@
 }
 
 .home-button:hover {
-    background-color: #5e27a2;
+    background-color: #CA7E19;
+    color: white;
 }
 
 .home-button:active {
-    background-color: #6b2da4;
+    background-color: #9E600C;
+    color: white;
 }
 
 .add-flashcard {
@@ -128,8 +130,8 @@
 }
 
 .actions button {
-    background-color: #5021a0;
-    color: white;
+    background-color: transparent;
+    color: FFB835;
     font-size: 16px;
     border: none;
     padding: 12px 24px;
@@ -139,11 +141,13 @@
 }
 
 .actions button:hover {
-    background-color: #5e27a2;
+    background-color: #CA7E19;
+    color: white;
 }
 
 .actions button:active {
-    background-color: #6b2da4;
+    background-color: #9E600C;
+    color: white;
 }
 
 .add-flashcard input {
@@ -158,7 +162,7 @@
 }
 
 .add-flashcard button {
-    background-color: #5021a0;
+    background-color: #FFB835;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -169,11 +173,11 @@
 }
 
 .add-flashcard button:hover {
-    background-color: #5e27a2;
+    background-color: #CA7E19;
 }
 
 .add-flashcard button:active {
-    background-color: #6b2da4;
+    background-color: #9E600C;
 }
 
 .flashcard {
@@ -276,7 +280,7 @@
 }
 
 .card-buttons button {
-    background-color: #5021a0;
+    background-color: #FFB835;
     color: white;
     font-size: 16px;
     border: none;
@@ -287,9 +291,9 @@
 }
 
 .card-buttons button:hover {
-    background-color: #5e27a2;
+    background-color: #CA7E19;
 }
 
 .card-buttons button:active {
-    background-color: #6b2da4;
+    background-color: #9E600C;
 }
