@@ -15,6 +15,25 @@ const HomePage: React.FC = () => {
     let Id: string = ud.userId;
 
 // Made changes to call the api, going to test , might revert
+    const handleLoad = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ Id }),
+        };
+        try {
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
+            if(!response.ok) {
+                throw new Error('Failed to fetch sets');
+            }
+            const newSets = await response.json();
+                
+            setStudySets(prevStudySets => [...prevStudySets, ...newSets]);
+            
+        } catch (error) {
+            console.error('Failed to load sets', error);
+        }
+    }
 
     const handleSaveSet = async () => {
         if (newSetName.trim()) {
