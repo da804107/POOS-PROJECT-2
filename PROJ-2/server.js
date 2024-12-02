@@ -169,8 +169,7 @@ app.post('/api/loadsets', async (req, res, next) => {
     try {
         const db = client.db('project');
         const results = await db.collection('StudySets').find({ UserId: userId }).toArray();
-        console.log(results);
-        console.log(results.length);
+        console.log(Array.isArray(results));
 
         for (let i = 0; i < results.length; i++) {
             let resultWithEdit = { ...results[i], isEditing: false };
