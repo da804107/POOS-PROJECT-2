@@ -22,6 +22,7 @@ const HomePage: React.FC = () => {
             body: JSON.stringify({ Id }),
         };
         try {
+            console.log(Id);
             const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
             if(!response.ok) {
                 throw new Error('Failed to fetch sets');
