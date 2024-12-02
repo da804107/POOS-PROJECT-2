@@ -15,6 +15,13 @@ const HomePage: React.FC = () => {
     let Id: string = ud.id;
 
 // Made changes to call the api, going to test , might revert
+    useEffect(() => {
+        if (Id) {
+            handleLoad();
+        }
+    }, [Id]);
+
+    
     const handleLoad = async () => {
         const requestOptions = {
             method: 'POST',
