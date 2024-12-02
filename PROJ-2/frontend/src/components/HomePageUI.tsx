@@ -15,7 +15,7 @@ interface HomePageUIProps {
     handleEditToggle: (id: string) => void;
     handleEditSave: (id: string, newName: string) => void;
     setIsAdding: React.Dispatch<React.SetStateAction<boolean>>;
-    handleLoad: (id: string) => void;
+    handleLoad: () => void;
 }
 
 const HomePageUI: React.FC<HomePageUIProps> = ({
