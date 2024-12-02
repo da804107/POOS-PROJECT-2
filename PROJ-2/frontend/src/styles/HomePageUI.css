@@ -42,7 +42,7 @@
 }
 
 #addStudySetButton {
-  background-color: #5021a0;
+  background-color: #FFB835;
   color: white;
   font: monospace;
   font-size: 16px;
@@ -54,11 +54,11 @@
 }
 
 #addStudySetButton:hover {
-  background-color: #5e27a2;
+  background-color: #CA7E19;
 }
 
 #addStudySetButton:active {
-  background-color: #6b2da4;
+  background-color: #9E600C;
 }
 
 #addNewSetDiv {
@@ -95,7 +95,7 @@
 }
 
 .save-button {
-  background-color: #5021a0;
+  background-color: #FFB835;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
@@ -103,16 +103,16 @@
 }
 
 .save-button:hover {
-  background-color: #5e27a2;
+  background-color: #CA7E19;
 }
 
 .save-button:active {
-  background-color: #6b2da4;
+  background-color: #9E600C;
 }
 
 .cancel-button {
   background-color: transparent;
-  color: #ff6565;
+  color: #FF6565;
   border: 2px solid #5021a0;
   padding: 8px 16px;
   border-radius: 20px;
@@ -120,12 +120,12 @@
 }
 
 .cancel-button:hover {
-  background-color: #ff6565;
+  background-color: #FF6565;
   color: white;
 }
 
 .cancel-button:active {
-  background-color: #ff4c4c;
+  background-color: #FF4C4C;
 }
 
 #studySetListDiv {
@@ -171,7 +171,7 @@
 }
 
 .view-button {
-  background-color: #5021a0;
+  background-color: #FFB835;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
@@ -179,16 +179,16 @@
 }
 
 .view-button:hover {
-  background-color: #5e27a2;
+  background-color: #CA7E19;
 }
 
 .view-button:active {
-  background-color: #6b2da4;
+  background-color: #9E600C;
 }
 
 .delete-button {
-  background-color: #2b2439;
-  color: #ff6565;
+  background-color: #transparent;
+  color: #FF0000;
   border: 2px solid #5021a0;
   padding: 8px 16px;
   border-radius: 20px;
@@ -196,12 +196,12 @@
 }
 
 .delete-button:hover {
-  background-color: #ff6565;
+  background-color: #D80101;
   color: white;
 }
 
 .delete-button:active {
-  background-color: #ff4c4c;
+  background-color: #AF0000;
 }
 
 .edit-button {
@@ -232,7 +232,7 @@
 }
 
 .editSetSaveButton {
-  background-color: #5021a0;
+  background-color: #FFB835;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
@@ -244,9 +244,9 @@
 }
 
 .editSetSaveButton:hover {
-  background-color: #5e27a2;
+  background-color: #CA7E19;
 }
 
 .editSetSaveButton:active {
-  background-color: #6b2da4;
+  background-color: #9E600C;
 }
