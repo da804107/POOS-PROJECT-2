@@ -41,6 +41,7 @@ const HomePage: React.FC = () => {
             const newSet = { userId: Id, title: newSetName};
             try {
             await doAddSet(newSet);
+            newSet.isEditing = false;
             setStudySets([...studySets, newSet]);
             setNewSetName('');
             setIsAdding(false);
