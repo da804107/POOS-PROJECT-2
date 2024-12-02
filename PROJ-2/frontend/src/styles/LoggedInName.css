@@ -32,13 +32,14 @@
   }
   
   #logoutButton:hover {
-    background-color: transparent;
-    color: 
+    background-color: #D80101;
+    color: white;
     transition: 0.15s;
   }
   
   #logoutButton:active {
     background-color: #AF0000;
+    color: white;
     transition: 0.15s;
   }
   
