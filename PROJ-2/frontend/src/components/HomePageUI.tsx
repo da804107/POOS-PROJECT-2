@@ -34,8 +34,8 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadSets();
-    }, [loadSets]);
+        handleLoad();
+    }, [handleLoad]);
 
     return (
         <div id="homepageUIDiv">
