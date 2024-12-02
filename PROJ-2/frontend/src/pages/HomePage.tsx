@@ -24,6 +24,7 @@ const HomePage: React.FC = () => {
     
     const handleLoad = async () => {
         const userId = Id;
+        console.log(userId);
         
         const requestOptions = {
             method: 'POST',
