@@ -1,7 +1,7 @@
 import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 import HomePageUI from '../components/HomePageUI';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const HomePage: React.FC = () => {
     const [studySets, setStudySets] = useState<{ id: string; name: string; isEditing: boolean }[]>([]);
@@ -111,6 +111,7 @@ const HomePage: React.FC = () => {
                 handleEditToggle={handleEditToggle}
                 handleEditSave={handleEditSave}
                 setIsAdding={setIsAdding}
+                loadSets={loadSets}
             />
         </div>
     );
