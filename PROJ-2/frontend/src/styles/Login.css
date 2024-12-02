@@ -62,7 +62,7 @@ body {
 }
 
 .purple-buttons {
-    background-color: #5021a0;
+    background-color: #FFB835;
     color: white;
     font-size: 20px;
     border: none;
@@ -74,16 +74,16 @@ body {
     transition: 0.15s;
 }
 .purple-buttons:hover {
-    background-color: #5e27a2;
+    background-color: #CA7E19;
     transition: 0.15s;
 }
 .purple-buttons:active {
-    background-color: #6b2da4;
+    background-color: #9E600C;
     transition: 0.15s;
 }
 
 .blue-buttons {
-    background-color: #1700ad;
+    background-color: #658BFF;
     color: white;
     font-size: 20px;
     border: none;
@@ -95,11 +95,11 @@ body {
     transition: 0.15s;
 }
 .blue-buttons:hover {
-    background-color: #2b16b1;
+    background-color: #3063FF;
     transition: 0.15s;
 }
 .blue-buttons:active {
-    background-color: #311cb5;
+    background-color: #1642C7;
     transition: 0.15s;
 }
 
