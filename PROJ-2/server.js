@@ -172,7 +172,8 @@ app.post('/api/loadsets', async (req, res, next) => {
         console.log(results);
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push(results[i]);
+            let resultWithEdit = { ...results[i], isEditing: false };
+            _ret.push(resultWithEdit);
         }
     } catch (e) {
         error = e.toString();
