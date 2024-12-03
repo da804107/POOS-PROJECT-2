@@ -170,11 +170,12 @@ app.post('/api/loadsets', async (req, res, next) => {
         const results = await db.collection('StudySets').find({ UserId: userId }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            let resultWithEdit = { id: results[i].UserId, name: results[i].SetName, isEditing: false };
+            let resultWithEdit = { id: results[i]._id, name: results[i].SetName, isEditing: false };
             _ret.push(resultWithEdit);
         }
     } catch (e) {
         error = e.toString();
+        return res.status(500).json({ results: [], error });
     }
     
     res.status(200).json({ results: _ret, error });
