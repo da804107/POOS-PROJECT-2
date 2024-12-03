@@ -15,13 +15,6 @@ const HomePage: React.FC = () => {
     let Id: string = ud.id;
 
 // Made changes to call the api, going to test , might revert
-    useLayoutEffect(() => {
-        if (Id) {
-            handleLoad();
-        }
-    }, []);
-
-    
     const handleLoad = async () => {
         const userId = Id;
         console.log(userId);
