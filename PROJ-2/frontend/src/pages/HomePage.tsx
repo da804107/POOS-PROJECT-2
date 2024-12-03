@@ -128,4 +128,6 @@ const HomePage: React.FC = () => {
     );
 };
 
+window.onload = handleLoad;
+
 export default HomePage;
