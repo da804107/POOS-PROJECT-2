@@ -38,7 +38,8 @@ const HomePage: React.FC = () => {
                 throw new Error('Failed to fetch sets');
             }
             const newSets = await response.json();
-                
+            console.log(newSets);
+            console.log(studySets);
             setStudySets(prevStudySets => [...prevStudySets, ...newSets]);
             console.log("Fetched no errors");
             
