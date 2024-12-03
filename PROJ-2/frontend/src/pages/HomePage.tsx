@@ -126,8 +126,8 @@ const HomePage: React.FC = () => {
             />
         </div>
     );
+    window.onload = handleLoad;
 };
 
-window.onload = handleLoad;
 
 export default HomePage;
