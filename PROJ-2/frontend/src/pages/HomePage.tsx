@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
 // Made changes to call the api, going to test , might revert
     const handleLoad = async () => {
         const userId = Id;
-        console.log(userId);
+        console.log("Loading sets");
         
         const requestOptions = {
             method: 'POST',
@@ -32,7 +32,6 @@ const HomePage: React.FC = () => {
             }
             const newSets = await response.json();
             console.log(newSets);
-            console.log(studySets);
             setStudySets(newSets);
             console.log("Fetched no errors");
             
@@ -40,10 +39,6 @@ const HomePage: React.FC = () => {
             console.error('Failed to load sets', error);
         }
     }
-
-    useEffect(() => {
-        console.log('Sets updated:', studySets);
-        }, [studySets]);
 
     
     const handleSaveSet = async () => {
