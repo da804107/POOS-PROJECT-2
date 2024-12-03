@@ -148,7 +148,7 @@ app.post('/api/searchcards', async (req, res, next) => {
 
     try {
         const db = client.db('project');
-        const results = await db.collection('Flash-Cards').find({ _id: setId }).toArray();
+        const results = await db.collection('FlashCards').find({ _id: setId }).toArray();
 
         for (let i = 0; i < results.length; i++) {
             _ret.push(results[i].Flashcards);
