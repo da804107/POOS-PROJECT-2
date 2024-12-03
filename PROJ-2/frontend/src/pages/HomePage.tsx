@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
             const newSets = await response.json();
             console.log(newSets);
             console.log(studySets);
-            setStudySets(prevStudySets => [...prevStudySets, ...newSets]);
+            setStudySets(newSets);
             console.log("Fetched no errors");
             
         } catch (error) {
