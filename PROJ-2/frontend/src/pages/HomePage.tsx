@@ -4,7 +4,7 @@ import HomePageUI from '../components/HomePageUI';
 import React, { useState, useEffect } from 'react';
 
 const HomePage: React.FC = () => {
-    const [studySets, setStudySets] = useState<{ id: string; name: string; isEditing: boolean }[]>([]);
+    const [studySets, setStudySets] = useState<any[]>([]);
     const [search, setSearch] = useState('');
     const [isAdding, setIsAdding] = useState(false);
     const [newSetName, setNewSetName] = useState('');
