@@ -15,30 +15,36 @@ const HomePage: React.FC = () => {
     let Id: string = ud.id;
 
 // Made changes to call the api, going to test , might revert
-    const handleLoad = async () => {
-        const userId = Id;
-        console.log("Loading sets");
-        
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId }),
-        };
-        try {
-            console.log(userId);
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
-            if(!response.ok) {
-                throw new Error('Failed to fetch sets');
-            }
-            const newSets = await response.json();
-            console.log(newSets);
-            setStudySets(newSets);
-            console.log("Fetched no errors");
+    useEffect(() => {
+        const handleLoad = async () => {
+            const userId = Id;
+            console.log("Loading sets");
             
-        } catch (error) {
-            console.error('Failed to load sets', error);
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId }),
+            };
+            try {
+                console.log(userId);
+                const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
+                if(!response.ok) {
+                    throw new Error('Failed to fetch sets');
+                }
+                const newSets = await response.json();
+                console.log(newSets);
+                setStudySets(newSets);
+                console.log("Fetched no errors");
+                
+            } catch (error) {
+                console.error('Failed to load sets', error);
+            }
+        };
+
+        if (Id) {
+            handleLoad();
         }
-    }
+    }, [Id]);
 
     
     const handleSaveSet = async () => {
@@ -121,7 +127,6 @@ const HomePage: React.FC = () => {
             />
         </div>
     );
-    window.onload = handleLoad;
 };
 
 
