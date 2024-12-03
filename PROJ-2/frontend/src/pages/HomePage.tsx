@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
         if (Id) {
             handleLoad();
         }
-    }, [])
+    }, [Id]);
 
     
     const handleLoad = async () => {
@@ -48,6 +48,11 @@ const HomePage: React.FC = () => {
         }
     }
 
+    useEffect(() => {
+        console.log('Sets updated:', studySets);
+        }, [studySets]);
+
+    
     const handleSaveSet = async () => {
         if (newSetName.trim()) {
             const newSet = { userId: Id, title: newSetName};
