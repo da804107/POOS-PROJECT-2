@@ -175,7 +175,6 @@ app.post('/api/loadsets', async (req, res, next) => {
         }
     } catch (e) {
         error = e.toString();
-        return res.status(500).json({ results: [], error });
     }
     
     res.status(200).json({ results: _ret, error });
