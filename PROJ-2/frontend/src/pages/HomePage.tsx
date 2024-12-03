@@ -1,7 +1,7 @@
 import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 import HomePageUI from '../components/HomePageUI';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 
 const HomePage: React.FC = () => {
     const [studySets, setStudySets] = useState<{ id: string; name: string; isEditing: boolean }[]>([]);
@@ -15,11 +15,11 @@ const HomePage: React.FC = () => {
     let Id: string = ud.id;
 
 // Made changes to call the api, going to test , might revert
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (Id) {
             handleLoad();
         }
-    }, [Id]);
+    }, []);
 
     
     const handleLoad = async () => {
