@@ -162,17 +162,15 @@ app.post('/api/searchcards', async (req, res, next) => {
 
 app.post('/api/loadsets', async (req, res, next) => {
     const { userId } = req.body;
-    console.log(userId);
     let error = '';
     let _ret = [];
 
     try {
         const db = client.db('project');
         const results = await db.collection('StudySets').find({ UserId: userId }).toArray();
-        console.log(Array.isArray(results));
 
         for (let i = 0; i < results.length; i++) {
-            let resultWithEdit = { id: results[i].UserId, name: results[i].SetName, isEdting: false };
+            let resultWithEdit = { id: results[i].UserId, name: results[i].SetName, isEditing: false };
             _ret.push(resultWithEdit);
         }
     } catch (e) {
