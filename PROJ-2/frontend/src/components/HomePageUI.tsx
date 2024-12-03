@@ -30,7 +30,6 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
     handleEditToggle,
     handleEditSave,
     setIsAdding,
-    handleLoad,
 }) => {
     const navigate = useNavigate();
     /*
