@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
         if (Id) {
             handleLoad();
         }
-    }, [Id])
+    }, [])
 
     
     const handleLoad = async () => {
