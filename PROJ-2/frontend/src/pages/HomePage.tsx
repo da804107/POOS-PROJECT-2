@@ -123,7 +123,6 @@ const HomePage: React.FC = () => {
                 handleEditToggle={handleEditToggle}
                 handleEditSave={handleEditSave}
                 setIsAdding={setIsAdding}
-                handleLoad={handleLoad}
             />
         </div>
     );
