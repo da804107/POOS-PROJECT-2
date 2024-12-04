@@ -40,7 +40,7 @@ const ViewStudySetPage = () => {
                 throw new Error('Failed to fetch sets');
             }
 
-
+            setStudySet(fetchedSet)
             console.log("Fetched no errors");
                 
             } catch (error) {
