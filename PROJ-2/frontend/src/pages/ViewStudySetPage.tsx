@@ -16,6 +16,7 @@ const ViewStudySetPage = async () => {
 
     const userId = Id;
             console.log("Loading sets");
+    let fetchedSet;
             
             const requestOptions = {
                 method: 'POST',
@@ -24,8 +25,8 @@ const ViewStudySetPage = async () => {
             };
             try {
                 console.log(userId);
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
-            const fetchedSet = await response.json();
+            const response = fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
+            fetchedSet = response.json();
             console.log(fetchedSet);
 
             if (!response.ok) {
