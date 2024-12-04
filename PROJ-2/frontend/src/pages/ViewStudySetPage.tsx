@@ -53,13 +53,13 @@ const ViewStudySetPage = () => {
         id: Id || '',
         name: sn.name,
         flashcards: [
-            { id: '1', term: 'Yup', definition: 'You got it' },
-            { id: '2', term: 'Nope', definition: 'No you dont' },
+            { id: '1', term: 'Oh', definition: 'I see' },
+            { id: '2', term: 'Dang', definition: 'it' },
         ],
         isEditingName: false,
     };
 
-    const [studySet, setStudySet] = useState(initialStudySet);
+    const [studySet, setStudySet] = useState<{ id: string; name: string; flashcards: any }[]>([]));
     const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
     const [isCardView, setIsCardView] = useState(false);
     const [term, setTerm] = useState('');
