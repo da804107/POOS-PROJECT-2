@@ -102,10 +102,10 @@ const ViewStudySetPage = () => {
             term,
             definition,
         };
-        setStudySet({
-            ...prev,
-            flashcards: [...prev.flashcards, newFlashcard],
-        });
+        setStudySet((prev) => ({
+        ...prev,
+        flashcards: [...prev.flashcards, newFlashcard], // Spread operator to append
+    }));
         setTerm('');
         setDefinition('');
         setIsAddingFlashcard(false);
