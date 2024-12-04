@@ -137,6 +137,28 @@ const HomePage: React.FC = () => {
         }
     };
 
+    async function doUpdateSet(setId: string, setTitle: string): Promise<void> {
+        const set = { setId: setId, newName: setTitle};
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(set),
+        };
+        console.log(set);
+        try {
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
+
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Error deleting set');
+            }
+
+        } catch(error : any) {
+            console.error('Error during delete set');
+            throw error;
+        }
+    };
+
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
             set.id === id ? { ...set, isEditing: !set.isEditing } : set
@@ -145,9 +167,7 @@ const HomePage: React.FC = () => {
 
     const handleEditSave = (id: string, newName: string) => {
         if (newName.trim()) {
-            doDeleteSet(id)
-            const set = { userId: Id, title: newName};
-            doAddSet(set);
+            doUpdateSet(id, newName);
         }
     };
 
