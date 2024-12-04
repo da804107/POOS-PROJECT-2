@@ -134,10 +134,11 @@ app.post('/api/setName', async (req, res) => {
 
 
 // POST /api/addset
+// Add Study Set
 app.post('/api/addset', async (req, res) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const set = { SetName: title, UserId: userId, Flashcards: textareasList };
+    const set = { SetName: title, UserId: userId, Flashcards: textareasList || [] }; // Initialize Flashcards as an array
     console.log(set);
     let error = '';
     try {
@@ -149,6 +150,7 @@ app.post('/api/addset', async (req, res) => {
 
     res.status(200).json({ error });
 });
+
 
 // POST /api/addflashcard
 app.post('/api/addflashcard', async (req, res) => {
