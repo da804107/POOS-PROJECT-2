@@ -154,6 +154,29 @@ app.post('/api/addset', async (req, res, next) => {
     res.status(200).json({ error });
 });
 
+//let's see if this works
+app.post('/api/addflashcard', async (req, res) => {
+    const { userId, setName, flashcard } = req.body;
+    let error = '';
+
+    try {
+        const db = client.db('project');
+        const result = await db.collection('StudySets').updateOne(
+            { UserId: userId, SetName: setName },
+            { $push: { Flashcards: flashcard } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ error: 'Study set not found' });
+        }
+    } catch (e) {
+        error = e.toString();
+    }
+
+    res.status(200).json({ error });
+});
+
+
 // Search Study Sets
 app.post('/api/searchsets', async (req, res, next) => {
     const { userId, search } = req.body;

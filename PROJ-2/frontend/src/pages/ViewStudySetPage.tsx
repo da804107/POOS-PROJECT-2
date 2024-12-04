@@ -96,22 +96,47 @@ const ViewStudySetPage = () => {
     console.log("Study set deleted:", studySet.id);
   };
 
-  const handleAddFlashcard = () => {
-    console.log("Flashcards:", studySet.flashcards); // Check its value before updating
-
+  const handleAddFlashcard = async () => {
     const newFlashcard: Flashcard = {
-      id: Date.now().toString(),
-      term,
-      definition,
+        id: Date.now().toString(),
+        term,
+        definition,
     };
-    setStudySet({
-      ...studySet,
-      flashcards: [...studySet.flashcards, newFlashcard],
-    });
-    setTerm("");
-    setDefinition("");
-    setIsAddingFlashcard(false);
-  };
+
+    try {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: Id,
+                setName: studySet.name,
+                flashcard: newFlashcard,
+            }),
+        };
+
+        const response = await fetch(
+            'https://project.annetteisabrunette.xyz/api/addflashcard',
+            requestOptions
+        );
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error adding flashcard');
+        }
+
+        setStudySet({
+            ...studySet,
+            flashcards: [...studySet.flashcards, newFlashcard],
+        });
+
+        setTerm('');
+        setDefinition('');
+        setIsAddingFlashcard(false);
+    } catch (error) {
+        console.error('Failed to add flashcard:', error);
+    }
+};
+
 
   const handleDeleteFlashcard = (flashcardId: string) => {
     setStudySet({
