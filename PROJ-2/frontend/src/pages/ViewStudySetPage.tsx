@@ -12,6 +12,8 @@ const ViewStudySetPage = () => {
     let sn = JSON.parse(_sn);
     let setName = sn.name;
     
+    useEffect(() => {
+        const handleLoad = async () => {
     const { id } = useParams();
 
     const userId = Id;
@@ -25,8 +27,8 @@ const ViewStudySetPage = () => {
             };
             try {
                 console.log(userId);
-            const response = fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
-            fetchedSet = response.json();
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
+            fetchedSet = await response.json();
             console.log(fetchedSet);
 
             if (!response.ok) {
@@ -39,6 +41,12 @@ const ViewStudySetPage = () => {
             } catch (error) {
                 console.error('Failed to load sets', error);
             }
+            };
+
+        if (Id) {
+            handleLoad();
+        }
+    }, [Id]);
 
     const initialStudySet = {
         id: id || '',
