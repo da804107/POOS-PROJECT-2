@@ -120,11 +120,9 @@ app.post('/api/setName', async (req, res) => {
         
 
         const { ObjectId } = require('mongodb');
-        const objectId = new ObjectId(setId); // Use new keyword to create ObjectId instance
-        console.log(objectId);
 
         const updateResult = await db.collection('StudySets').updateOne(
-            { UserId: userId, _id: objectId },
+            { UserId: userId, SetName: setId },
             { $set: { SetName: newName } }
         );
 
