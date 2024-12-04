@@ -113,7 +113,7 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
                                         </button>
                                         <button
                                             className="buttons delete-button"
-                                            onClick={() => handleDeleteSet(set.name)}
+                                            onClick={() => handleDeleteSet(set.id)}
                                         >
                                             DELETE
                                         </button>
