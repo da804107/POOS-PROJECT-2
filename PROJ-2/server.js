@@ -182,6 +182,8 @@ app.post('/api/viewsets', async (req, res, next) => {
     let error = '';
     let _ret = [];
 
+    console.log(req.body);
+
     try {
         const db = client.db('project');
         const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _setName + '.*' } });
