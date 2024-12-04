@@ -1,7 +1,19 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PageTitle from "../components/PageTitle";
 import ViewStudySetUI from "../components/ViewStudySetUI";
+
+interface Flashcard {
+  id: string;
+  term: string;
+  definition: string;
+}
+
+interface StudySet {
+  id: string;
+  name: string;
+  flashcards: Flashcard[];
+  isEditingName: boolean;
+}
 
 const ViewStudySetPage = () => {
   let _ud: any = localStorage.getItem("user_data");
@@ -11,72 +23,6 @@ const ViewStudySetPage = () => {
   let _sn: any = localStorage.getItem("set_name");
   let sn = JSON.parse(_sn);
   let setName = sn.name;
-
-  useEffect(() => {
-    const handleLoad = async () => {
-    const userId = Id;
-    console.log("Loading sets");
-
-    const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: userId, setName: setName }),
-    };
-    try {
-        console.log(requestOptions.body);
-        const response = await fetch(
-            "https://project.annetteisabrunette.xyz/api/viewset",
-            requestOptions
-        );
-        const fetchedSet = await response.json();
-        console.log(fetchedSet);
-
-        if (!response.ok) {
-            throw new Error("Failed to fetch sets");
-        }
-        console.log(fetchedSet.results.Flashcards);
-        if (fetchedSet.results) {
-            const len = fetchedSet.results.Flashcards.length;
-            /*
-              for(int i = 0; i < len; i++) {
-                setTerm(fetchedSet.results.Flashcards[i].term);
-                setDefinition(fetchedSet.results.Flashcards[i].definition);
-              }
-            */
-        }
-    } catch (error) {
-        console.error("Failed to load sets", error);
-    }
-    };
-
-
-    if (Id) {
-      handleLoad();
-    }
-    }, [Id]);
-
-  const initialStudySet = {
-    id: Id || "",
-    name: sn.name,
-    flashcards: [
-      { id: "1", term: "Oh", definition: "I see" },
-      { id: "2", term: "Dang", definition: "it" },
-    ],
-    isEditingName: false,
-  };
-
-  interface Flashcard {
-    id: string;
-    term: string;
-    definition: string;
-  }
-
-  interface StudySet {
-    id: string;
-    name: string;
-    flashcards: Flashcard[];
-    isEditingName: boolean;
-  }
 
   const [studySet, setStudySet] = useState<StudySet>({
     id: "",
@@ -89,205 +35,188 @@ const ViewStudySetPage = () => {
   const [term, setTerm] = useState("");
   const [definition, setDefinition] = useState("");
 
+  useEffect(() => {
+    const handleLoad = async () => {
+      const userId = Id;
+      console.log("Loading sets");
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userId, setName: setName }),
+      };
+      try {
+        const response = await fetch(
+          "https://project.annetteisabrunette.xyz/api/viewset",
+          requestOptions
+        );
+        const fetchedSet = await response.json();
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch sets");
+        }
+
+        console.log(fetchedSet.results.Flashcards);
+
+        if (fetchedSet.results) {
+          setStudySet({
+            id: Id,
+            name: setName,
+            flashcards: fetchedSet.results.Flashcards || [],
+            isEditingName: false,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load sets", error);
+      }
+    };
+
+    if (Id) {
+      handleLoad();
+    }
+  }, [Id, setName]);
+
   const handleEditSetName = () => {
     setStudySet({ ...studySet, isEditingName: !studySet.isEditingName });
   };
 
   const handleSaveSetName = async (newName: string) => {
     try {
-        const requestOptions = {
-            method: 'POST', // Changed from 'PATCH' to 'POST'
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: Id,
-                setId: studySet.id,
-                newName: newName,
-            }),
-        };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: Id,
+          setId: studySet.id,
+          newName: newName,
+        }),
+      };
 
-        const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
+      const response = await fetch(
+        "https://project.annetteisabrunette.xyz/api/setName",
+        requestOptions
+      );
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (!response.ok) {
-            throw new Error(result.error || 'Error updating set name');
-        }
+      if (!response.ok) {
+        throw new Error(result.error || "Error updating set name");
+      }
 
-        // Fetch the updated study set to ensure 'id' is retained
-        const viewSetResponse = await fetch(
-            "https://project.annetteisabrunette.xyz/api/viewset",
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: Id, setName: newName }),
-            }
-        );
-
-        const updatedSet = await viewSetResponse.json();
-
-        if (!viewSetResponse.ok) {
-            throw new Error('Error fetching updated set');
-        }
-
-        setStudySet(updatedSet.results);
+      setStudySet((prev) => ({ ...prev, name: newName, isEditingName: false }));
     } catch (error) {
-        console.error('Failed to save set name:', error);
-    }
-    };
-
-  const handleDeleteSet = async () => {
-    try {
-        const requestOptions = {
-            method: 'POST', // Changed from 'DELETE' to 'POST'
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: Id,
-                title: studySet.name,
-            }),
-        };
-
-        const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteset', requestOptions);
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Error deleting set');
-        }
-
-        // Redirect or update UI after deletion
-        window.location.href = '/sets';
-    } catch (error) {
-        console.error('Failed to delete set:', error);
+      console.error("Failed to save set name:", error);
     }
   };
 
-const handleAddFlashcard = async () => {
+  const handleAddFlashcard = async () => {
     const newFlashcard: Flashcard = {
-        id: Date.now().toString(),
-        term,
-        definition,
+      id: Date.now().toString(),
+      term,
+      definition,
     };
 
     try {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: Id,
-                setName: setName,
-                flashcard: newFlashcard,
-            }),
-        };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: Id,
+          setName: studySet.name,
+          flashcard: newFlashcard,
+        }),
+      };
 
-        console.log(newFlashcard);
-        console.log(Id);
-        console.log(setName);
-        const response = await fetch('https://project.annetteisabrunette.xyz/api/addflashcard', requestOptions);
+      const response = await fetch(
+        "https://project.annetteisabrunette.xyz/api/addflashcard",
+        requestOptions
+      );
 
-        if (!response.ok) {
-            const errorResponse = await response.json();
-            throw new Error(errorResponse.error || 'Error adding flashcard');
-        }
+      if (!response.ok) {
+        throw new Error("Error adding flashcard");
+      }
 
-
-        const updatedSetResponse = await fetch(
-            'https://project.annetteisabrunette.xyz/api/viewset',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: Id, setName: setName }),
-            }
-        );
-
-        const updatedSet = await updatedSetResponse.json();
-        if (updatedSet.results) {
-            setStudySet(updatedSet.results);
-        }
-
-        setTerm('');
-        setDefinition('');
-        setIsAddingFlashcard(false);
-
+      setStudySet((prev) => ({
+        ...prev,
+        flashcards: [...prev.flashcards, newFlashcard],
+      }));
+      setTerm("");
+      setDefinition("");
+      setIsAddingFlashcard(false);
     } catch (error) {
-        console.error('Failed to add flashcard:', error);
+      console.error("Failed to add flashcard:", error);
     }
-};
+  };
 
-const handleDeleteFlashcard = async (flashcardId: string) => {
+  const handleDeleteFlashcard = async (flashcardId: string) => {
     try {
-        const requestOptions = {
-            method: 'POST', // Changed from 'DELETE' to 'POST'
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: Id,
-                setName: studySet.name,
-                flashcardId: flashcardId,
-            }),
-        };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: Id,
+          setName: studySet.name,
+          flashcardId: flashcardId,
+        }),
+      };
 
-        const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteflashcard', requestOptions);
+      const response = await fetch(
+        "https://project.annetteisabrunette.xyz/api/deleteflashcard",
+        requestOptions
+      );
 
-        const result = await response.json();
+      if (!response.ok) {
+        throw new Error("Error deleting flashcard");
+      }
 
-        if (!response.ok) {
-            throw new Error(result.error || 'Error deleting flashcard');
-        }
-
-        setStudySet({
-            ...studySet,
-            flashcards: studySet.flashcards.filter(
-                (flashcard) => flashcard.id !== flashcardId
-            ),
-        });
+      setStudySet((prev) => ({
+        ...prev,
+        flashcards: prev.flashcards.filter((card) => card.id !== flashcardId),
+      }));
     } catch (error) {
-        console.error('Failed to delete flashcard:', error);
+      console.error("Failed to delete flashcard:", error);
     }
-};
+  };
 
-
-const handleEditFlashcard = async (
+  const handleEditFlashcard = async (
     flashcardId: string,
     newTerm: string,
     newDefinition: string
-) => {
+  ) => {
     try {
-        const requestOptions = {
-            method: 'POST', // Changed from 'PATCH' to 'POST'
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                userId: Id,
-                setName: studySet.name,
-                flashcardId: flashcardId,
-                newTerm: newTerm,
-                newDefinition: newDefinition,
-            }),
-        };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: Id,
+          setName: studySet.name,
+          flashcardId: flashcardId,
+          newTerm: newTerm,
+          newDefinition: newDefinition,
+        }),
+      };
 
-        const response = await fetch('https://project.annetteisabrunette.xyz/api/editflashcard', requestOptions);
+      const response = await fetch(
+        "https://project.annetteisabrunette.xyz/api/editflashcard",
+        requestOptions
+      );
 
-        const result = await response.json();
+      if (!response.ok) {
+        throw new Error("Error editing flashcard");
+      }
 
-        if (!response.ok) {
-            throw new Error(result.error || 'Error editing flashcard');
-        }
-
-        setStudySet({
-            ...studySet,
-            flashcards: studySet.flashcards.map((flashcard) =>
-                flashcard.id === flashcardId
-                    ? { ...flashcard, term: newTerm, definition: newDefinition }
-                    : flashcard
-            ),
-        });
+      setStudySet((prev) => ({
+        ...prev,
+        flashcards: prev.flashcards.map((card) =>
+          card.id === flashcardId
+            ? { ...card, term: newTerm, definition: newDefinition }
+            : card
+        ),
+      }));
     } catch (error) {
-        console.error('Failed to edit flashcard:', error);
+      console.error("Failed to edit flashcard:", error);
     }
-};
-
-
-  useEffect(() => {
-    console.log("Fetching study set for ID:", Id);
-  }, [Id]);
+  };
 
   return (
     <div>
@@ -302,7 +231,7 @@ const handleEditFlashcard = async (
         setDefinition={setDefinition}
         isCardView={isCardView}
         setIsCardView={setIsCardView}
-        handleDeleteSet={handleDeleteSet}
+        handleDeleteSet={() => {}}
         handleEditSetName={handleEditSetName}
         handleSaveSetName={handleSaveSetName}
         handleAddFlashcard={handleAddFlashcard}
@@ -314,4 +243,3 @@ const handleEditFlashcard = async (
 };
 
 export default ViewStudySetPage;
-

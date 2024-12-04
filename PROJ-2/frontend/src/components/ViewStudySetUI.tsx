@@ -2,7 +2,7 @@ import '../styles/ViewStudySetUI.css';
 import React, { useEffect, useState } from 'react';
 
 const ViewStudySetUI: React.FC<{
-    studySet?: {
+    studySet: {
         id: string;
         name: string;
         flashcards: { id: string; term: string; definition: string }[];
@@ -39,39 +39,23 @@ const ViewStudySetUI: React.FC<{
     handleDeleteFlashcard,
     handleEditFlashcard,
 }) => {
-    const [localStudySet, setLocalStudySet] = useState(() => studySet || null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
 
-    useEffect(() => {
-        if (studySet) {
-            setLocalStudySet({
-                ...studySet,
-                flashcards: studySet.flashcards || [],
-            });
-        }
-    }, [studySet]);
-           
-
-        if (!localStudySet) {
-            return <div>Loading...</div>;
-        }
-
-        const currentCard =
-            localStudySet && localStudySet.flashcards && localStudySet.flashcards.length > 0
-            ? localStudySet.flashcards[currentIndex]
+    const currentCard =
+        studySet.flashcards && studySet.flashcards.length > 0
+            ? studySet.flashcards[currentIndex]
             : null;
-        
 
-        const handleNextCard = () => {
-            setIsFlipped(false);
-            setCurrentIndex((prev) => (prev + 1) % localStudySet.flashcards.length);
-        };
+    const handleNextCard = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) => (prev + 1) % studySet.flashcards.length);
+    };
 
-        const handlePreviousCard = () => {
-            setIsFlipped(false);
-            setCurrentIndex((prev) =>
-                (prev - 1 + localStudySet.flashcards.length) % localStudySet.flashcards.length
+    const handlePreviousCard = () => {
+        setIsFlipped(false);
+        setCurrentIndex((prev) =>
+            (prev - 1 + studySet.flashcards.length) % studySet.flashcards.length
         );
     };
 
@@ -86,18 +70,18 @@ const ViewStudySetUI: React.FC<{
                 </button>
             </div>
             <div className="study-set-header">
-                {localStudySet.isEditingName ? (
+                {studySet.isEditingName ? (
                     <div className="edit-set-name">
                         <input
                             type="text"
-                            defaultValue={localStudySet.name}
+                            defaultValue={studySet.name}
                             onBlur={(e) => handleSaveSetName(e.target.value)}
                             autoFocus
                         />
                         <button onClick={() => handleEditSetName()}>CANCEL</button>
                     </div>
                 ) : (
-                    <h2>{localStudySet.name}</h2>
+                    <h2>{studySet.name}</h2>
                 )}
             </div>
             <div className="actions">
@@ -145,7 +129,7 @@ const ViewStudySetUI: React.FC<{
             ) : (
                 !isCardView && (
                     <div className="flashcards">
-                        {localStudySet.flashcards.map((card) => (
+                        {studySet.flashcards.map((card) => (
                             <div className="flashcard" key={card.id}>
                                 <div className="term">{card.term}</div>
                                 <div className="definition">{card.definition}</div>
@@ -171,7 +155,7 @@ const ViewStudySetUI: React.FC<{
                 )
             )}
         </div>
-    );    
+    );
 };
 
 export default ViewStudySetUI;
