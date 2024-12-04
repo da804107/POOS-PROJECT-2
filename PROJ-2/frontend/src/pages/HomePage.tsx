@@ -177,7 +177,7 @@ const HomePage: React.FC = () => {
     };*/
 
     const handleEditToggle = (id: string) => {
-        setStudySets(studySets.map(set =>
+        setStudySets(studySets.map(set => {
             //set.id === id ? { ...set, isEditing: !set.isEditing } : set
             if (set.id === id) {
             var editSet = {name: set.name};
@@ -185,7 +185,7 @@ const HomePage: React.FC = () => {
                 return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
             }
           return set;
-        ));
+        }));
         
     };
 
