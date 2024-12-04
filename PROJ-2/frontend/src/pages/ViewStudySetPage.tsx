@@ -6,6 +6,7 @@ import ViewStudySetUI from '../components/ViewStudySetUI';
 const ViewStudySetPage = () => {
     let _sn: any = localStorage.getItem('set_name');
     let sn = JSON.parse(_sn);
+    let setName = sn.name;
     
     const { id } = useParams();
 
@@ -15,7 +16,7 @@ const ViewStudySetPage = () => {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, sn.name }),
+                body: JSON.stringify({ userId, setName }),
             };
             try {
                 console.log(userId);
