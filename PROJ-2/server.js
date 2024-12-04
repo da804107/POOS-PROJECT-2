@@ -178,6 +178,31 @@ app.post('/api/addflashcard', async (req, res) => {
     res.status(200).json({ error });
 });
 
+// POST /api/deleteflashcard
+app.post('/api/deleteflashcard', async (req, res) => {
+    const { userId, setName, flashcardId } = req.body;
+    let error = '';
+
+    try {
+        const db = client.db('project');
+        
+        // Perform the delete operation to remove the flashcard from the array
+        const updateResult = await db.collection('StudySets').updateOne(
+            { UserId: userId, SetName: setName },
+            { $pull: { Flashcards: { id: flashcardId } } } // Remove the flashcard with the given id
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).json({ message: 'Study set or flashcard not found' });
+        }
+        
+        res.status(200).json({ error: '' });
+    } catch (e) {
+        error = e.toString();
+        res.status(500).json({ error });
+    }
+});
+
 // POST /api/searchsets
 app.post('/api/searchsets', async (req, res) => {
     const { userId, search } = req.body;
