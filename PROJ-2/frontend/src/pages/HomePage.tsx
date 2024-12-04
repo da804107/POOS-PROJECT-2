@@ -191,10 +191,15 @@ const HomePage: React.FC = () => {
 
     const handleEditSave = (id: string, newName: string) => {
         if (newName.trim()) {
-            setStudySets(studySets.map(set =>
-                set.id === id ? { ...set, name: newName, isEditing: false } : set
-            ));
-        }
+            //set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            if (set.id === id) {
+                let _sn: any = localStorage.getItem('set_name');
+                let sn = JSON.parse(_sn);
+            doUpdateSet(sn.name, newName) // Store the name
+                return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
+            }
+          return set;
+        }));
     };
 
     const filteredSets = studySets.filter(set =>
