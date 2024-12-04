@@ -78,6 +78,7 @@ const ViewStudySetPage = () => {
     };
 
     const handleAddFlashcard = () => {
+        console.log('Flashcards:', studySet.flashcards); // Check its value before updating
         const newFlashcard = {
             id: Date.now().toString(),
             term,
