@@ -197,7 +197,7 @@ const HomePage: React.FC = () => {
                 let _sn: any = localStorage.getItem('set_name');
                 let sn = JSON.parse(_sn);
                 doUpdateSet(sn.name, newName) // Store the name
-                return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
+                return { ...set, name: newName, isEditing: !set.isEditing }; // Toggle isEditing
             }
             return set;
             }));
