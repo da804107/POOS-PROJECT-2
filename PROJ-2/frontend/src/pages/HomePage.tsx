@@ -147,8 +147,7 @@ const HomePage: React.FC = () => {
         if (newName.trim()) {
             doDeleteSet(id)
             const set = { userId: Id, title: newName};
-            doAddSet(set)
-            ));
+            doAddSet(set);
         }
     };
 
