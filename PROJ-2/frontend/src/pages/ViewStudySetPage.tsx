@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import ViewStudySetUI from '../components/ViewStudySetUI';
 
-const ViewStudySetPage = async () => {
+const ViewStudySetPage = () => {
     let _ud: any = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud);
     let Id: string = ud.id;
