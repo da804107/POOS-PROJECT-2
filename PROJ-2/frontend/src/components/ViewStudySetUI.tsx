@@ -45,9 +45,13 @@ const ViewStudySetUI: React.FC<{
 
     useEffect(() => {
         if (studySet) {
-            setLocalStudySet(studySet);
+            setLocalStudySet({
+                ...studySet,
+                flashcards: studySet.flashcards || [],
+            });
         }
-    }, [studySet]);    
+    }, [studySet]);
+           
 
         if (!localStudySet) {
             return <div>Loading...</div>;
