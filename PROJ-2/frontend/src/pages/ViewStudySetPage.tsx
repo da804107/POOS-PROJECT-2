@@ -28,7 +28,7 @@ const ViewStudySetPage = () => {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, setName }),
+                body: JSON.stringify({ userId: userId, setName: setName }),
             };
             try {
                 console.log(requestOptions.body);
