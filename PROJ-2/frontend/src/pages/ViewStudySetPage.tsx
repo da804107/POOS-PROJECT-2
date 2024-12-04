@@ -424,6 +424,6 @@ const ViewStudySetUI: React.FC<ViewStudySetUIProps> = ({
   );
 };
 
-export default ViewStudySetUI;
+export default ViewStudySetPage;
 
 
