@@ -86,9 +86,9 @@ const HomePage: React.FC = () => {
 
     
     
-    const handleDeleteSet = (id: string) => {
+    const handleDeleteSet = async (id: string) => {
+        await doDeleteSet(id);
         setStudySets(studySets.filter(set => set.id !== id));
-        doDeleteSet(id);
     };
 
     async function doDeleteSet(setTitle: string): Promise<void> {
