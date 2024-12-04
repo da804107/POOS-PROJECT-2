@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { ObjectId } = require('mongodb');
 
 const app = express();
 
@@ -15,6 +14,18 @@ app.use(cors(corsOptions));
 
 // Middleware
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Or your frontend URL
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PATCH, DELETE, OPTIONS'
+    );
+    next();
+});
 
 // Root Route
 app.get('/', (req, res) => {
@@ -24,30 +35,18 @@ app.get('/', (req, res) => {
 // Database Connection
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://da804107:mypassword@cluster0.v6oei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-const client = new MongoClient(url, { useUnifiedTopology: true });
-
-client.connect((err) => {
-    if (err) {
-        console.error('Failed to connect to MongoDB:', err);
-        process.exit(1);
-    }
-    console.log('Connected to MongoDB');
-
-    // Start the Server after successful DB connection
-    app.listen(5000, () => {
-        console.log('Server is running on http://localhost:5000');
-    });
-});
+const client = new MongoClient(url);
+client.connect();
 
 // SignUp Route
-app.post('/api/signup', async (req, res) => {
+app.post('/api/signup', async (req, res, next) => {
     const { username, password } = req.body;
     const newUser = { UserId: null, Username: username, Password: password };
     let error = '';
 
     try {
         const db = client.db('project');
-        newUser.UserId = await db.collection('Users').countDocuments() + 1; // Ensure unique UserId
+        newUser.UserId = await db.collection('Users').countDocuments();
 
         /* Uncomment to check for existing user
         if (await db.collection('Users').findOne({ Username: newUser.Username })) {
@@ -64,11 +63,11 @@ app.post('/api/signup', async (req, res) => {
 });
 
 // Login Route
-app.post('/api/login', async (req, res) => {
+app.post('/api/login', async (req, res, next) => {
     console.log("in server.js");
     const { login, password } = req.body;
     let error = '';
-    let id = -1, fn = '';
+    let id = -1, fn = '', ln = '';
 
     try {
         const db = client.db('project');
@@ -88,56 +87,61 @@ app.post('/api/login', async (req, res) => {
 });
 
 // Delete Study Sets
-app.post('/api/deleteset', async (req, res) => {
-    const { userId, title } = req.body;
+app.post('/api/deleteset', async(req, res, next) => {
+    const {userId, title} = req.body;
     console.log('Delete: ', title);
     let error = '';
 
-    try {
+    try{
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').deleteOne({ UserId: userId, SetName: title });
+        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, SetName: title});
 
-        if (delSetResult.deletedCount === 0) {
-            return res.status(404).json({ message: 'No study set found' });
+        if (delSetResult.deletedCount === 0){
+             return res.status(404).json({message: 'No study set found'});
         }
 
-        // Delete all flashcards
-        await db.collection('FlashCards').deleteMany({ SetName: title });
-    } catch (e) {
+        //delete all flashcards
+        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
+
+    } catch (e){
         error = e.toString();
     }
-    res.status(200).json({ error });
+    res.status(200).json({error});
 });
 
-// Update Set Name
-app.post('/api/setName', async (req, res) => {
-    const { userId, setId, newName } = req.body;
+//Update set Name
+app.post('/api/setName', async(req, res, next) => {
+    const {userId, setId, newName} = req.body;
     console.log('Update: ', setId);
     let error = '';
 
-    try {
+    try{
         const db = client.db('project');
-        const updateResult = await db.collection('StudySets').updateOne(
-            { UserId: userId, SetName: setId },
-            { $set: { SetName: newName } }
-        );
+        const delSetResult = await db.collection('StudySets').updateOne( { UserId: userId, SetName: setId },
+{
+  $set: {
+    SetName: newName
+  },
+});
 
-        if (updateResult.matchedCount === 0) {
-            return res.status(404).json({ message: 'No study set found' });
+        if (delSetResult.deletedCount === 0){
+             return res.status(404).json({message: 'No study set found'});
         }
 
-        // Note: Removed deletion of flashcards here as it seems unrelated to updating set name
-    } catch (e) {
+        //delete all flashcards
+        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
+
+    } catch (e){
         error = e.toString();
     }
-    res.status(200).json({ error });
+    res.status(200).json({error});
 });
 
 // Add Study Set
-app.post('/api/addset', async (req, res) => {
+app.post('/api/addset', async (req, res, next) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const set = { SetName: title, UserId: userId, Flashcards: textareasList };
+    const set = { SetName: title, UserId: userId, Flashcards: null };
     console.log(set);
     let error = '';
     try {
@@ -150,7 +154,7 @@ app.post('/api/addset', async (req, res) => {
     res.status(200).json({ error });
 });
 
-// Add Flashcard
+//let's see if this works
 app.post('/api/addflashcard', async (req, res) => {
     const { userId, setName, flashcard } = req.body;
     let error = '';
@@ -172,8 +176,9 @@ app.post('/api/addflashcard', async (req, res) => {
     res.status(200).json({ error });
 });
 
+
 // Search Study Sets
-app.post('/api/searchsets', async (req, res) => {
+app.post('/api/searchsets', async (req, res, next) => {
     const { userId, search } = req.body;
     const _search = search.trim();
     let error = '';
@@ -184,7 +189,7 @@ app.post('/api/searchsets', async (req, res) => {
         const results = await db.collection('StudySets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push([results[i]._id.toString(), results[i].SetName]);
+            _ret.push([results[i]._id, results[i].SetName]);
         }
     } catch (e) {
         error = e.toString();
@@ -193,11 +198,12 @@ app.post('/api/searchsets', async (req, res) => {
     res.status(200).json({ results: _ret, error });
 });
 
-// View Set
-app.post('/api/viewset', async (req, res) => {
+//View set
+app.post('/api/viewset', async (req, res, next) => {
     const { userId, setName } = req.body;
+    //const _search = search.trim();
     let error = '';
-    let _ret = null;
+    let _ret = [];
 
     console.log(req.body);
 
@@ -205,14 +211,7 @@ app.post('/api/viewset', async (req, res) => {
         const db = client.db('project');
         const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: setName + '.*' } });
 
-        if (results) {
-            _ret = {
-                id: results._id.toString(), // Map MongoDB _id to id
-                name: results.SetName,
-                flashcards: results.Flashcards || [],
-                isEditingName: results.isEditingName || false,
-            };
-        }
+        _ret = results;
         console.log(_ret);
     } catch (e) {
         error = e.toString();
@@ -222,14 +221,14 @@ app.post('/api/viewset', async (req, res) => {
 });
 
 // Search Flash Cards
-app.post('/api/searchcards', async (req, res) => {
+app.post('/api/searchcards', async (req, res, next) => {
     const { setId } = req.body;
     let error = '';
     let _ret = [];
 
     try {
         const db = client.db('project');
-        const results = await db.collection('FlashCards').find({ _id: new ObjectId(setId) }).toArray();
+        const results = await db.collection('FlashCards').find({ _id: setId }).toArray();
 
         for (let i = 0; i < results.length; i++) {
             _ret.push(results[i].Flashcards);
@@ -241,8 +240,7 @@ app.post('/api/searchcards', async (req, res) => {
     res.status(200).json({ results: _ret, error });
 });
 
-// Load Sets
-app.post('/api/loadsets', async (req, res) => {
+app.post('/api/loadsets', async (req, res, next) => {
     const { userId } = req.body;
     let error = '';
     let _ret = [];
@@ -254,15 +252,20 @@ app.post('/api/loadsets', async (req, res) => {
         if (!userId) {
             return res.status(400).json({ error: 'Invalid or missing userId' });
         }
-
+        
         for (let i = 0; i < results.length; i++) {
-            let resultWithEdit = { id: results[i]._id.toString(), name: results[i].SetName, isEditing: false };
+            let resultWithEdit = { id: results[i]._id, name: results[i].SetName, isEditing: false };
             _ret.push(resultWithEdit);
         }
     } catch (e) {
         error = e.toString();
         return res.status(500).json({ results: [], error });
     }
-
+    
     res.status(200).json({ results: _ret, error });
+});
+
+// Start the Server
+app.listen(5000, () => {
+    console.log('Server is running on http://localhost:5000');
 });
