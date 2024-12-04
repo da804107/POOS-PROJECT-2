@@ -9,10 +9,34 @@ const ViewStudySetPage = () => {
     
     const { id } = useParams();
 
+    const userId = Id;
+            console.log("Loading sets");
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, sn.name }),
+            };
+            try {
+                console.log(userId);
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
+            const fetchedSet = await response.json();
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch sets');
+            }
+
+
+            console.log("Fetched no errors");
+                
+            } catch (error) {
+                console.error('Failed to load sets', error);
+            }
+
     const initialStudySet = {
         id: id || '',
         name: sn.name,
-        flashcards: [],
+        flashcards: fetchedSet.flashcards,
         isEditingName: false,
     };
 
