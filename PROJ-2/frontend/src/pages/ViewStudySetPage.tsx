@@ -1,162 +1,167 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import PageTitle from '../components/PageTitle';
-import ViewStudySetUI from '../components/ViewStudySetUI';
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import PageTitle from "../components/PageTitle";
+import ViewStudySetUI from "../components/ViewStudySetUI";
 
 const ViewStudySetPage = () => {
-    let _ud: any = localStorage.getItem('user_data');
-    let ud = JSON.parse(_ud);
-    let Id: string = ud.id;
-    
-    let _sn: any = localStorage.getItem('set_name');
-    let sn = JSON.parse(_sn);
-    let setName = sn.name;
+  let _ud: any = localStorage.getItem("user_data");
+  let ud = JSON.parse(_ud);
+  let Id: string = ud.id;
 
-    
-    useEffect(() => {
-        const handleLoad = async () => {
-    //const { id } = useParams();
+  let _sn: any = localStorage.getItem("set_name");
+  let sn = JSON.parse(_sn);
+  let setName = sn.name;
 
-    const userId = Id;
-            console.log("Loading sets");
-    
-            
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: userId, setName: setName }),
-            };
-            try {
-                console.log(requestOptions.body);
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
-            const fetchedSet = await response.json();
-            console.log(fetchedSet);
+  useEffect(() => {
+    const handleLoad = async () => {
+      //const { id } = useParams();
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch sets');
-            }
+      const userId = Id;
+      console.log("Loading sets");
 
-            setStudySet(fetchedSet);
-            console.log("Fetched no errors");
-                
-            } catch (error) {
-                console.error('Failed to load sets', error);
-            }
-            };
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: userId, setName: setName }),
+      };
+      try {
+        console.log(requestOptions.body);
+        const response = await fetch(
+          "https://project.annetteisabrunette.xyz/api/viewset",
+          requestOptions
+        );
+        const fetchedSet = await response.json();
+        console.log(fetchedSet);
 
-        if (Id) {
-            handleLoad();
+        if (!response.ok) {
+          throw new Error("Failed to fetch sets");
         }
-    }, [Id]);
 
-    const initialStudySet = {
-        id: Id || '',
-        name: sn.name,
-        flashcards: [
-            { id: '1', term: 'Oh', definition: 'I see' },
-            { id: '2', term: 'Dang', definition: 'it' },
-        ],
-        isEditingName: false,
+        setStudySet(fetchedSet);
+        console.log("Fetched no errors");
+      } catch (error) {
+        console.error("Failed to load sets", error);
+      }
     };
 
-    interface Flashcard {
+    if (Id) {
+      handleLoad();
+    }
+  }, [Id]);
+
+  const initialStudySet = {
+    id: Id || "",
+    name: sn.name,
+    flashcards: [
+      { id: "1", term: "Oh", definition: "I see" },
+      { id: "2", term: "Dang", definition: "it" },
+    ],
+    isEditingName: false,
+  };
+
+  interface Flashcard {
     id: string;
     term: string;
     definition: string;
-    }
+  }
 
-    interface StudySet {
-        id: string;
-        name: string;
-        flashcards: Flashcard[];
-        isEditingName: boolean;
-    }
+  interface StudySet {
+    id: string;
+    name: string;
+    flashcards: Flashcard[];
+    isEditingName: boolean;
+  }
 
-    const [studySet, setStudySet] = useState<StudySet>({
-        id: '',
-        name: '',
-        flashcards: [],
-        isEditingName: false,
+  const [studySet, setStudySet] = useState<StudySet>({
+    id: "",
+    name: "",
+    flashcards: [],
+    isEditingName: false,
+  });
+  const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
+  const [isCardView, setIsCardView] = useState(false);
+  const [term, setTerm] = useState("");
+  const [definition, setDefinition] = useState("");
+
+  const handleEditSetName = () => {
+    setStudySet({ ...studySet, isEditingName: !studySet.isEditingName });
+  };
+
+  const handleSaveSetName = (newName: string) => {
+    setStudySet({ ...studySet, name: newName, isEditingName: false });
+  };
+
+  const handleDeleteSet = () => {
+    console.log("Study set deleted:", studySet.id);
+  };
+
+  const handleAddFlashcard = () => {
+    console.log("Flashcards:", studySet.flashcards); // Check its value before updating
+
+    const newFlashcard: Flashcard = {
+      id: Date.now().toString(),
+      term,
+      definition,
+    };
+    setStudySet({
+      ...studySet,
+      flashcards: [...studySet.flashcards, newFlashcard],
     });
-    const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
-    const [isCardView, setIsCardView] = useState(false);
-    const [term, setTerm] = useState('');
-    const [definition, setDefinition] = useState('');
+    setTerm("");
+    setDefinition("");
+    setIsAddingFlashcard(false);
+  };
 
-    const handleEditSetName = () => {
-        setStudySet({ ...studySet, isEditingName: !studySet.isEditingName });
-    };
+  const handleDeleteFlashcard = (flashcardId: string) => {
+    setStudySet({
+      ...studySet,
+      flashcards: studySet.flashcards.filter(
+        (flashcard) => flashcard.id !== flashcardId
+      ),
+    });
+  };
 
-    const handleSaveSetName = (newName: string) => {
-        setStudySet({ ...studySet, name: newName, isEditingName: false });
-    };
+  const handleEditFlashcard = (
+    flashcardId: string,
+    newTerm: string,
+    newDefinition: string
+  ) => {
+    setStudySet({
+      ...studySet,
+      flashcards: studySet.flashcards.map((flashcard) =>
+        flashcard.id === flashcardId
+          ? { ...flashcard, term: newTerm, definition: newDefinition }
+          : flashcard
+      ),
+    });
+  };
 
-    const handleDeleteSet = () => {
-        console.log('Study set deleted:', studySet.id);
-    };
+  useEffect(() => {
+    console.log("Fetching study set for ID:", Id);
+  }, [Id]);
 
-    const handleAddFlashcard = () => {
-        console.log('Flashcards:', studySet.flashcards); // Check its value before updating
-        const newFlashcard: Flashcard = {
-            id: Date.now().toString(),
-            term,
-            definition,
-        };
-        setStudySet((prev) => ({
-        ...prev,
-        flashcards: [...prev.flashcards, newFlashcard], // Spread operator to append
-    }));
-        setTerm('');
-        setDefinition('');
-        setIsAddingFlashcard(false);
-    };
-
-    const handleDeleteFlashcard = (flashcardId: string) => {
-        setStudySet({
-            ...studySet,
-            flashcards: studySet.flashcards.filter(
-                (flashcard) => flashcard.id !== flashcardId
-            ),
-        });
-    };
-
-    const handleEditFlashcard = (flashcardId: string, newTerm: string, newDefinition: string) => {
-        setStudySet({
-            ...studySet,
-            flashcards: studySet.flashcards.map((flashcard) =>
-                flashcard.id === flashcardId
-                    ? { ...flashcard, term: newTerm, definition: newDefinition }
-                    : flashcard
-            ),
-        });
-    };
-
-    useEffect(() => {
-        console.log('Fetching study set for ID:', Id);
-    }, [Id]);
-
-    return (
-        <div>
-            <PageTitle />
-            <ViewStudySetUI
-                studySet={studySet}
-                isAddingFlashcard={isAddingFlashcard}
-                setIsAddingFlashcard={setIsAddingFlashcard}
-                term={term}
-                setTerm={setTerm}
-                definition={definition}
-                setDefinition={setDefinition}
-                isCardView={isCardView}
-                setIsCardView={setIsCardView}
-                handleDeleteSet={handleDeleteSet}
-                handleEditSetName={handleEditSetName}
-                handleSaveSetName={handleSaveSetName}
-                handleAddFlashcard={handleAddFlashcard}
-                handleDeleteFlashcard={handleDeleteFlashcard}
-                handleEditFlashcard={handleEditFlashcard}
-            />
-        </div>
-    );
+  return (
+    <div>
+      <PageTitle />
+      <ViewStudySetUI
+        studySet={studySet}
+        isAddingFlashcard={isAddingFlashcard}
+        setIsAddingFlashcard={setIsAddingFlashcard}
+        term={term}
+        setTerm={setTerm}
+        definition={definition}
+        setDefinition={setDefinition}
+        isCardView={isCardView}
+        setIsCardView={setIsCardView}
+        handleDeleteSet={handleDeleteSet}
+        handleEditSetName={handleEditSetName}
+        handleSaveSetName={handleSaveSetName}
+        handleAddFlashcard={handleAddFlashcard}
+        handleDeleteFlashcard={handleDeleteFlashcard}
+        handleEditFlashcard={handleEditFlashcard}
+      />
+    </div>
+  );
 };
 
 export default ViewStudySetPage;
