@@ -162,9 +162,24 @@ const HomePage: React.FC = () => {
         }
     };
 
+    /*const handleEditToggle = (id: string) => {
+        setStudySets(studySets.map(set =>
+            set.id === id ? { ...set, isEditing: !set.isEditing } : set
+        ));
+    };
+
+    const handleEditSave = (id: string, newName: string) => {
+        if (newName.trim()) {
+            setStudySets(studySets.map(set =>
+                set.id === id ? { ...set, name: newName, isEditing: false } : set
+            ));
+        }
+    };*/
+
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
             set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            localStorage.setItem('set_name', JSON.stringify(id));
         ));
     };
 
