@@ -111,13 +111,13 @@ app.post('/api/deleteset', async(req, res, next) => {
 
 //Update set Name
 app.post('/api/setName', async(req, res, next) => {
-    const {setId, newName} = req.body;
+    const {userId, setId, newName} = req.body;
     console.log('Update: ', setId);
     let error = '';
 
     try{
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').updateOne( { _id: ObjectId(setId) },
+        const delSetResult = await db.collection('StudySets').updateOne( { UserId: userId, SetName: setId },
 {
   $set: {
     SetName: newName
