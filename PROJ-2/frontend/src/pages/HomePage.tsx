@@ -178,9 +178,15 @@ const HomePage: React.FC = () => {
 
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
-            set.id === id ? { ...set, isEditing: !set.isEditing } : set
-            localStorage.setItem('set_name', JSON.stringify(id));
+            //set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            if (set.id === id) {
+            var editSet = {name: set.name};
+                localStorage.setItem('set_name', JSON.stringify(editSet)); // Store the name
+                return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
+            }
+          return set;
         ));
+        
     };
 
     const handleEditSave = (id: string, newName: string) => {
