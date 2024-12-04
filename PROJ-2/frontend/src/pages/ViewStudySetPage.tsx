@@ -21,6 +21,7 @@ const ViewStudySetPage = () => {
                 console.log(userId);
             const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
             const fetchedSet = await response.json();
+            console.log(fetchedSet);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch sets');
@@ -36,7 +37,7 @@ const ViewStudySetPage = () => {
     const initialStudySet = {
         id: id || '',
         name: sn.name,
-        flashcards: fetchedSet.flashcards,
+        flashcards: fetchedSet,
         isEditingName: false,
     };
 
