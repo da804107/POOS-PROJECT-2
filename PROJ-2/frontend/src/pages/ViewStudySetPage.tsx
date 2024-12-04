@@ -170,7 +170,7 @@ const handleAddFlashcard = async () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 userId: Id,
-                setName: studySet.name,
+                setName: setName,
                 flashcard: newFlashcard,
             }),
         };
