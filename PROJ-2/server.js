@@ -86,62 +86,58 @@ app.post('/api/login', async (req, res, next) => {
     res.status(200).json({ id, username: fn, error });
 });
 
-// Delete Study Sets
-app.post('/api/deleteset', async(req, res, next) => {
-    const {userId, title} = req.body;
+// POST /api/deleteset
+app.post('/api/deleteset', async (req, res) => {
+    const { userId, title } = req.body;
     console.log('Delete: ', title);
     let error = '';
 
-    try{
+    try {
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, SetName: title});
+        const delSetResult = await db.collection('StudySets').deleteOne({ UserId: userId, SetName: title });
 
-        if (delSetResult.deletedCount === 0){
-             return res.status(404).json({message: 'No study set found'});
+        if (delSetResult.deletedCount === 0) {
+            return res.status(404).json({ message: 'No study set found' });
         }
 
-        //delete all flashcards
-        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
-
-    } catch (e){
+        // Delete all flashcards
+        await db.collection('FlashCards').deleteMany({ SetName: title });
+    } catch (e) {
         error = e.toString();
     }
-    res.status(200).json({error});
+    res.status(200).json({ error });
 });
 
-//Update set Name
-app.post('/api/setName', async(req, res, next) => {
-    const {userId, setId, newName} = req.body;
+// POST /api/setName
+app.post('/api/setName', async (req, res) => {
+    const { userId, setId, newName } = req.body;
     console.log('Update: ', setId);
     let error = '';
 
-    try{
+    try {
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').updateOne( { UserId: userId, SetName: setId },
-{
-  $set: {
-    SetName: newName
-  },
-});
+        const updateResult = await db.collection('StudySets').updateOne(
+            { UserId: userId, SetName: setId },
+            { $set: { SetName: newName } }
+        );
 
-        if (delSetResult.deletedCount === 0){
-             return res.status(404).json({message: 'No study set found'});
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).json({ message: 'No study set found' });
         }
 
-        //delete all flashcards
-        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
-
-    } catch (e){
+        // Note: Removed deletion of flashcards here as it seems unrelated to updating set name
+    } catch (e) {
         error = e.toString();
     }
-    res.status(200).json({error});
+    res.status(200).json({ error });
 });
 
-// Add Study Set
-app.post('/api/addset', async (req, res, next) => {
+
+// POST /api/addset
+app.post('/api/addset', async (req, res) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const set = { SetName: title, UserId: userId, Flashcards: null };
+    const set = { SetName: title, UserId: userId, Flashcards: textareasList };
     console.log(set);
     let error = '';
     try {
@@ -154,7 +150,7 @@ app.post('/api/addset', async (req, res, next) => {
     res.status(200).json({ error });
 });
 
-//let's see if this works
+// POST /api/addflashcard
 app.post('/api/addflashcard', async (req, res) => {
     const { userId, setName, flashcard } = req.body;
     let error = '';
@@ -176,9 +172,8 @@ app.post('/api/addflashcard', async (req, res) => {
     res.status(200).json({ error });
 });
 
-
-// Search Study Sets
-app.post('/api/searchsets', async (req, res, next) => {
+// POST /api/searchsets
+app.post('/api/searchsets', async (req, res) => {
     const { userId, search } = req.body;
     const _search = search.trim();
     let error = '';
@@ -189,7 +184,7 @@ app.post('/api/searchsets', async (req, res, next) => {
         const results = await db.collection('StudySets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push([results[i]._id, results[i].SetName]);
+            _ret.push([results[i]._id.toString(), results[i].SetName]);
         }
     } catch (e) {
         error = e.toString();
@@ -221,14 +216,15 @@ app.post('/api/viewset', async (req, res, next) => {
 });
 
 // Search Flash Cards
-app.post('/api/searchcards', async (req, res, next) => {
+// POST /api/searchcards
+app.post('/api/searchcards', async (req, res) => {
     const { setId } = req.body;
     let error = '';
     let _ret = [];
 
     try {
         const db = client.db('project');
-        const results = await db.collection('FlashCards').find({ _id: setId }).toArray();
+        const results = await db.collection('FlashCards').find({ _id: new ObjectId(setId) }).toArray();
 
         for (let i = 0; i < results.length; i++) {
             _ret.push(results[i].Flashcards);
@@ -240,7 +236,8 @@ app.post('/api/searchcards', async (req, res, next) => {
     res.status(200).json({ results: _ret, error });
 });
 
-app.post('/api/loadsets', async (req, res, next) => {
+// POST /api/loadsets
+app.post('/api/loadsets', async (req, res) => {
     const { userId } = req.body;
     let error = '';
     let _ret = [];
@@ -252,16 +249,16 @@ app.post('/api/loadsets', async (req, res, next) => {
         if (!userId) {
             return res.status(400).json({ error: 'Invalid or missing userId' });
         }
-        
+
         for (let i = 0; i < results.length; i++) {
-            let resultWithEdit = { id: results[i]._id, name: results[i].SetName, isEditing: false };
+            let resultWithEdit = { id: results[i]._id.toString(), name: results[i].SetName, isEditing: false };
             _ret.push(resultWithEdit);
         }
     } catch (e) {
         error = e.toString();
         return res.status(500).json({ results: [], error });
     }
-    
+
     res.status(200).json({ results: _ret, error });
 });
 
