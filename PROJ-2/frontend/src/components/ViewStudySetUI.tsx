@@ -49,21 +49,29 @@ const ViewStudySetUI: React.FC<{
         }
     }, [studySet]);    
 
-    if (!localStudySet) {
-        return <div>Loading...</div>;
-    }
+        if (!localStudySet) {
+            return <div>Loading...</div>;
+        }
 
-    const currentCard = localStudySet.flashcards[currentIndex];
+        const currentCard =
+            localStudySet && localStudySet.flashcards && localStudySet.flashcards.length > 0
+            ? localStudySet.flashcards[currentIndex]
+            : null;
 
-    const handleNextCard = () => {
-        setIsFlipped(false);
-        setCurrentIndex((prev) => (prev + 1) % localStudySet.flashcards.length);
-    };
+        if (!localStudySet || !localStudySet.flashcards || localStudySet.flashcards.length === 0) {
+            return <div>No flashcards available. Add some to get started!</div>;
+        }
+        
 
-    const handlePreviousCard = () => {
-        setIsFlipped(false);
-        setCurrentIndex((prev) =>
-            (prev - 1 + localStudySet.flashcards.length) % localStudySet.flashcards.length
+        const handleNextCard = () => {
+            setIsFlipped(false);
+            setCurrentIndex((prev) => (prev + 1) % localStudySet.flashcards.length);
+        };
+
+        const handlePreviousCard = () => {
+            setIsFlipped(false);
+            setCurrentIndex((prev) =>
+                (prev - 1 + localStudySet.flashcards.length) % localStudySet.flashcards.length
         );
     };
 
