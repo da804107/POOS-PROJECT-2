@@ -31,7 +31,7 @@ const ViewStudySetPage = () => {
                 body: JSON.stringify({ userId, setName }),
             };
             try {
-                console.log(userId);
+                console.log(requestOptions.body);
             const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
             fetchedSet = await response.json();
             console.log(fetchedSet);
