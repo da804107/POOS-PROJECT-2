@@ -90,8 +90,8 @@ const HomePage: React.FC = () => {
         setStudySets(studySets.filter(set => set.id !== id));
     };*/
 
-    async function handleDeleteSet(set: { userId: 0; title: string }): Promise<void> {
-        set.userId = Id;
+    async function handleDeleteSet(setTitle: string): Promise<void> {
+        const set = { userId: Id, title: setTitle};
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
