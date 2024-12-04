@@ -109,7 +109,6 @@ app.post('/api/deleteset', async (req, res) => {
 });
 
 // POST /api/setName
-// POST /api/setName
 app.post('/api/setName', async (req, res) => {
     const { userId, setId, newName } = req.body;
     console.log('Update: ', setId);
@@ -118,11 +117,12 @@ app.post('/api/setName', async (req, res) => {
     try {
         const db = client.db('project');
         
-        // Convert setId to ObjectId if it's not already
-        const objectId = new require('mongodb').ObjectId(setId);
+        // Correctly instantiate ObjectId
+        const { ObjectId } = require('mongodb');
+        const objectId = new ObjectId(setId); // Use new keyword to create ObjectId instance
 
         const updateResult = await db.collection('StudySets').updateOne(
-            { UserId: userId, _id: objectId }, // Match by ObjectId
+            { UserId: userId, _id: objectId },
             { $set: { SetName: newName } }
         );
 
@@ -138,8 +138,6 @@ app.post('/api/setName', async (req, res) => {
     res.status(200).json({ error: '' });
 });
 
-
-// POST /api/addset
 // Add Study Set
 app.post('/api/addset', async (req, res) => {
     const { userId, title, textareasList } = req.body;
