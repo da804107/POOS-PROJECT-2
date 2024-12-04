@@ -156,34 +156,33 @@ const ViewStudySetPage = () => {
   //       console.error('Failed to delete set:', error);
   //   }
   // };
-  const handleDeleteSet = async (setId: string) => {
+const handleDeleteSet = async (setId: string) => {
     try {
         const requestOptions = {
-            method: 'POST', // Use 'DELETE' if your backend expects it
+            method: 'POST', // Change to 'DELETE' if your backend expects it
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 userId: Id,
-                setId: setId, // Use setId instead of title
+                setId: setId,
             }),
         };
 
         const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteset', requestOptions);
 
         if (!response.ok) {
-            const result = await response.json();
-            throw new Error(result.message || 'Error deleting set');
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error deleting set');
         }
 
-        // Optionally, update the UI after deletion instead of redirecting
-        // Remove the deleted set from the state
+        // Update the UI to remove the deleted set
         setStudySets((prevStudySets) => prevStudySets.filter((set) => set.id !== setId));
 
-        // Or redirect if necessary
-        // window.location.href = '/sets';
     } catch (error) {
         console.error('Failed to delete set:', error);
+        // Optionally, provide user feedback here
     }
 };
+
 
 const handleAddFlashcard = async () => {
     const newFlashcard: Flashcard = {
