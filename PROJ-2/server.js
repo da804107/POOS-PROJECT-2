@@ -250,7 +250,14 @@ app.post('/api/viewset', async (req, res) => {
         const db = client.db('project');
         const results = await db.collection('StudySets').findOne({ userId: userId, name: setName });
 
-        _ret = results;
+        if (results) {
+            _ret = {
+                id: results._id.toString(),
+                name: results.name,
+                flashcards: results.flashcards,
+                isEditingName: results.isEditingName || false,
+            };
+        }
         console.log(_ret);
     } catch (e) {
         error = e.toString();
