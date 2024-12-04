@@ -176,7 +176,7 @@ app.post('/api/searchsets', async (req, res, next) => {
 });
 
 //View set
-app.post('/api/viewsets', async (req, res, next) => {
+app.post('/api/viewset', async (req, res, next) => {
     const { userId, setName } = req.body;
     const _search = search.trim();
     let error = '';
