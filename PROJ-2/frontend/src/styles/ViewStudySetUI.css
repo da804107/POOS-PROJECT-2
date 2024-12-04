@@ -25,13 +25,15 @@
 }
 
 .home-button:hover {
-    background-color: #CA7E19;
+    background-color: #D80101;
     color: white;
+    transition: 0.15s;
 }
 
 .home-button:active {
-    background-color: #9E600C;
+    background-color: #AF0000;
     color: white;
+    transition: 0.15s;
 }
 
 .add-flashcard {
