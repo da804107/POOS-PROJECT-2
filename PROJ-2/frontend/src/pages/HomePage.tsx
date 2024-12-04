@@ -14,6 +14,9 @@ const HomePage: React.FC = () => {
     let ud = JSON.parse(_ud);
     let Id: string = ud.id;
 
+    let _sn: any = localStorage.getItem('set_name');
+    let sn = JSON.parse(_sn);
+    
 // Made changes to call the api, going to test , might revert
     useEffect(() => {
         const handleLoad = async () => {
@@ -138,7 +141,7 @@ const HomePage: React.FC = () => {
     };
 
     async function doUpdateSet(setId: string, setTitle: string): Promise<void> {
-        const set = { setId: setId, newName: setTitle};
+        const set = { userId: Id, setId: setId, newName: setTitle};
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -162,12 +165,18 @@ const HomePage: React.FC = () => {
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
             set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            if (set.id === id) {
+                localStorage.setItem('set_name', JSON.stringify(set.name));
+            }
         ));
     };
 
     const handleEditSave = (id: string, newName: string) => {
         if (newName.trim()) {
-            doUpdateSet(id, newName);
+            doUpdateSet(sn, newName);
+            setStudySets(studySets.map(set =>
+            set.id === id ? { ...set, isEditing: !set.isEditing } : set
+        ));
         }
     };
 
