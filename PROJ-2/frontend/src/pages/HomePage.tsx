@@ -87,36 +87,33 @@ const HomePage: React.FC = () => {
         }
     };
 
-    
-    
-    const handleDeleteSet = async (id: string) => {
+const handleDeleteSet = async (id: string) => {
+    try {
+        // Perform the delete operation
         await doDeleteSet(id);
-        
+
+        // After deleting, reload the study sets to reflect the change
         const userId = Id;
-            console.log("Loading sets");
-            
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId }),
-            };
-            try {
-                console.log(userId);
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions);
-            const data = await response.json();
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId }),
+        };
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to fetch sets');
-            }
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions);
+        const data = await response.json();
 
-            setStudySets(data.results || []);
-            console.log(data.results);
-            console.log("Fetched no errors");
-                
-            } catch (error) {
-                console.error('Failed to load sets', error);
-            }
-    };
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to fetch sets');
+        }
+
+        setStudySets(data.results || []); // Update the study sets list in the state
+        console.log("Study sets reloaded:", data.results);
+    } catch (error) {
+        console.error('Failed to delete set or reload sets', error);
+    }
+};
+
 
     async function doDeleteSet(setTitle: string): Promise<void> {
         const set = { userId: Id, title: setTitle};
@@ -204,16 +201,30 @@ const HomePage: React.FC = () => {
     //     }
     // };
     const handleEditSave = (id: string, newName: string) => {
-    if (newName.trim()) {
-        setStudySets(studySets.map(set => {
-            if (set.id === id) {
-                doUpdateSet(set.id, newName); // Pass correct ID
-                return { ...set, name: newName, isEditing: false }; // Toggle isEditing
-            }
-            return set;
-        }));
-    }
+        if (newName.trim()) {
+            // Update the study set name in the backend
+            doUpdateSet(id, newName).then(() => {
+                // After updating, reload the study sets to reflect the change
+                const userId = Id;
+                const requestOptions = {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId }),
+                };
+                fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        setStudySets(data.results || []);
+                    })
+                    .catch(error => {
+                        console.error('Failed to fetch updated sets', error);
+                    });
+            }).catch(error => {
+                console.error('Error during set name update', error);
+            });
+        }
     };
+
     
     const handleViewSet = (id: string) => {
         setStudySets(studySets.map(set => {
