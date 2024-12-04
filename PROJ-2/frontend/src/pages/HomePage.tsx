@@ -211,7 +211,7 @@ const HomePage: React.FC = () => {
             var editSet = {name: set.name};
                 localStorage.setItem('set_name', JSON.stringify(editSet)); // Store the name
                 //navigate(`/studySet/${set.name}`);
-                window.location.href = '/studySet/${set.name}';
+                window.location.href = '/studySet/' + set.name;
                 return set;
             }
           return set;
