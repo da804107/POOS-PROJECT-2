@@ -313,8 +313,12 @@
 
 // src/components/ViewStudySetUI.tsx
 
-import React, { useState } from 'react';
-import './StudySetUI.css'; // Ensure you import your CSS file
+
+// src/pages/ViewStudySetPage.tsx
+
+import React, { useState, useEffect } from 'react';
+import ViewStudySetUI from '../components/ViewStudySetUI';
+import { useParams } from 'react-router-dom';
 
 interface Flashcard {
   id: string;
@@ -329,101 +333,162 @@ interface StudySet {
   isEditingName: boolean;
 }
 
-interface ViewStudySetUIProps {
-  studySet: StudySet;
-  isAddingFlashcard: boolean;
-  newFlashcard: { term: string; definition: string };
-  setNewFlashcard: React.Dispatch<React.SetStateAction<{ term: string; definition: string }>>;
-  handleAddFlashcard: () => void;
-  handleDeleteSet: () => void;
-  handleEditSetName: (newName: string) => void;
-  handleEditFlashcard: (id: string, newTerm: string, newDefinition: string) => void;
-  setIsAddingFlashcard: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const ViewStudySetPage: React.FC = () => {
+  const { id: setId } = useParams<{ id: string }>();
+  const [studySet, setStudySet] = useState<StudySet | null>(null);
+  const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
+  const [newFlashcard, setNewFlashcard] = useState({ term: '', definition: '' });
 
-const ViewStudySetUI: React.FC<ViewStudySetUIProps> = ({
-  studySet,
-  isAddingFlashcard,
-  newFlashcard,
-  setNewFlashcard,
-  handleAddFlashcard,
-  handleDeleteSet,
-  handleEditSetName,
-  handleEditFlashcard,
-  setIsAddingFlashcard,
-}) => {
-  const [newName, setNewName] = useState(studySet.name);
+  const userData = localStorage.getItem('user_data');
+  const userId = userData ? JSON.parse(userData).id : '';
+
+  useEffect(() => {
+    const fetchStudySet = async () => {
+      try {
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/getStudySet', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId, setId }),
+        });
+
+        if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.error || 'Failed to fetch study set');
+        }
+
+        const data = await response.json();
+        setStudySet({
+          id: data.setId,
+          name: data.title,
+          flashcards: data.flashcards || [],
+          isEditingName: false,
+        });
+      } catch (error) {
+        console.error('Error fetching study set:', error);
+      }
+    };
+
+    if (userId && setId) {
+      fetchStudySet();
+    }
+  }, [userId, setId]);
+
+  const handleEditSetName = (newName: string) => {
+    if (studySet) {
+      const updateSetName = async () => {
+        try {
+          const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId,
+              setId: studySet.id,
+              newName,
+            }),
+          });
+
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error updating set name');
+          }
+
+          setStudySet({ ...studySet, name: newName, isEditingName: false });
+        } catch (error) {
+          console.error('Failed to update set name:', error);
+        }
+      };
+
+      updateSetName();
+    }
+  };
+
+  const handleAddFlashcard = () => {
+    if (newFlashcard.term.trim() && newFlashcard.definition.trim()) {
+      const addFlashcard = async () => {
+        try {
+          const response = await fetch('https://project.annetteisabrunette.xyz/api/addFlashcard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId,
+              setId: studySet?.id,
+              term: newFlashcard.term,
+              definition: newFlashcard.definition,
+            }),
+          });
+
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error adding flashcard');
+          }
+
+          const data = await response.json();
+          if (studySet) {
+            setStudySet({
+              ...studySet,
+              flashcards: [...studySet.flashcards, { id: data.flashcardId, ...newFlashcard }],
+            });
+          }
+          setNewFlashcard({ term: '', definition: '' });
+          setIsAddingFlashcard(false);
+        } catch (error) {
+          console.error('Failed to add flashcard:', error);
+        }
+      };
+
+      addFlashcard();
+    }
+  };
+
+  const handleEditFlashcard = (id: string, newTerm: string, newDefinition: string) => {
+    // Implement edit flashcard functionality
+  };
+
+  const handleDeleteSet = async () => {
+    try {
+      const requestOptions = {
+        method: 'POST', // Or 'DELETE' if your backend expects it
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId,
+          setId: studySet?.id,
+        }),
+      };
+
+      const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteset', requestOptions);
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || 'Error deleting set');
+      }
+
+      // After deletion, redirect the user or update the UI
+      window.location.href = '/homePage'; // Adjust the URL as needed
+    } catch (error) {
+      console.error('Failed to delete set:', error);
+      // Optionally, display an error message to the user
+    }
+  };
 
   return (
-    <div className="study-set-page">
-      <button className="home-button" onClick={() => (window.location.href = '/home')}>
-        Home
-      </button>
-
-      <div className="study-set-header">
-        {studySet.isEditingName ? (
-          <div className="edit-set-name">
-            <input
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-            />
-            <button onClick={() => handleEditSetName(newName)}>Save</button>
-          </div>
-        ) : (
-          <h2>{studySet.name}</h2>
-        )}
-      </div>
-
-      <div className="actions">
-        <button onClick={() => setIsAddingFlashcard(true)}>Add Flashcard</button>
-        <button onClick={handleDeleteSet}>Delete Set</button>
-        <button onClick={() => handleEditSetName(newName)}>Edit Set Name</button>
-      </div>
-
-      {isAddingFlashcard && (
-        <div className="add-flashcard">
-          <input
-            type="text"
-            placeholder="Term"
-            value={newFlashcard.term}
-            onChange={(e) => setNewFlashcard({ ...newFlashcard, term: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Definition"
-            value={newFlashcard.definition}
-            onChange={(e) => setNewFlashcard({ ...newFlashcard, definition: e.target.value })}
-          />
-          <div className="add-card-buttons">
-            <button onClick={handleAddFlashcard}>Add</button>
-            <button onClick={() => setIsAddingFlashcard(false)}>Cancel</button>
-          </div>
-        </div>
+    <div>
+      {studySet && (
+        <ViewStudySetUI
+          studySet={studySet}
+          isAddingFlashcard={isAddingFlashcard}
+          newFlashcard={newFlashcard}
+          setNewFlashcard={setNewFlashcard}
+          handleAddFlashcard={handleAddFlashcard}
+          handleDeleteSet={handleDeleteSet}
+          handleEditSetName={handleEditSetName}
+          handleEditFlashcard={handleEditFlashcard}
+          setIsAddingFlashcard={setIsAddingFlashcard}
+        />
       )}
-
-      <div className="flashcards">
-        {studySet.flashcards.map((flashcard) => (
-          <div key={flashcard.id} className="flashcard">
-            <div className="term">{flashcard.term}</div>
-            <div className="definition">{flashcard.definition}</div>
-            <div className="flashcard-buttons">
-              <button
-                onClick={() =>
-                  handleEditFlashcard(flashcard.id, flashcard.term, flashcard.definition)
-                }
-              >
-                Edit
-              </button>
-              <button>Delete</button>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
 
 export default ViewStudySetPage;
-
-
