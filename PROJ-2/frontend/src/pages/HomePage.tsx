@@ -204,6 +204,20 @@ const HomePage: React.FC = () => {
         }
     };
 
+    const handleViewSet = (id: string) => {
+        setStudySets(studySets.map(set => {
+            //set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            if (set.id === id) {
+            var editSet = {name: set.name};
+                localStorage.setItem('set_name', JSON.stringify(editSet)); // Store the name
+                navigate(`/studySet/${set.name}`);
+                return set;
+            }
+          return set;
+        }));
+        
+    };
+
     const filteredSets = studySets.filter(set =>
         set.name.toLowerCase().includes(search.toLowerCase())
     );
