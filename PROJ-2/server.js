@@ -187,6 +187,7 @@ app.post('/api/viewsets', async (req, res, next) => {
         const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _sn.name + '.*' } });
 
         _ret = results.Flashcards;
+        console.log(_ret);
     } catch (e) {
         error = e.toString();
     }
