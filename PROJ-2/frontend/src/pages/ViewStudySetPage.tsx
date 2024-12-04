@@ -177,7 +177,7 @@ const handleAddFlashcard = async () => {
 
         console.log(newFlashcard);
         console.log(Id);
-        console.log(studySet.name);
+        console.log(setName);
         const response = await fetch('https://project.annetteisabrunette.xyz/api/addflashcard', requestOptions);
 
         if (!response.ok) {
