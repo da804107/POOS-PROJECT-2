@@ -1,18 +1,43 @@
-// Updated ViewStudySetPage.tsx
+// ViewStudySetPage.tsx
+
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PageTitle from "../components/PageTitle";
 import ViewStudySetUI from "../components/ViewStudySetUI";
 
-const ViewStudySetPage = () => {
-  let _ud: any = localStorage.getItem("user_data");
-  let ud = JSON.parse(_ud);
-  let Id: string = ud.id;
+interface Flashcard {
+  id: string;
+  term: string;
+  definition: string;
+}
 
-  let _sn: any = localStorage.getItem("set_name");
-  let sn = JSON.parse(_sn);
-  let setName = sn.name;
-  let setId: string = sn.id; // Assuming set_id is stored
+interface StudySet {
+  _id: string;
+  name: string;
+  flashcards: Flashcard[];
+  isEditingName: boolean;
+}
+
+const ViewStudySetPage = () => {
+  const _ud: any = localStorage.getItem("user_data");
+  const ud = JSON.parse(_ud);
+  const Id: string = ud.id;
+
+  const _sn: any = localStorage.getItem("set_name");
+  const sn = JSON.parse(_sn);
+  const setName = sn.name;
+  const setId: string = sn.id; // Assuming set_id is stored
+
+  const [studySet, setStudySet] = useState<StudySet>({
+    _id: "",
+    name: "",
+    flashcards: [],
+    isEditingName: false,
+  });
+  const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
+  const [isCardView, setIsCardView] = useState(false);
+  const [term, setTerm] = useState("");
+  const [definition, setDefinition] = useState("");
 
   useEffect(() => {
     const handleLoad = async () => {
@@ -36,9 +61,9 @@ const ViewStudySetPage = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch sets");
         }
-        console.log(fetchedSet.results.Flashcards);
+        console.log(fetchedSet.results.flashcards);
         setStudySet(fetchedSet.results);
-        console.log(fetchedSet.results.Flashcards);
+        console.log(fetchedSet.results.flashcards);
         console.log("Fetched no errors");
       } catch (error) {
         console.error("Failed to load sets", error);
@@ -49,30 +74,6 @@ const ViewStudySetPage = () => {
       handleLoad();
     }
   }, [Id, setName]);
-
-  interface Flashcard {
-    id: string;
-    term: string;
-    definition: string;
-  }
-
-  interface StudySet {
-    _id: string;
-    SetName: string;
-    Flashcards: Flashcard[];
-    isEditingName: boolean;
-  }
-
-  const [studySet, setStudySet] = useState<StudySet>({
-    _id: "",
-    SetName: "",
-    Flashcards: [],
-    isEditingName: false,
-  });
-  const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
-  const [isCardView, setIsCardView] = useState(false);
-  const [term, setTerm] = useState("");
-  const [definition, setDefinition] = useState("");
 
   const handleEditSetName = () => {
     setStudySet({ ...studySet, isEditingName: !studySet.isEditingName });
@@ -111,7 +112,7 @@ const ViewStudySetPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
-          title: studySet.SetName,
+          title: studySet.name,
         }),
       };
 
@@ -124,7 +125,6 @@ const ViewStudySetPage = () => {
       }
 
       // Redirect or update UI after deletion
-      // Example:
       window.location.href = '/sets';
     } catch (error) {
       console.error('Failed to delete set:', error);
@@ -144,7 +144,7 @@ const ViewStudySetPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
-          setName: studySet.SetName,
+          setName: studySet.name,
           flashcard: newFlashcard,
         }),
       };
@@ -161,7 +161,7 @@ const ViewStudySetPage = () => {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: Id, setName: studySet.SetName }),
+          body: JSON.stringify({ userId: Id, setName: studySet.name }),
         }
       );
 
@@ -183,7 +183,7 @@ const ViewStudySetPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
-          setName: studySet.SetName,
+          setName: studySet.name,
           flashcardId: flashcardId,
         }),
       };
@@ -198,7 +198,7 @@ const ViewStudySetPage = () => {
 
       setStudySet({
         ...studySet,
-        Flashcards: studySet.Flashcards.filter(
+        flashcards: studySet.flashcards.filter(
           (flashcard) => flashcard.id !== flashcardId
         ),
       });
@@ -218,7 +218,7 @@ const ViewStudySetPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
-          setName: studySet.SetName,
+          setName: studySet.name,
           flashcardId: flashcardId,
           newTerm: newTerm,
           newDefinition: newDefinition,
@@ -235,7 +235,7 @@ const ViewStudySetPage = () => {
 
       setStudySet({
         ...studySet,
-        Flashcards: studySet.Flashcards.map((flashcard) =>
+        flashcards: studySet.flashcards.map((flashcard) =>
           flashcard.id === flashcardId
             ? { ...flashcard, term: newTerm, definition: newDefinition }
             : flashcard
