@@ -94,7 +94,7 @@ app.post('/api/deleteset', async(req, res, next) => {
 
     try{
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, SetName: title});
+        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, _id: title});
 
         if (delSetResult.deletedCount === 0){
              return res.status(404).json({message: 'No study set found'});
