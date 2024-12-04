@@ -34,7 +34,7 @@ const ViewStudySetPage = () => {
         if (!response.ok) {
             throw new Error("Failed to fetch sets");
         }
-        console.log(fetchedSet.Flashcards[0]);
+        console.log(fetchedSet.results.Flashcards);
         if (fetchedSet.results) {
             console.log(fetchedSet.results.flashcards);
             setStudySet(fetchedSet.results);
