@@ -51,7 +51,7 @@ app.post('/api/signup', async (req, res) => {
         const db = client.db('project');
         newUser.UserId = await db.collection('Users').countDocuments();
 
-        /* Uncomment to check for existing user
+        /* 
         if (await db.collection('Users').findOne({ Username: newUser.Username })) {
             return res.status(400).json({ error: 'User already exists' });
         }
