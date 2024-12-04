@@ -185,7 +185,6 @@ const handleAddFlashcard = async () => {
             throw new Error(errorResponse.error || 'Error adding flashcard');
         }
 
-        /*
 
         const updatedSetResponse = await fetch(
             'https://project.annetteisabrunette.xyz/api/viewset',
@@ -205,7 +204,6 @@ const handleAddFlashcard = async () => {
         setDefinition('');
         setIsAddingFlashcard(false);
 
-        */
     } catch (error) {
         console.error('Failed to add flashcard:', error);
     }
