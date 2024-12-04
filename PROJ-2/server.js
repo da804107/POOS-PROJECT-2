@@ -1,4 +1,5 @@
-// Import necessary modules
+// server.js
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -93,16 +94,12 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/addset', async (req, res) => {
     const { userId, title, textareasList } = req.body;
     console.log(req.body);
-    const set = { SetName: title, UserId: userId, Flashcards: textareasList };
+    const set = { name: title, userId: userId, flashcards: textareasList };
     console.log(set);
     let error = '';
     try {
         const db = client.db('project');
         await db.collection('StudySets').insertOne(set);
-        await db.collection('FlashCards').insertMany(textareasList.map(fc => ({
-            SetName: title,
-            Flashcard: fc
-        })));
     } catch (e) {
         error = e.toString();
     }
@@ -118,21 +115,21 @@ app.delete('/api/deleteset', async (req, res) => {
 
     try {
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').deleteOne({ UserId: userId, SetName: title });
+        const delSetResult = await db.collection('StudySets').deleteOne({ userId: userId, name: title });
 
         if (delSetResult.deletedCount === 0) {
             return res.status(404).json({ message: 'No study set found' });
         }
 
         // Delete all flashcards
-        await db.collection('FlashCards').deleteMany({ SetName: title });
+        await db.collection('FlashCards').deleteMany({ setName: title });
     } catch (e) {
         error = e.toString();
     }
     res.status(200).json({ error });
 });
 
-// Update Set Name
+// Edit Set Name
 app.patch('/api/editsets', async (req, res) => {
     const { userId, setId, newName } = req.body;
     console.log('Update: ', setId);
@@ -141,8 +138,8 @@ app.patch('/api/editsets', async (req, res) => {
     try {
         const db = client.db('project');
         const updateResult = await db.collection('StudySets').updateOne(
-            { UserId: userId, _id: new ObjectId(setId) },
-            { $set: { SetName: newName } }
+            { userId: userId, _id: new ObjectId(setId) },
+            { $set: { name: newName } }
         );
 
         if (updateResult.matchedCount === 0) {
@@ -162,8 +159,8 @@ app.post('/api/addflashcard', async (req, res) => {
     try {
         const db = client.db('project');
         const result = await db.collection('StudySets').updateOne(
-            { UserId: userId, SetName: setName },
-            { $push: { Flashcards: flashcard } }
+            { userId: userId, name: setName },
+            { $push: { flashcards: flashcard } }
         );
 
         if (result.matchedCount === 0) {
@@ -184,12 +181,12 @@ app.delete('/api/deleteflashcard', async (req, res) => {
     try {
         const db = client.db('project');
         const result = await db.collection('StudySets').updateOne(
-            { UserId: userId, SetName: setName },
-            { $pull: { Flashcards: { id: flashcardId } } }
+            { userId: userId, name: setName },
+            { $pull: { flashcards: { id: flashcardId } } }
         );
 
         if (result.matchedCount === 0) {
-            return res.status(404).json({ error: 'Study set not found' });
+            return res.status(404).json({ error: 'Flashcard not found' });
         }
     } catch (e) {
         error = e.toString();
@@ -206,8 +203,8 @@ app.patch('/api/editflashcard', async (req, res) => {
     try {
         const db = client.db('project');
         const result = await db.collection('StudySets').updateOne(
-            { UserId: userId, SetName: setName, "Flashcards.id": flashcardId },
-            { $set: { "Flashcards.$.term": newTerm, "Flashcards.$.definition": newDefinition } }
+            { userId: userId, name: setName, "flashcards.id": flashcardId },
+            { $set: { "flashcards.$.term": newTerm, "flashcards.$.definition": newDefinition } }
         );
 
         if (result.matchedCount === 0) {
@@ -229,10 +226,10 @@ app.post('/api/searchsets', async (req, res) => {
 
     try {
         const db = client.db('project');
-        const results = await db.collection('StudySets').find({ UserId: userId, SetName: { $regex: _search + '.*' } }).toArray();
+        const results = await db.collection('StudySets').find({ userId: userId, name: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push([results[i]._id, results[i].SetName]);
+            _ret.push([results[i]._id, results[i].name]);
         }
     } catch (e) {
         error = e.toString();
@@ -251,7 +248,7 @@ app.post('/api/viewset', async (req, res) => {
 
     try {
         const db = client.db('project');
-        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: setName });
+        const results = await db.collection('StudySets').findOne({ userId: userId, name: setName });
 
         _ret = results;
         console.log(_ret);
@@ -272,8 +269,8 @@ app.post('/api/searchcards', async (req, res) => {
         const db = client.db('project');
         const results = await db.collection('StudySets').findOne({ _id: new ObjectId(setId) });
 
-        if (results && results.Flashcards) {
-            _ret = results.Flashcards;
+        if (results && results.flashcards) {
+            _ret = results.flashcards;
         }
     } catch (e) {
         error = e.toString();
