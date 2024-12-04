@@ -196,11 +196,12 @@ const HomePage: React.FC = () => {
             if (set.id === id) {
                 let _sn: any = localStorage.getItem('set_name');
                 let sn = JSON.parse(_sn);
-            doUpdateSet(sn.name, newName) // Store the name
+                doUpdateSet(sn.name, newName) // Store the name
                 return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
             }
-          return set;
-            }}));
+            return set;
+            }));
+        }
     };
 
     const filteredSets = studySets.filter(set =>
