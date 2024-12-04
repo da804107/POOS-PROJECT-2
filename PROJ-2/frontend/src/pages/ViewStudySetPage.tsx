@@ -4,15 +4,15 @@ import PageTitle from '../components/PageTitle';
 import ViewStudySetUI from '../components/ViewStudySetUI';
 
 const ViewStudySetPage = () => {
+    let _sn: any = localStorage.getItem('set_name');
+    let sn = JSON.parse(_sn);
+    
     const { id } = useParams();
 
     const initialStudySet = {
         id: id || '',
-        name: 'My Study Set',
-        flashcards: [
-            { id: '1', term: 'Term 1', definition: 'Definition 1' },
-            { id: '2', term: 'Term 2', definition: 'Definition 2' },
-        ],
+        name: sn.name,
+        flashcards: [],
         isEditingName: false,
     };
 
