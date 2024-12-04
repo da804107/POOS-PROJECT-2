@@ -21,7 +21,7 @@ interface StudySet {
 const ViewStudySetPage = () => {
   const _ud: any = localStorage.getItem("user_data");
   const ud = JSON.parse(_ud);
-  const Id: string = ud.id;
+  const Id: string = ud.userId; // Changed to userId
 
   const _sn: any = localStorage.getItem("set_name");
   const sn = JSON.parse(_sn);
@@ -101,7 +101,23 @@ const ViewStudySetPage = () => {
         throw new Error(result.error || 'Error updating set name');
       }
 
-      setStudySet({ ...studySet, name: newName, isEditingName: false });
+      // Fetch the updated study set to ensure 'id' is retained
+      const viewSetResponse = await fetch(
+        "https://project.annetteisabrunette.xyz/api/viewset",
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: Id, setName: newName }),
+        }
+      );
+
+      const updatedSet = await viewSetResponse.json();
+
+      if (!viewSetResponse.ok) {
+        throw new Error('Error fetching updated set');
+      }
+
+      setStudySet(updatedSet.results);
     } catch (error) {
       console.error('Failed to save set name:', error);
     }
