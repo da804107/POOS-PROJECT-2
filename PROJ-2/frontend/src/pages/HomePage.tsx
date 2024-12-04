@@ -27,14 +27,16 @@ const HomePage: React.FC = () => {
             };
             try {
                 console.log(userId);
-                const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions); 
-                if(!response.ok) {
-                    throw new Error('Failed to fetch sets');
-                }
-                const newSets = await response.json();
-                console.log(newSets);
-                setStudySets(newSets);
-                console.log("Fetched no errors");
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to fetch sets');
+            }
+
+            setStudySets(data.results || []);
+            console.log(data.results);
+            console.log("Fetched no errors");
                 
             } catch (error) {
                 console.error('Failed to load sets', error);
