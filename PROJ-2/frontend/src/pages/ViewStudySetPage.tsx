@@ -14,41 +14,42 @@ const ViewStudySetPage = () => {
 
   useEffect(() => {
     const handleLoad = async () => {
-      //const { id } = useParams();
+    const userId = Id;
+    console.log("Loading sets");
 
-      const userId = Id;
-      console.log("Loading sets");
-
-      const requestOptions = {
+    const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: userId, setName: setName }),
-      };
-      try {
+    };
+    try {
         console.log(requestOptions.body);
         const response = await fetch(
-          "https://project.annetteisabrunette.xyz/api/viewset",
-          requestOptions
+            "https://project.annetteisabrunette.xyz/api/viewset",
+            requestOptions
         );
         const fetchedSet = await response.json();
         console.log(fetchedSet);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch sets");
+            throw new Error("Failed to fetch sets");
         }
-        console.log(studySet.flashcards);
-        setStudySet(fetchedSet);
-        console.log(studySet.flashcards);
-        console.log("Fetched no errors");
-      } catch (error) {
+        if (fetchedSet.results) {
+            console.log(fetchedSet.results.flashcards);
+            setStudySet(fetchedSet.results);
+            console.log(fetchedSet.results.flashcards);
+            console.log("Fetched no errors");
+        }
+    } catch (error) {
         console.error("Failed to load sets", error);
-      }
+    }
     };
+
 
     if (Id) {
       handleLoad();
     }
-  }, [Id]);
+    }, [Id]);
 
   const initialStudySet = {
     id: Id || "",
@@ -88,15 +89,75 @@ const ViewStudySetPage = () => {
     setStudySet({ ...studySet, isEditingName: !studySet.isEditingName });
   };
 
-  const handleSaveSetName = (newName: string) => {
-    setStudySet({ ...studySet, name: newName, isEditingName: false });
+  const handleSaveSetName = async (newName: string) => {
+    try {
+        const requestOptions = {
+            method: 'POST', // Changed from 'PATCH' to 'POST'
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: Id,
+                setId: studySet.id,
+                newName: newName,
+            }),
+        };
+
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Error updating set name');
+        }
+
+        // Fetch the updated study set to ensure 'id' is retained
+        const viewSetResponse = await fetch(
+            "https://project.annetteisabrunette.xyz/api/viewset",
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: Id, setName: newName }),
+            }
+        );
+
+        const updatedSet = await viewSetResponse.json();
+
+        if (!viewSetResponse.ok) {
+            throw new Error('Error fetching updated set');
+        }
+
+        setStudySet(updatedSet.results);
+    } catch (error) {
+        console.error('Failed to save set name:', error);
+    }
+    };
+
+  const handleDeleteSet = async () => {
+    try {
+        const requestOptions = {
+            method: 'POST', // Changed from 'DELETE' to 'POST'
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: Id,
+                title: studySet.name,
+            }),
+        };
+
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteset', requestOptions);
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Error deleting set');
+        }
+
+        // Redirect or update UI after deletion
+        window.location.href = '/sets';
+    } catch (error) {
+        console.error('Failed to delete set:', error);
+    }
   };
 
-  const handleDeleteSet = () => {
-    console.log("Study set deleted:", studySet.id);
-  };
-
-  const handleAddFlashcard = async () => {
+const handleAddFlashcard = async () => {
     const newFlashcard: Flashcard = {
         id: Date.now().toString(),
         term,
@@ -120,7 +181,7 @@ const ViewStudySetPage = () => {
             const errorResponse = await response.json();
             throw new Error(errorResponse.error || 'Error adding flashcard');
         }
-        
+
         const updatedSetResponse = await fetch(
             'https://project.annetteisabrunette.xyz/api/viewset',
             {
@@ -131,7 +192,9 @@ const ViewStudySetPage = () => {
         );
 
         const updatedSet = await updatedSetResponse.json();
-        setStudySet(updatedSet.results);
+        if (updatedSet.results) {
+            setStudySet(updatedSet.results);
+        }
 
         setTerm('');
         setDefinition('');
@@ -141,31 +204,77 @@ const ViewStudySetPage = () => {
     }
 };
 
+const handleDeleteFlashcard = async (flashcardId: string) => {
+    try {
+        const requestOptions = {
+            method: 'POST', // Changed from 'DELETE' to 'POST'
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: Id,
+                setName: studySet.name,
+                flashcardId: flashcardId,
+            }),
+        };
+
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteflashcard', requestOptions);
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Error deleting flashcard');
+        }
+
+        setStudySet({
+            ...studySet,
+            flashcards: studySet.flashcards.filter(
+                (flashcard) => flashcard.id !== flashcardId
+            ),
+        });
+    } catch (error) {
+        console.error('Failed to delete flashcard:', error);
+    }
+};
 
 
-  const handleDeleteFlashcard = (flashcardId: string) => {
-    setStudySet({
-      ...studySet,
-      flashcards: studySet.flashcards.filter(
-        (flashcard) => flashcard.id !== flashcardId
-      ),
-    });
-  };
-
-  const handleEditFlashcard = (
+const handleEditFlashcard = async (
     flashcardId: string,
     newTerm: string,
     newDefinition: string
-  ) => {
-    setStudySet({
-      ...studySet,
-      flashcards: studySet.flashcards.map((flashcard) =>
-        flashcard.id === flashcardId
-          ? { ...flashcard, term: newTerm, definition: newDefinition }
-          : flashcard
-      ),
-    });
-  };
+) => {
+    try {
+        const requestOptions = {
+            method: 'POST', // Changed from 'PATCH' to 'POST'
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId: Id,
+                setName: studySet.name,
+                flashcardId: flashcardId,
+                newTerm: newTerm,
+                newDefinition: newDefinition,
+            }),
+        };
+
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/editflashcard', requestOptions);
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Error editing flashcard');
+        }
+
+        setStudySet({
+            ...studySet,
+            flashcards: studySet.flashcards.map((flashcard) =>
+                flashcard.id === flashcardId
+                    ? { ...flashcard, term: newTerm, definition: newDefinition }
+                    : flashcard
+            ),
+        });
+    } catch (error) {
+        console.error('Failed to edit flashcard:', error);
+    }
+};
+
 
   useEffect(() => {
     console.log("Fetching study set for ID:", Id);
