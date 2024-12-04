@@ -190,7 +190,7 @@ const ViewStudySetPage = () => {
         body: JSON.stringify({
           userId: Id,
           setName: studySet.name,
-          flashcardId: flashcardId,
+          flashcardId: id,
           newTerm: newTerm,
           newDefinition: newDefinition,
         }),
@@ -208,7 +208,7 @@ const ViewStudySetPage = () => {
       setStudySet((prev) => ({
         ...prev,
         flashcards: prev.flashcards.map((card) =>
-          card.id === flashcardId
+          card.id === id
             ? { ...card, term: newTerm, definition: newDefinition }
             : card
         ),
