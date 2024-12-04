@@ -109,6 +109,7 @@ app.post('/api/deleteset', async (req, res) => {
 });
 
 // POST /api/setName
+// POST /api/setName
 app.post('/api/setName', async (req, res) => {
     const { userId, setId, newName } = req.body;
     console.log('Update: ', setId);
@@ -116,8 +117,12 @@ app.post('/api/setName', async (req, res) => {
 
     try {
         const db = client.db('project');
+        
+        // Convert setId to ObjectId if it's not already
+        const objectId = new require('mongodb').ObjectId(setId);
+
         const updateResult = await db.collection('StudySets').updateOne(
-            { UserId: userId, SetName: setId },
+            { UserId: userId, _id: objectId }, // Match by ObjectId
             { $set: { SetName: newName } }
         );
 
@@ -125,11 +130,12 @@ app.post('/api/setName', async (req, res) => {
             return res.status(404).json({ message: 'No study set found' });
         }
 
-        // Note: Removed deletion of flashcards here as it seems unrelated to updating set name
     } catch (e) {
         error = e.toString();
+        return res.status(500).json({ error });
     }
-    res.status(200).json({ error });
+
+    res.status(200).json({ error: '' });
 });
 
 
