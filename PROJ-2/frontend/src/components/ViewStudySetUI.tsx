@@ -57,10 +57,6 @@ const ViewStudySetUI: React.FC<{
             localStudySet && localStudySet.flashcards && localStudySet.flashcards.length > 0
             ? localStudySet.flashcards[currentIndex]
             : null;
-
-        if (!localStudySet || !localStudySet.flashcards || localStudySet.flashcards.length === 0) {
-            return <div>No flashcards available. Add some to get started!</div>;
-        }
         
 
         const handleNextCard = () => {
