@@ -2,7 +2,6 @@ import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 import HomePageUI from '../components/HomePageUI';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
     const [studySets, setStudySets] = useState<{ id: string; name: string; isEditing: boolean }[]>([]);
@@ -211,7 +210,8 @@ const HomePage: React.FC = () => {
             if (set.id === id) {
             var editSet = {name: set.name};
                 localStorage.setItem('set_name', JSON.stringify(editSet)); // Store the name
-                navigate(`/studySet/${set.name}`);
+                //navigate(`/studySet/${set.name}`);
+                window.location.href = '/studySet/${set.name}';
                 return set;
             }
           return set;
