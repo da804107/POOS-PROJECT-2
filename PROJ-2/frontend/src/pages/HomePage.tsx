@@ -189,21 +189,32 @@ const HomePage: React.FC = () => {
         
     };
 
+    // const handleEditSave = (id: string, newName: string) => {
+    //     if (newName.trim()) {
+    //         setStudySets(studySets.map(set => {
+    //         //set.id === id ? { ...set, isEditing: !set.isEditing } : set
+    //         if (set.id === id) {
+    //             let _sn: any = localStorage.getItem('set_name');
+    //             let sn = JSON.parse(_sn);
+    //             doUpdateSet(sn.name, newName) // Store the name
+    //             return { ...set, name: newName, isEditing: !set.isEditing }; // Toggle isEditing
+    //         }
+    //         return set;
+    //         }));
+    //     }
+    // };
     const handleEditSave = (id: string, newName: string) => {
-        if (newName.trim()) {
-            setStudySets(studySets.map(set => {
-            //set.id === id ? { ...set, isEditing: !set.isEditing } : set
+    if (newName.trim()) {
+        setStudySets(studySets.map(set => {
             if (set.id === id) {
-                let _sn: any = localStorage.getItem('set_name');
-                let sn = JSON.parse(_sn);
-                doUpdateSet(sn.name, newName) // Store the name
-                return { ...set, name: newName, isEditing: !set.isEditing }; // Toggle isEditing
+                doUpdateSet(set.id, newName); // Pass correct ID
+                return { ...set, name: newName, isEditing: false }; // Toggle isEditing
             }
             return set;
-            }));
-        }
+        }));
+    }
     };
-
+    
     const handleViewSet = (id: string) => {
         setStudySets(studySets.map(set => {
             //set.id === id ? { ...set, isEditing: !set.isEditing } : set
