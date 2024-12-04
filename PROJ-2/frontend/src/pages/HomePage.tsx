@@ -414,7 +414,7 @@ const response = await fetch('https://project.annetteisabrunette.xyz/api/setName
 
 if (!response.ok) {
 const errorResponse = await response.json();
-throw new Error(errorResponse.error || 'Error deleting set');
+throw new Error(errorResponse.error || 'Error updating set');
 }
 
 } catch(error : any) {
