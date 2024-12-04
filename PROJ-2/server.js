@@ -109,6 +109,34 @@ app.post('/api/deleteset', async(req, res, next) => {
     res.status(200).json({error});
 });
 
+/Update set Name
+app.post('/api/setName', async(req, res, next) => {
+    const {setId, newName} = req.body;
+    console.log('Update: ', setId);
+    let error = '';
+
+    try{
+        const db = client.db('project');
+        const delSetResult = await db.collection('StudySets').updateOne( { _id: ObjectId(setId) },
+{
+  $set: {
+    SetName: newName
+  },
+});
+
+        if (delSetResult.deletedCount === 0){
+             return res.status(404).json({message: 'No study set found'});
+        }
+
+        //delete all flashcards
+        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
+
+    } catch (e){
+        error = e.toString();
+    }
+    res.status(200).json({error});
+});
+
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
     const { userId, title, textareasList } = req.body;
