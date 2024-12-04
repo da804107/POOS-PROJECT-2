@@ -11,6 +11,8 @@ const ViewStudySetPage = () => {
     let _sn: any = localStorage.getItem('set_name');
     let sn = JSON.parse(_sn);
     let setName = sn.name;
+
+    let fetchedSet = [];
     
     useEffect(() => {
         const handleLoad = async () => {
@@ -18,7 +20,7 @@ const ViewStudySetPage = () => {
 
     const userId = Id;
             console.log("Loading sets");
-    let fetchedSet;
+    
             
             const requestOptions = {
                 method: 'POST',
@@ -109,8 +111,8 @@ const ViewStudySetPage = () => {
     };
 
     useEffect(() => {
-        console.log('Fetching study set for ID:', id);
-    }, [id]);
+        console.log('Fetching study set for ID:', Id);
+    }, [Id]);
 
     return (
         <div>
