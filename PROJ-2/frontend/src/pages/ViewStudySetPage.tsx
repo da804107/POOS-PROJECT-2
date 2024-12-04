@@ -1,5 +1,3 @@
-// ViewStudySetPage.tsx
-
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PageTitle from "../components/PageTitle";
@@ -21,12 +19,11 @@ interface StudySet {
 const ViewStudySetPage = () => {
   const _ud: any = localStorage.getItem("user_data");
   const ud = JSON.parse(_ud);
-  const Id: string = ud.userId; // Changed to userId
+  const Id: string = ud.id; // 'id' corresponds to 'UserId' from backend
 
   const _sn: any = localStorage.getItem("set_name");
   const sn = JSON.parse(_sn);
   const setName = sn.name;
-  const setId: string = sn.id; // Assuming set_id is stored
 
   const [studySet, setStudySet] = useState<StudySet>({
     id: "",
@@ -84,7 +81,7 @@ const ViewStudySetPage = () => {
   const handleSaveSetName = async (newName: string) => {
     try {
       const requestOptions = {
-        method: 'PATCH',
+        method: 'POST', // Changed from 'PATCH' to 'POST' to match original '/api/setName' route
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
@@ -93,7 +90,7 @@ const ViewStudySetPage = () => {
         }),
       };
 
-      const response = await fetch('https://project.annetteisabrunette.xyz/api/editsets', requestOptions);
+      const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
 
       const result = await response.json();
 
@@ -126,7 +123,7 @@ const ViewStudySetPage = () => {
   const handleDeleteSet = async () => {
     try {
       const requestOptions = {
-        method: 'DELETE',
+        method: 'POST', // Changed from 'DELETE' to 'POST' to match original '/api/deleteset' route
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
@@ -199,7 +196,7 @@ const ViewStudySetPage = () => {
   const handleDeleteFlashcard = async (flashcardId: string) => {
     try {
       const requestOptions = {
-        method: 'DELETE',
+        method: 'POST', // Changed from 'DELETE' to 'POST' to match original '/api/deleteflashcard' route
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
@@ -234,7 +231,7 @@ const ViewStudySetPage = () => {
   ) => {
     try {
       const requestOptions = {
-        method: 'PATCH',
+        method: 'POST', // Changed from 'PATCH' to 'POST' to match original '/api/editflashcard' route
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
@@ -265,6 +262,10 @@ const ViewStudySetPage = () => {
       console.error('Failed to edit flashcard:', error);
     }
   };
+
+  useEffect(() => {
+    console.log("Fetching study set for ID:", Id);
+  }, [Id]);
 
   return (
     <div>
