@@ -114,20 +114,24 @@ const ViewStudySetPage = () => {
             }),
         };
 
-        const response = await fetch(
-            'https://project.annetteisabrunette.xyz/api/addflashcard',
-            requestOptions
-        );
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/addflashcard', requestOptions);
 
         if (!response.ok) {
             const errorResponse = await response.json();
             throw new Error(errorResponse.error || 'Error adding flashcard');
         }
+        
+        const updatedSetResponse = await fetch(
+            'https://project.annetteisabrunette.xyz/api/viewset',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: Id, setName: studySet.name }),
+            }
+        );
 
-        setStudySet({
-            ...studySet,
-            flashcards: [...studySet.flashcards, newFlashcard],
-        });
+        const updatedSet = await updatedSetResponse.json();
+        setStudySet(updatedSet.results);
 
         setTerm('');
         setDefinition('');
@@ -136,6 +140,7 @@ const ViewStudySetPage = () => {
         console.error('Failed to add flashcard:', error);
     }
 };
+
 
 
   const handleDeleteFlashcard = (flashcardId: string) => {

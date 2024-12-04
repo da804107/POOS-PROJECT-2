@@ -44,13 +44,10 @@ const ViewStudySetUI: React.FC<{
     const [isFlipped, setIsFlipped] = useState(false);
 
     useEffect(() => {
-        if (!localStudySet) {
-            const storedSet = localStorage.getItem('current_study_set');
-            if (storedSet) {
-                setLocalStudySet(JSON.parse(storedSet));
-            }
+        if (studySet) {
+            setLocalStudySet(studySet);
         }
-    }, [localStudySet]);
+    }, [studySet]);    
 
     if (!localStudySet) {
         return <div>Loading...</div>;
