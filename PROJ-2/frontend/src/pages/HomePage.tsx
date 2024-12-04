@@ -2,6 +2,7 @@ import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 import HomePageUI from '../components/HomePageUI';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
     const [studySets, setStudySets] = useState<{ id: string; name: string; isEditing: boolean }[]>([]);
