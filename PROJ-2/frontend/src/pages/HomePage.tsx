@@ -138,25 +138,23 @@ const handleDeleteSet = async (id: string) => {
     };
 
     async function doUpdateSet(setId: string, setTitle: string): Promise<void> {
-        const set = { userId: Id, setId: setId, newName: setTitle};
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(set),
-        };
-        console.log(set);
-        try {
-            const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
+    const set = { userId: Id, setId: setId, newName: setTitle };
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(set),
+    };
+    try {
+        const response = await fetch('https://project.annetteisabrunette.xyz/api/setName', requestOptions);
 
-            if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error(errorResponse.error || 'Error deleting set');
-            }
-
-        } catch(error : any) {
-            console.error('Error during delete set');
-            throw error;
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error updating set name');
         }
+    } catch (error: any) {
+        console.error('Error during set name update', error);
+        throw error;
+    }
     };
 
     /*const handleEditToggle = (id: string) => {
@@ -204,27 +202,17 @@ const handleDeleteSet = async (id: string) => {
         if (newName.trim()) {
             // Update the study set name in the backend
             doUpdateSet(id, newName).then(() => {
-                // After updating, reload the study sets to reflect the change
-                const userId = Id;
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId }),
-                };
-                fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        setStudySets(data.results || []);
-                    })
-                    .catch(error => {
-                        console.error('Failed to fetch updated sets', error);
-                    });
+                // After the name update, update the state directly
+                setStudySets(prevStudySets =>
+                    prevStudySets.map(set =>
+                        set.id === id ? { ...set, name: newName, isEditing: false } : set
+                    )
+                );
             }).catch(error => {
                 console.error('Error during set name update', error);
             });
         }
     };
-
     
     const handleViewSet = (id: string) => {
         setStudySets(studySets.map(set => {
