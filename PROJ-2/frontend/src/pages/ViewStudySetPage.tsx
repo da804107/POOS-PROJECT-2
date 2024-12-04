@@ -12,7 +12,10 @@ const ViewStudySetPage = () => {
     let sn = JSON.parse(_sn);
     let setName = sn.name;
 
-    let fetchedSet = [];
+    let fetchedSet = [
+            { id: '1', term: 'Term 1', definition: 'Definition 1' },
+            { id: '2', term: 'Term 2', definition: 'Definition 2' },
+        ];
     
     useEffect(() => {
         const handleLoad = async () => {
@@ -51,7 +54,7 @@ const ViewStudySetPage = () => {
     }, [Id]);
 
     const initialStudySet = {
-        id: id || '',
+        id: Id || '',
         name: sn.name,
         flashcards: fetchedSet,
         isEditingName: false,
