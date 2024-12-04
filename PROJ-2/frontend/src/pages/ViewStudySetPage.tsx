@@ -36,8 +36,9 @@ const ViewStudySetPage = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch sets");
         }
-
+        console.log(studySet.flashcards);
         setStudySet(fetchedSet);
+        console.log(studySet.flashcards);
         console.log("Fetched no errors");
       } catch (error) {
         console.error("Failed to load sets", error);
