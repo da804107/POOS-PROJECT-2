@@ -12,10 +12,6 @@ const ViewStudySetPage = () => {
     let sn = JSON.parse(_sn);
     let setName = sn.name;
 
-    let fetchedSet = [
-            { id: '1', term: 'Term 1', definition: 'Definition 1' },
-            { id: '2', term: 'Term 2', definition: 'Definition 2' },
-        ];
     
     useEffect(() => {
         const handleLoad = async () => {
@@ -33,14 +29,14 @@ const ViewStudySetPage = () => {
             try {
                 console.log(requestOptions.body);
             const response = await fetch('https://project.annetteisabrunette.xyz/api/viewset', requestOptions);
-            fetchedSet = await response.json();
+            const fetchedSet = await response.json();
             console.log(fetchedSet);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch sets');
             }
 
-            setStudySet(fetchedSet)
+            setStudySet(fetchedSet);
             console.log("Fetched no errors");
                 
             } catch (error) {
@@ -56,7 +52,10 @@ const ViewStudySetPage = () => {
     const initialStudySet = {
         id: Id || '',
         name: sn.name,
-        flashcards: fetchedSet,
+        flashcards: [
+            { id: '1', term: 'Yup', definition: 'You got it' },
+            { id: '2', term: 'Nope', definition: 'No you dont' },
+        ],
         isEditingName: false,
     };
 
