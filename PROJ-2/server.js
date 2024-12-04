@@ -112,6 +112,7 @@ app.post('/api/deleteset', async (req, res) => {
 app.post('/api/setName', async (req, res) => {
     const { userId, setId, newName } = req.body;
     console.log('Update: ', setId);
+    console.log(req.body);
     let error = '';
 
     try {
