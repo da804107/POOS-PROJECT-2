@@ -85,9 +85,31 @@ const HomePage: React.FC = () => {
     };
 
     
-
-    const handleDeleteSet = (id: string) => {
+    //Old delete set (didnt actually delete)
+    /*const handleDeleteSet = (id: string) => {
         setStudySets(studySets.filter(set => set.id !== id));
+    };*/
+
+    async function handleDeleteSet(set: { userId: 0; title: string }): Promise<void> {
+        set.userId = Id;
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(set),
+        };
+        console.log(Id);
+        try {
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/deleteset', requestOptions);
+
+            if (!response.ok) {
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.error || 'Error deleting set');
+            }
+
+        } catch(error : any) {
+            console.error('Error during delete set');
+            throw error;
+        }
     };
 
     const handleEditToggle = (id: string) => {
