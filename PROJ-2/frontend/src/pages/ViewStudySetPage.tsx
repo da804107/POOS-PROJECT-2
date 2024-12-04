@@ -103,8 +103,8 @@ const ViewStudySetPage = () => {
             definition,
         };
         setStudySet({
-            ...studySet,
-            flashcards: [...studySet.flashcards, newFlashcard],
+            ...prev,
+            flashcards: [...prev.flashcards, newFlashcard],
         });
         setTerm('');
         setDefinition('');
