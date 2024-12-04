@@ -186,7 +186,7 @@ app.post('/api/viewset', async (req, res, next) => {
 
     try {
         const db = client.db('project');
-        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _setName + '.*' } });
+        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: setName + '.*' } });
 
         _ret = results.Flashcards;
         console.log(_ret);
