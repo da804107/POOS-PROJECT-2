@@ -107,7 +107,7 @@ const HomePageUI: React.FC<HomePageUIProps> = ({
                                     <div className="setActions">
                                         <button
                                             className="buttons view-button"
-                                            onClick={() => navigate(`/studySet/${set.id}`)}
+                                            onClick={() => handleViewSet(set.id)}
                                         >
                                             VIEW
                                         </button>
