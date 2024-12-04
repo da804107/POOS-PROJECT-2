@@ -59,7 +59,20 @@ const ViewStudySetPage = () => {
         isEditingName: false,
     };
 
-    const [studySet, setStudySet] = useState<studySet>({
+    interface Flashcard {
+    id: string;
+    term: string;
+    definition: string;
+    }
+
+    interface StudySet {
+        id: string;
+        name: string;
+        flashcards: Flashcard[];
+        isEditingName: boolean;
+    }
+
+    const [studySet, setStudySet] = useState<StudySet>({
         id: '',
         name: '',
         flashcards: [],
@@ -84,7 +97,7 @@ const ViewStudySetPage = () => {
 
     const handleAddFlashcard = () => {
         console.log('Flashcards:', studySet.flashcards); // Check its value before updating
-        const newFlashcard = {
+        const newFlashcard: Flashcard = {
             id: Date.now().toString(),
             term,
             definition,
