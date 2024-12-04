@@ -88,7 +88,31 @@ const HomePage: React.FC = () => {
     
     const handleDeleteSet = async (id: string) => {
         await doDeleteSet(id);
-        handleLoad();
+        
+        const userId = Id;
+            console.log("Loading sets");
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId }),
+            };
+            try {
+                console.log(userId);
+            const response = await fetch('https://project.annetteisabrunette.xyz/api/loadsets', requestOptions);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to fetch sets');
+            }
+
+            setStudySets(data.results || []);
+            console.log(data.results);
+            console.log("Fetched no errors");
+                
+            } catch (error) {
+                console.error('Failed to load sets', error);
+            }
     };
 
     async function doDeleteSet(setTitle: string): Promise<void> {
