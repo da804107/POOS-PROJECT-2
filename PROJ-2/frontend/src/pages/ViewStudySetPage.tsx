@@ -179,7 +179,7 @@ const ViewStudySetPage = () => {
   };
 
   const handleEditFlashcard = async (
-    flashcardId: string,
+    Id: string,
     newTerm: string,
     newDefinition: string
   ) => {
