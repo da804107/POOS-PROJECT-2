@@ -19,7 +19,7 @@ const ViewStudySetPage = () => {
     
     useEffect(() => {
         const handleLoad = async () => {
-    const { id } = useParams();
+    //const { id } = useParams();
 
     const userId = Id;
             console.log("Loading sets");
