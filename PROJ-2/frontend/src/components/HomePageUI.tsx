@@ -14,7 +14,7 @@ interface HomePageUIProps {
     handleDeleteSet: (id: string) => void;
     handleEditToggle: (id: string) => void;
     handleEditSave: (id: string, newName: string) => void;
-    handleViewSet = (id: string) => void;
+    handleViewSet: (id: string) => void;
     setIsAdding: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
