@@ -239,6 +239,7 @@ const HomePage: React.FC = () => {
                 handleDeleteSet={handleDeleteSet}
                 handleEditToggle={handleEditToggle}
                 handleEditSave={handleEditSave}
+                handleViewSet={handleViewSet}
                 setIsAdding={setIsAdding}
             />
         </div>
