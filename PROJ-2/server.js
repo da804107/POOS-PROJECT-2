@@ -179,7 +179,7 @@ app.post('/api/addflashcard', async (req, res) => {
     res.status(200).json({ error });
 });
 
-// POST /api/deleteflashcard
+// POST deleteflashcard
 app.post('/api/deleteflashcard', async (req, res) => {
     const { userId, setName, flashcardId } = req.body;
     let error = '';
@@ -204,7 +204,38 @@ app.post('/api/deleteflashcard', async (req, res) => {
     }
 });
 
-// POST /api/searchsets
+// POST editflashcard
+app.post('/api/editflashcard', async (req, res) => {
+    const { userId, setName, flashcardId, newTerm, newDefinition } = req.body;
+    let error = '';
+
+    try {
+        const db = client.db('project');
+
+        // Update the specific flashcard in the study set
+        const updateResult = await db.collection('StudySets').updateOne(
+            { UserId: userId, SetName: setName, "Flashcards.id": flashcardId }, // Match study set and flashcard by ID
+            {
+                $set: {
+                    "Flashcards.$.term": newTerm,           // Update term
+                    "Flashcards.$.definition": newDefinition, // Update definition
+                },
+            }
+        );
+
+        if (updateResult.matchedCount === 0) {
+            return res.status(404).json({ error: 'Study set or flashcard not found' });
+        }
+
+        res.status(200).json({ error: '' });
+    } catch (e) {
+        error = e.toString();
+        res.status(500).json({ error });
+    }
+});
+
+
+// POST searchsets
 app.post('/api/searchsets', async (req, res) => {
     const { userId, search } = req.body;
     const _search = search.trim();
@@ -248,7 +279,7 @@ app.post('/api/viewset', async (req, res, next) => {
 });
 
 // Search Flash Cards
-// POST /api/searchcards
+// POST searchcards
 app.post('/api/searchcards', async (req, res) => {
     const { setId } = req.body;
     let error = '';
@@ -268,7 +299,7 @@ app.post('/api/searchcards', async (req, res) => {
     res.status(200).json({ results: _ret, error });
 });
 
-// POST /api/loadsets
+// POST loadsets
 app.post('/api/loadsets', async (req, res) => {
     const { userId } = req.body;
     let error = '';

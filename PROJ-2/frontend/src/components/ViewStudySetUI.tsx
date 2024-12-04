@@ -135,13 +135,13 @@ const ViewStudySetUI: React.FC<{
                                 <div className="definition">{card.definition}</div>
                                 <div className="flashcard-buttons">
                                     <button
-                                        onClick={() =>
-                                            handleEditFlashcard(
-                                                card.id,
-                                                prompt('Edit Term:', card.term) || card.term,
-                                                prompt('Edit Definition:', card.definition) || card.definition
-                                            )
-                                        }
+                                        onClick={() => {
+                                            const newTerm = prompt('Edit Term:', card.term) || card.term;
+                                            const newDefinition = prompt('Edit Definition:', card.definition) || card.definition;
+                                            if (newTerm && newDefinition) {
+                                                handleEditFlashcard(card.id, newTerm, newDefinition);
+                                            }
+                                        }}
                                     >
                                         EDIT
                                     </button>
