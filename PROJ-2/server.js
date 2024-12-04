@@ -89,7 +89,7 @@ app.post('/api/login', async (req, res, next) => {
 // Delete Study Sets
 app.post('/api/deleteset', async(req, res, next) => {
     const {userId, title} = req.body;
-    console.log('Delete: ', title);
+    console.log('Delete: ', ObjectId(title));
     let error = '';
 
     try{
