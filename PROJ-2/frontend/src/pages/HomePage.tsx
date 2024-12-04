@@ -164,20 +164,15 @@ const HomePage: React.FC = () => {
 
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
-            set.id === id ? { ...set, isEditing: !set.isEditing } : {continue};
-            var newSet = {
-                name: set.name
-            }
-            set.id === id ? localStorage.setItem('set_name', JSON.stringify(newSet) : {continue};
+            set.id === id ? { ...set, isEditing: !set.isEditing } : set
         ));
     };
 
     const handleEditSave = (id: string, newName: string) => {
         if (newName.trim()) {
-            doUpdateSet(sn.name, newName);
             setStudySets(studySets.map(set =>
-            set.id === id ? { ...set, isEditing: !set.isEditing } : {continue};
-        ));
+                set.id === id ? { ...set, name: newName, isEditing: false } : set
+            ));
         }
     };
 
