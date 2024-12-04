@@ -160,7 +160,6 @@ app.post('/api/addset', async (req, res) => {
 app.post('/api/addflashcard', async (req, res) => {
     const { userId, setName, flashcard } = req.body;
     console.log(req.body);
-    console.log(flashcard);
     let error = '';
 
     try {
