@@ -12,7 +12,7 @@ interface Flashcard {
 }
 
 interface StudySet {
-  _id: string;
+  id: string;
   name: string;
   flashcards: Flashcard[];
   isEditingName: boolean;
@@ -29,7 +29,7 @@ const ViewStudySetPage = () => {
   const setId: string = sn.id; // Assuming set_id is stored
 
   const [studySet, setStudySet] = useState<StudySet>({
-    _id: "",
+    id: "",
     name: "",
     flashcards: [],
     isEditingName: false,
@@ -61,10 +61,12 @@ const ViewStudySetPage = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch sets");
         }
-        console.log(fetchedSet.results.flashcards);
-        setStudySet(fetchedSet.results);
-        console.log(fetchedSet.results.flashcards);
-        console.log("Fetched no errors");
+        if (fetchedSet.results) {
+          console.log(fetchedSet.results.flashcards);
+          setStudySet(fetchedSet.results);
+          console.log(fetchedSet.results.flashcards);
+          console.log("Fetched no errors");
+        }
       } catch (error) {
         console.error("Failed to load sets", error);
       }
@@ -86,7 +88,7 @@ const ViewStudySetPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: Id,
-          setId: studySet._id,
+          setId: studySet.id,
           newName: newName,
         }),
       };
@@ -166,7 +168,9 @@ const ViewStudySetPage = () => {
       );
 
       const updatedSet = await updatedSetResponse.json();
-      setStudySet(updatedSet.results);
+      if (updatedSet.results) {
+        setStudySet(updatedSet.results);
+      }
 
       setTerm('');
       setDefinition('');
