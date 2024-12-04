@@ -89,12 +89,12 @@ app.post('/api/login', async (req, res, next) => {
 // Delete Study Sets
 app.post('/api/deleteset', async(req, res, next) => {
     const {userId, title} = req.body;
-    console.log('Delete: ', ObjectId(title));
+    console.log('Delete: ', title);
     let error = '';
 
     try{
         const db = client.db('project');
-        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, _id: ObjectId(title)});
+        const delSetResult = await db.collection('StudySets').deleteOne({UserId: userId, _id: {"$oid": title}});
 
         if (delSetResult.deletedCount === 0){
              return res.status(404).json({message: 'No study set found'});
