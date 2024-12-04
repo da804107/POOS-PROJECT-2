@@ -373,6 +373,40 @@ const ViewStudySetPage: React.FC = () => {
     }
   }, [userId, setId]);
 
+  const handleEditSetName = (newName: string) => {
+    if (studySet) {
+      // Update the study set name in the backend
+      const updateSetName = async () => {
+        try {
+          const response = await fetch('https://project.annetteisabrunette.xyz/api/updateSetName', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId,
+              setId: studySet.id,
+              newName,
+            }),
+          });
+
+          if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.error || 'Error updating set name');
+          }
+
+          // Update the local state
+          setStudySet({ ...studySet, name: newName, isEditingName: false });
+        } catch (error) {
+          console.error('Failed to update set name:', error);
+        }
+      };
+
+      updateSetName();
+    }
+  };
+
+  // Placeholder functions for other handlers
+  const handleAddFlashcard = () => {};
+  const handleEditFlashcard = (id: string, newTerm: string, newDefinition: string) => {};
   const handleDeleteSet = async () => {
     try {
       const requestOptions = {
@@ -399,11 +433,6 @@ const ViewStudySetPage: React.FC = () => {
     }
   };
 
-  // Placeholder functions for other handlers
-  const handleAddFlashcard = () => {};
-  const handleEditSetName = (newName: string) => {};
-  const handleEditFlashcard = (id: string, newTerm: string, newDefinition: string) => {};
-
   return (
     <div>
       {studySet && (
@@ -424,4 +453,5 @@ const ViewStudySetPage: React.FC = () => {
 };
 
 export default ViewStudySetPage;
+
 
