@@ -8,7 +8,7 @@ function LoggedInName(){
     var ud = JSON.parse(_ud);
     var userId = ud.id;
     var firstName = ud.username;
-    console.log(ud);
+    //console.log(ud);
 
     const navigate = useNavigate();
 
