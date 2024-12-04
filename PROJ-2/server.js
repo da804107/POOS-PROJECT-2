@@ -109,7 +109,7 @@ app.post('/api/deleteset', async(req, res, next) => {
     res.status(200).json({error});
 });
 
-/Update set Name
+//Update set Name
 app.post('/api/setName', async(req, res, next) => {
     const {setId, newName} = req.body;
     console.log('Update: ', setId);
