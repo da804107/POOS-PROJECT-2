@@ -86,21 +86,29 @@ app.post('/api/login', async (req, res, next) => {
     res.status(200).json({ id, username: fn, error });
 });
 
-// Add Card to Study Set
-/*app.post('/api/addcard', async (req, res, next) => {
-    const { setId, cardTitle, cardDesc } = req.body;
-    const newCard = { SetId: setId, CardTitle: cardTitle, CardDesc: cardDesc };
+// Delete Study Sets
+app.delete('/api/deleteset', async(req, res, next) => {
+    const {title} = req.body;
+    console.log('Delete: ', title);
     let error = '';
 
-    try {
+    try{
         const db = client.db('project');
-        await db.collection('Flash-Cards').insertOne(newCard);
-    } catch (e) {
+        const delSetResult = await db.collection('StudySets').deleteOne({
+SetName: title});
+
+        if (delSetResult.deletedCount === 0){
+             return res.status(404).json({message: 'No study set found'});
+        }
+
+        //delete all flashcards
+        const delFlashCardsResult = await db.collection('FlashCards').deleteMany({SetName: title});
+
+    } catch (e){
         error = e.toString();
     }
-
-    res.status(200).json({ error });
-});*/
+    res.status(200).json({error});
+});
 
 // Add Study Set
 app.post('/api/addset', async (req, res, next) => {
