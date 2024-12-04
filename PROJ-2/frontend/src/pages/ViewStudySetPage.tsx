@@ -175,6 +175,7 @@ const handleAddFlashcard = async () => {
             }),
         };
 
+        console.log(newFlashcard);
         const response = await fetch('https://project.annetteisabrunette.xyz/api/addflashcard', requestOptions);
 
         if (!response.ok) {
