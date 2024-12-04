@@ -177,14 +177,14 @@ app.post('/api/searchsets', async (req, res, next) => {
 
 //View set
 app.post('/api/viewsets', async (req, res, next) => {
-    const { userId, sn.name } = req.body;
+    const { userId, setName } = req.body;
     const _search = search.trim();
     let error = '';
     let _ret = [];
 
     try {
         const db = client.db('project');
-        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _sn.name + '.*' } });
+        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _setName + '.*' } });
 
         _ret = results.Flashcards;
         console.log(_ret);
