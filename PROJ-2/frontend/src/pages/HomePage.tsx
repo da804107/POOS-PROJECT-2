@@ -164,10 +164,8 @@ const HomePage: React.FC = () => {
 
     const handleEditToggle = (id: string) => {
         setStudySets(studySets.map(set =>
-            set.id === id ? { ...set, isEditing: !set.isEditing } : set;
-            if (set.id === id) {
-                localStorage.setItem('set_name', JSON.stringify(set.name));
-            }
+            set.id === id ? { ...set, isEditing: !set.isEditing } : set
+            set.id === id ? localStorage.setItem('set_name', JSON.stringify(set.name)) : set
         ));
     };
 
@@ -175,7 +173,7 @@ const HomePage: React.FC = () => {
         if (newName.trim()) {
             doUpdateSet(sn, newName);
             setStudySets(studySets.map(set =>
-            set.id === id ? { ...set, isEditing: !set.isEditing } : set;
+            set.id === id ? { ...set, isEditing: !set.isEditing } : set
         ));
         }
     };
