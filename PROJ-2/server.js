@@ -175,6 +175,25 @@ app.post('/api/searchsets', async (req, res, next) => {
     res.status(200).json({ results: _ret, error });
 });
 
+//View set
+app.post('/api/viewsets', async (req, res, next) => {
+    const { userId, sn.name } = req.body;
+    const _search = search.trim();
+    let error = '';
+    let _ret = [];
+
+    try {
+        const db = client.db('project');
+        const results = await db.collection('StudySets').findOne({ UserId: userId, SetName: { $regex: _sn.name + '.*' } });
+
+        _ret = results.Flashcards;
+    } catch (e) {
+        error = e.toString();
+    }
+
+    res.status(200).json({ results: _ret, error });
+});
+
 // Search Flash Cards
 app.post('/api/searchcards', async (req, res, next) => {
     const { setId } = req.body;
