@@ -20,6 +20,7 @@
   #logoutButton {
     background-color: transparent;
     color: #FF0000;
+    border: 2px solid #5021a0;
     font: monospace;
     font-size: 16px;
     font-weight: normal;

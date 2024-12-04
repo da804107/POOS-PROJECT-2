@@ -11,8 +11,8 @@
 
 .home-button {
     background-color: transparent;
-    color: D80101;
-    border: none;
+    color: #FF0000;
+    border: 2px solid #5021a0;
     border-radius: 20px;
     padding: 12px 24px;
     font-size: 16px;
@@ -130,24 +130,22 @@
 }
 
 .actions button {
-    background-color: transparent;
-    color: FFB835;
     font-size: 16px;
     border: none;
     padding: 12px 24px;
     border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.15s ease-in-out;
+    background-color: #FFB835;
+    color: white;
 }
 
 .actions button:hover {
     background-color: #CA7E19;
-    color: white;
 }
 
 .actions button:active {
     background-color: #9E600C;
-    color: white;
 }
 
 .add-flashcard input {
