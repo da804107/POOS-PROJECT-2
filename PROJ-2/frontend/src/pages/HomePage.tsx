@@ -85,12 +85,13 @@ const HomePage: React.FC = () => {
     };
 
     
-    //Old delete set (didnt actually delete)
-    /*const handleDeleteSet = (id: string) => {
+    
+    const handleDeleteSet = (id: string) => {
         setStudySets(studySets.filter(set => set.id !== id));
-    };*/
+        await doDeleteSet(string);
+    };
 
-    async function handleDeleteSet(setTitle: string): Promise<void> {
+    async function doDeleteSet(setTitle: string): Promise<void> {
         const set = { userId: Id, title: setTitle};
         const requestOptions = {
             method: 'POST',
