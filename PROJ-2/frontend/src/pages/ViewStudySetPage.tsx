@@ -3,7 +3,11 @@ import { useState, useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import ViewStudySetUI from '../components/ViewStudySetUI';
 
-const ViewStudySetPage = () => {
+const ViewStudySetPage = async () => {
+    let _ud: any = localStorage.getItem('user_data');
+    let ud = JSON.parse(_ud);
+    let Id: string = ud.id;
+    
     let _sn: any = localStorage.getItem('set_name');
     let sn = JSON.parse(_sn);
     let setName = sn.name;
