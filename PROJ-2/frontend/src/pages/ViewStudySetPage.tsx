@@ -59,7 +59,7 @@ const ViewStudySetPage = () => {
         isEditingName: false,
     };
 
-    const [studySet, setStudySet] = useState<{ id: string; name: string; flashcards: any }[]>([]));
+    const [studySet, setStudySet] = useState<{ id: string; name: string; flashcards: any }[]>;
     const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
     const [isCardView, setIsCardView] = useState(false);
     const [term, setTerm] = useState('');
