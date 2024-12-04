@@ -190,7 +190,7 @@ const handleAddFlashcard = async () => {
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: Id, setName: studySet.name }),
+                body: JSON.stringify({ userId: Id, setName: setName }),
             }
         );
 
