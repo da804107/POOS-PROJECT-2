@@ -44,15 +44,15 @@ client.connect((err) => {
 // SignUp Route
 app.post('/api/signup', async (req, res) => {
     const { username, password } = req.body;
-    const newUser = { UserId: null, Username: username, Password: password };
+    const newUser = { userId: null, username: username, password: password };
     let error = '';
 
     try {
         const db = client.db('project');
-        newUser.UserId = await db.collection('Users').countDocuments();
+        newUser.userId = await db.collection('Users').countDocuments() + 1; // Assign unique userId
 
-        /* 
-        if (await db.collection('Users').findOne({ Username: newUser.Username })) {
+        /* Uncomment to check for existing user
+        if (await db.collection('Users').findOne({ username: newUser.username })) {
             return res.status(400).json({ error: 'User already exists' });
         }
         */
@@ -70,16 +70,15 @@ app.post('/api/login', async (req, res) => {
     console.log("in server.js");
     const { login, password } = req.body;
     let error = '';
-    let id = -1, fn = '', ln = '';
+    let userId = -1, username = '';
 
     try {
         const db = client.db('project');
-        const results = await db.collection('Users').find({ Username: login, Password: password }).toArray();
+        const results = await db.collection('Users').find({ username: login, password: password }).toArray();
 
         if (results.length > 0) {
-            id = results[0].UserId;
-            fn = results[0].Username || '';
-            ln = results[0].LastName || '';
+            userId = results[0].userId;
+            username = results[0].username || '';
         } else {
             error = 'Wrong username/password';
         }
@@ -87,14 +86,14 @@ app.post('/api/login', async (req, res) => {
         error = e.toString();
     }
 
-    res.status(200).json({ id, firstName: fn, lastName: ln, error });
+    res.status(200).json({ userId, username, error });
 });
 
 // Add Study Set
 app.post('/api/addset', async (req, res) => {
-    const { userId, title, textareasList } = req.body;
+    const { userId, title, flashcardsList } = req.body;
     console.log(req.body);
-    const set = { name: title, userId: userId, flashcards: textareasList };
+    const set = { name: title, userId: userId, flashcards: flashcardsList };
     console.log(set);
     let error = '';
     try {
@@ -229,7 +228,7 @@ app.post('/api/searchsets', async (req, res) => {
         const results = await db.collection('StudySets').find({ userId: userId, name: { $regex: _search + '.*' } }).toArray();
 
         for (let i = 0; i < results.length; i++) {
-            _ret.push([results[i]._id, results[i].name]);
+            _ret.push([results[i]._id.toString(), results[i].name]);
         }
     } catch (e) {
         error = e.toString();
