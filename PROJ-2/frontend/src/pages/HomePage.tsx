@@ -200,7 +200,7 @@ const HomePage: React.FC = () => {
                 return { ...set, isEditing: !set.isEditing }; // Toggle isEditing
             }
           return set;
-        }));
+            }}));
     };
 
     const filteredSets = studySets.filter(set =>
