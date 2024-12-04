@@ -145,8 +145,9 @@ const HomePage: React.FC = () => {
 
     const handleEditSave = (id: string, newName: string) => {
         if (newName.trim()) {
-            setStudySets(studySets.map(set =>
-                set.id === id ? { ...set, name: newName, isEditing: false } : set
+            doDeleteSet(id)
+            const set = { userId: Id, title: newName};
+            doAddSet(set)
             ));
         }
     };
