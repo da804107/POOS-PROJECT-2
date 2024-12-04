@@ -37,10 +37,12 @@ const ViewStudySetPage = () => {
         console.log(fetchedSet.results.Flashcards);
         if (fetchedSet.results) {
             const len = fetchedSet.results.Flashcards.length;
+            /*
               for(int i = 0; i < len; i++) {
                 setTerm(fetchedSet.results.Flashcards[i].term);
                 setDefinition(fetchedSet.results.Flashcards[i].definition);
               }
+            */
         }
     } catch (error) {
         console.error("Failed to load sets", error);
